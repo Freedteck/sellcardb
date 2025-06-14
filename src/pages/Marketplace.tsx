@@ -570,7 +570,7 @@ const Marketplace: React.FC = () => {
       >
         <Link to={`/product/${product.id}`} className="block h-full flex flex-col">
           {/* Product Image */}
-          <div className="relative aspect-square overflow-hidden">
+          <div className="relative h-40 aspect-square overflow-hidden">
             <img
               src={product.images[0] || '/placeholder-product.jpg'}
               alt={product.name}
