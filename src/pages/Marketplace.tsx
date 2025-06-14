@@ -638,7 +638,7 @@ const Marketplace: React.FC = () => {
         className="flex-shrink-0 w-64 mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg relative border border-gray-100 dark:border-gray-700"
       >
         <Link to={`/service/${service.id}`} className="block h-full group">
-          {/* Image container */}
+          {/* Image container with delivery days badge */}
           <div className="relative aspect-square overflow-hidden">
             {service.images.length > 0 && (
               <img
@@ -647,38 +647,36 @@ const Marketplace: React.FC = () => {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             )}
+            {service.duration_days && (
+              <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center">
+                <Calendar className="h-3 w-3 mr-1" />
+                {service.duration_days} days
+              </span>
+            )}
           </div>
           
           {/* Service info */}
-          <div className="p-3 flex flex-col h-[calc(100%-12rem)]">
-            <div className="flex-1">
-              <h3 className="font-semibold line-clamp-2 text-sm mb-1" style={{ color: 'var(--text-primary)' }}>
-                {service.name}
-              </h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
-                {service.description}
-              </p>
-            </div>
+          <div className="p-3 flex flex-col">
+            <h3 className="font-semibold line-clamp-2 text-sm mb-1" style={{ color: 'var(--text-primary)' }}>
+              {service.name}
+            </h3>
             
-            <div className="mt-auto space-y-2">
-              {service.duration_days && (
-                <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-                  <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
-                  <span>Delivers in {service.duration_days} days</span>
-                </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3">
+              {service.description}
+            </p>
+            
+            <div className="flex items-center justify-between mt-auto">
+              {service.price ? (
+                <span className="text-base font-bold text-green-600 dark:text-green-400">
+                  ${service.price}
+                </span>
+              ) : (
+                <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                  Custom Pricing
+                </span>
               )}
               
-              <div className="flex items-center justify-between pt-1">
-                {service.price ? (
-                  <span className="text-base font-bold text-green-600 dark:text-green-400">
-                    ${service.price}
-                  </span>
-                ) : (
-                  <span className="text-sm font-medium text-green-600 dark:text-green-400">
-                    Custom Pricing
-                  </span>
-                )}
-              </div>
+              {/* Optional: Add rating or other info here */}
             </div>
           </div>
         </Link>
