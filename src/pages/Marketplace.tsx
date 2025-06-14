@@ -570,7 +570,7 @@ const Marketplace: React.FC = () => {
       >
         <Link to={`/product/${product.id}`} className="block h-full group">
           {/* Image container with category badge */}
-          <div className="relative h-40 overflow-hidden">
+          <div className="relative aspect-square overflow-hidden">
             {product.images.length > 0 && (
               <img
                 src={product.images[0]}
