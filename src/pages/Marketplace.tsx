@@ -788,100 +788,119 @@ const Marketplace: React.FC = () => {
               </motion.div>
             ) : (
               /* Items Grid */
-              <div className="grid grid-cols-2 gap-3">
-  {filteredItems.map((item, index) => (
-    <motion.div
-      key={`${item.type}-${item.id}`}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      className="mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg border border-gray-100 dark:border-gray-700"
-    >
-      <Link to={`/${item.type}/${item.id}`} className="block h-full group">
-        {/* Image with type badge */}
-        <div className="relative aspect-square overflow-hidden">
-          {item.images.length > 0 && (
-            <img
-              src={item.images[0]}
-              alt={item.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          )}
-          
-          {/* Top-right type indicator */}
-          <div className="absolute top-2 right-2 bg-white/90 dark:bg-gray-800/90 rounded-full p-1 backdrop-blur-sm">
-            {item.type === 'product' ? (
-              <Package className="h-4 w-4 text-blue-500" />
-            ) : (
-              <Users className="h-4 w-4 text-green-500" />
-            )}
-          </div>
-          
-          {/* Category/Days badge */}
-          {item.type === 'product' && item.category ? (
-            <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm">
-              {item.category}
-            </span>
-          ) : item.type === 'service' && item.duration_days ? (
-            <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center">
-              <Calendar className="h-3 w-3 mr-1" />
-              {item.duration_days}d
-            </span>
-          ) : null}
-        </div>
-        
-        {/* Content area */}
-        <div className="p-3 flex flex-col h-[calc(100%-10rem)]">
-          <div className="flex-1">
-            <h3 className="font-semibold line-clamp-2 text-sm mb-1" style={{ color: 'var(--text-primary)' }}>
-              {item.name}
-            </h3>
-            
-            <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
-              {item.description}
-            </p>
-          </div>
-          
-          {/* Price */}
-          <div className="mb-2">
-            {item.price ? (
-              <span className="text-base font-bold text-blue-600 dark:text-blue-400">
-                ${item.price}
-              </span>
-            ) : (
-              <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                Custom Pricing
-              </span>
-            )}
-          </div>
-          
-          {/* Seller info */}
-          <div className="border-t pt-2" style={{ borderColor: 'var(--border-color)' }}>
-            <div className="flex items-center justify-between">
-              <div className="max-w-[70%] truncate">
-                <p className="font-medium text-xs truncate" style={{ color: 'var(--text-primary)' }}>
-                  {item.seller.business_name}
-                </p>
-                {item.seller.location && (
-                  <p className="text-xs flex items-center truncate" style={{ color: 'var(--text-muted)' }}>
-                    <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
-                    <span className="truncate">{item.seller.location}</span>
-                  </p>
+              <motion.div
+  key="items"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  exit={{ opacity: 0, y: -20 }}
+>
+  <div className="mb-4">
+    <p style={{ color: 'var(--text-muted)' }}>
+      {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''} found
+    </p>
+  </div>
+
+  {filteredItems.length > 0 && (
+    <div className="grid grid-cols-2 gap-4">
+      {filteredItems.map((item, index) => (
+        <motion.div
+          key={`${item.type}-${item.id}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.1 }}
+          className="relative rounded-lg border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-md transition-all"
+        >
+          <Link to={`/${item.type}/${item.id}`} className="block h-full">
+            {/* Image with type badge */}
+            <div className="relative aspect-square">
+              {item.images.length > 0 && (
+                <img
+                  src={item.images[0]}
+                  alt={item.name}
+                  className="w-full h-full object-cover"
+                />
+              )}
+              
+              {/* Category/Days badge */}
+              <div className="absolute top-2 left-2">
+                {item.type === 'product' && item.category ? (
+                  <span className="bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+                    {item.category}
+                  </span>
+                ) : item.type === 'service' && item.duration_days ? (
+                  <span className="bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center">
+                    <Calendar className="h-3 w-3 mr-1" />
+                    {item.duration_days}d
+                  </span>
+                ) : null}
+              </div>
+              
+              {/* Type indicator */}
+              <div className="absolute top-2 right-2 bg-white/80 dark:bg-gray-800/80 rounded-full p-1 backdrop-blur-sm">
+                {item.type === 'product' ? (
+                  <Package className="h-4 w-4 text-blue-500" />
+                ) : (
+                  <Users className="h-4 w-4 text-green-500" />
                 )}
               </div>
-              <div className="flex items-center">
-                <Star className="h-3 w-3 text-yellow-400 mr-1" />
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                  {item.seller.rating.toFixed(1)}
-                </span>
+            </div>
+            
+            {/* Content area */}
+            <div className="p-3">
+              <h3 className="font-semibold line-clamp-2 text-sm mb-1" style={{ color: 'var(--text-primary)' }}>
+                {item.name}
+              </h3>
+              
+              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+                {item.description}
+              </p>
+              
+              {/* Price */}
+              <div className="mb-3">
+                {item.price ? (
+                  <span className="text-base font-bold text-blue-600 dark:text-blue-400">
+                    ${item.price}
+                  </span>
+                ) : (
+                  <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                    Custom Pricing
+                  </span>
+                )}
+              </div>
+              
+              {/* Seller info */}
+              <div className="border-t border-gray-100 dark:border-gray-700 pt-2">
+                <Link 
+                  to={`/shop/${item.seller.id}`} 
+                  className="flex items-center justify-between gap-2"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-xs truncate" style={{ color: 'var(--text-primary)' }}>
+                      {item.seller.business_name}
+                    </p>
+                    {item.seller.location && (
+                      <p className="text-xs flex items-center text-gray-500 dark:text-gray-400 truncate">
+                        <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
+                        <span className="truncate">{item.seller.location}</span>
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex items-center">
+                    <Star className="h-3 w-3 text-yellow-400 mr-1" />
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {item.seller.rating?.toFixed(1) || 'New'}
+                    </span>
+                  </div>
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
-      </Link>
-    </motion.div>
-  ))}
-</div>
+          </Link>
+        </motion.div>
+      ))}
+    </div>
+  )}
+</motion.div>
                     ))}
                   </div>
                 ) : (
