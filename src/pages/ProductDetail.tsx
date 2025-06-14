@@ -6,6 +6,9 @@ import { supabase, Product, Seller } from '../lib/supabase';
 import { sendWhatsAppNotification } from '../utils/whatsappNotifications';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import RatingStars from '../components/RatingStars';
+import ReviewForm from '../components/ReviewForm';
+import ReviewsList from '../components/ReviewsList';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -15,6 +18,7 @@ const ProductDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showInquiryForm, setShowInquiryForm] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
   const [inquiryForm, setInquiryForm] = useState({
     customerName: '',
     customerEmail: '',
@@ -150,6 +154,11 @@ const ProductDetail: React.FC = () => {
     }
   };
 
+  const handleReviewSubmitted = () => {
+    // Refresh product data to update seller rating
+    fetchProduct();
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen">
@@ -247,10 +256,6 @@ const ProductDetail: React.FC = () => {
                 <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full">
                   {product.category}
                 </span>
-                {/* <div className="flex items-center">
-                  <Eye className="h-4 w-4 mr-1" />
-                  {product.view_count} views
-                </div> */}
                 <span>Stock: {product.stock_quantity}</span>
               </div>
               
@@ -272,7 +277,7 @@ const ProductDetail: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <Star className="h-5 w-5 text-yellow-400 mr-2" />
+                    <RatingStars rating={product.seller.rating} size="md" className="mr-2" />
                     <span className="font-medium text-gray-900 dark:text-white">
                       {product.seller.rating.toFixed(1)}
                     </span>
@@ -311,6 +316,23 @@ const ProductDetail: React.FC = () => {
               </button>
               
               <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setShowReviewForm(true)}
+                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center justify-center"
+                >
+                  <Star className="h-4 w-4 mr-2" />
+                  Rate Seller
+                </button>
+                
+                <button
+                  onClick={() => setShowInquiryForm(true)}
+                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                >
+                  Send Inquiry
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
                 {product.seller.phone_number && (
                   <button
                     onClick={() => handleContactSeller('phone')}
@@ -331,13 +353,6 @@ const ProductDetail: React.FC = () => {
                   </button>
                 )}
               </div>
-              
-              <button
-                onClick={() => setShowInquiryForm(true)}
-                className="w-full bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium"
-              >
-                Send Inquiry
-              </button>
             </div>
 
             {/* Additional Seller Links */}
@@ -368,6 +383,41 @@ const ProductDetail: React.FC = () => {
                 )}
               </div>
             )}
+          </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="mt-12">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Seller Reviews
+              </h2>
+              <button
+                onClick={() => setShowReviewForm(true)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+              >
+                <Star size={16} className="mr-2" />
+                Write Review
+              </button>
+            </div>
+
+            {/* Rating Summary */}
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
+              <div className="flex items-center justify-center space-x-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                    {product.seller.rating.toFixed(1)}
+                  </div>
+                  <RatingStars rating={product.seller.rating} size="md" className="justify-center mb-1" />
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Based on {product.seller.total_reviews} review{product.seller.total_reviews !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <ReviewsList sellerId={product.seller.id} limit={3} />
           </div>
         </div>
       </motion.div>
@@ -491,6 +541,15 @@ const ProductDetail: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Review Form Modal */}
+      <ReviewForm
+        sellerId={product.seller.id}
+        sellerName={product.seller.business_name}
+        isOpen={showReviewForm}
+        onClose={() => setShowReviewForm(false)}
+        onReviewSubmitted={handleReviewSubmitted}
+      />
 
       <Footer />
     </div>

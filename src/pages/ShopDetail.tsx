@@ -4,6 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Star, MapPin, MessageCircle, Phone, Mail, Globe, Instagram, Eye, Store, Package, Users, Calendar, TrendingUp, Award, Share2 } from 'lucide-react';
 import { supabase, Seller, Product, Service } from '../lib/supabase';
 import MobileHeader from '../components/MobileHeader';
+import ReviewForm from '../components/ReviewForm';
+import ReviewsList from '../components/ReviewsList';
+import RatingStars from '../components/RatingStars';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -13,7 +16,8 @@ const ShopDetail: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'products' | 'services' | 'about'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'services' | 'reviews' | 'about'>('products');
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
   useEffect(() => {
     if (sellerId) {
@@ -101,6 +105,11 @@ const ShopDetail: React.FC = () => {
       navigator.clipboard.writeText(shopUrl);
       toast.success('Shop link copied to clipboard!');
     }
+  };
+
+  const handleReviewSubmitted = () => {
+    // Refresh seller data to update rating
+    fetchShopData();
   };
 
   if (loading) {
@@ -212,7 +221,7 @@ const ShopDetail: React.FC = () => {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="text-center p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
                     <div className="flex items-center justify-center mb-1">
-                      <Star className="h-4 w-4 text-yellow-400 mr-1" />
+                      <RatingStars rating={seller.rating} size="sm" className="mr-2" />
                       <span className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
                         {seller.rating.toFixed(1)}
                       </span>
@@ -247,6 +256,14 @@ const ShopDetail: React.FC = () => {
                 </button>
                 
                 <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setShowReviewForm(true)}
+                    className="mobile-button bg-yellow-600 text-white px-4 py-2 rounded-xl hover:bg-yellow-700 transition-colors flex items-center justify-center"
+                  >
+                    <Star className="h-4 w-4 mr-2" />
+                    Rate Shop
+                  </button>
+                  
                   {seller.phone_number && (
                     <button
                       onClick={() => handleContactSeller('phone')}
@@ -308,6 +325,7 @@ const ShopDetail: React.FC = () => {
               {[
                 { id: 'products', label: `Products (${products.length})`, icon: Package },
                 { id: 'services', label: `Services (${services.length})`, icon: Users },
+                { id: 'reviews', label: `Reviews (${seller.total_reviews})`, icon: Star },
                 { id: 'about', label: 'About', icon: Store },
               ].map((tab) => (
                 <button
@@ -476,6 +494,46 @@ const ShopDetail: React.FC = () => {
             </motion.div>
           )}
 
+          {activeTab === 'reviews' && (
+            <motion.div
+              key="reviews"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="mobile-card p-4"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                  Customer Reviews
+                </h2>
+                <button
+                  onClick={() => setShowReviewForm(true)}
+                  className="mobile-button bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                >
+                  <Star size={16} className="mr-2" />
+                  Write Review
+                </button>
+              </div>
+
+              {/* Rating Summary */}
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
+                <div className="flex items-center justify-center space-x-4">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                      {seller.rating.toFixed(1)}
+                    </div>
+                    <RatingStars rating={seller.rating} size="md" className="justify-center mb-1" />
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Based on {seller.total_reviews} review{seller.total_reviews !== 1 ? 's' : ''}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <ReviewsList sellerId={seller.id} showAll />
+            </motion.div>
+          )}
+
           {activeTab === 'about' && (
             <motion.div
               key="about"
@@ -570,6 +628,15 @@ const ShopDetail: React.FC = () => {
           )}
         </AnimatePresence>
       </motion.div>
+
+      {/* Review Form Modal */}
+      <ReviewForm
+        sellerId={seller.id}
+        sellerName={seller.business_name}
+        isOpen={showReviewForm}
+        onClose={() => setShowReviewForm(false)}
+        onReviewSubmitted={handleReviewSubmitted}
+      />
     </div>
   );
 };

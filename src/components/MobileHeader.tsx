@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
 
 interface MobileHeaderProps {
   title: string;
@@ -60,7 +61,10 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
         </h1>
 
         {/* Right side - fixed width matching left side */}
-        <div className="flex items-center justify-end w-10">{rightAction}</div>
+        <div className="flex items-center justify-end space-x-2 w-auto min-w-[2.5rem]">
+          <ThemeToggle />
+          {rightAction && <div>{rightAction}</div>}
+        </div>
       </div>
     </motion.header>
   );

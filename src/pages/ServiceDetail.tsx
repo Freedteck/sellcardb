@@ -6,6 +6,9 @@ import { supabase, Service, Seller } from '../lib/supabase';
 import { sendWhatsAppNotification } from '../utils/whatsappNotifications';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import RatingStars from '../components/RatingStars';
+import ReviewForm from '../components/ReviewForm';
+import ReviewsList from '../components/ReviewsList';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -15,6 +18,7 @@ const ServiceDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showInquiryForm, setShowInquiryForm] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
   const [inquiryForm, setInquiryForm] = useState({
     customerName: '',
     customerEmail: '',
@@ -148,6 +152,11 @@ const ServiceDetail: React.FC = () => {
       navigator.clipboard.writeText(serviceUrl);
       toast.success('Service link copied to clipboard!');
     }
+  };
+
+  const handleReviewSubmitted = () => {
+    // Refresh service data to update seller rating
+    fetchService();
   };
 
   if (loading) {
@@ -291,7 +300,7 @@ const ServiceDetail: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <Star className="h-5 w-5 text-yellow-400 mr-2" />
+                    <RatingStars rating={service.seller.rating} size="md" className="mr-2" />
                     <span className="font-medium text-gray-900 dark:text-white">
                       {service.seller.rating.toFixed(1)}
                     </span>
@@ -330,6 +339,23 @@ const ServiceDetail: React.FC = () => {
               </button>
               
               <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setShowReviewForm(true)}
+                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center justify-center touch-target"
+                >
+                  <Star className="h-4 w-4 mr-2" />
+                  Rate Seller
+                </button>
+                
+                <button
+                  onClick={() => setShowInquiryForm(true)}
+                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors font-medium touch-target"
+                >
+                  Send Inquiry
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
                 {service.seller.phone_number && (
                   <button
                     onClick={() => handleContactSeller('phone')}
@@ -350,13 +376,6 @@ const ServiceDetail: React.FC = () => {
                   </button>
                 )}
               </div>
-              
-              <button
-                onClick={() => setShowInquiryForm(true)}
-                className="w-full bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium touch-target"
-              >
-                Send Inquiry
-              </button>
             </div>
 
             {/* Additional Seller Links */}
@@ -387,6 +406,41 @@ const ServiceDetail: React.FC = () => {
                 )}
               </div>
             )}
+          </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="mt-12">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Seller Reviews
+              </h2>
+              <button
+                onClick={() => setShowReviewForm(true)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+              >
+                <Star size={16} className="mr-2" />
+                Write Review
+              </button>
+            </div>
+
+            {/* Rating Summary */}
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
+              <div className="flex items-center justify-center space-x-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                    {service.seller.rating.toFixed(1)}
+                  </div>
+                  <RatingStars rating={service.seller.rating} size="md" className="justify-center mb-1" />
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Based on {service.seller.total_reviews} review{service.seller.total_reviews !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <ReviewsList sellerId={service.seller.id} limit={3} />
           </div>
         </div>
       </motion.div>
@@ -510,6 +564,15 @@ const ServiceDetail: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Review Form Modal */}
+      <ReviewForm
+        sellerId={service.seller.id}
+        sellerName={service.seller.business_name}
+        isOpen={showReviewForm}
+        onClose={() => setShowReviewForm(false)}
+        onReviewSubmitted={handleReviewSubmitted}
+      />
 
       <Footer />
     </div>
