@@ -570,7 +570,7 @@ const Marketplace: React.FC = () => {
       >
         <Link to={`/product/${product.id}`} className="block h-full group">
           {/* Image container with category badge */}
-          <div className="relative aspect-square overflow-hidden">
+          <div className="relative h-40 overflow-hidden">
             {product.images.length > 0 && (
               <img
                 src={product.images[0]}
@@ -639,7 +639,7 @@ const Marketplace: React.FC = () => {
       >
         <Link to={`/service/${service.id}`} className="block h-full group">
           {/* Image container with delivery days badge */}
-          <div className="relative aspect-square overflow-hidden">
+          <div className="relative h-40 overflow-hidden">
             {service.images.length > 0 && (
               <img
                 src={service.images[0]}
