@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { supabase, Service, Seller } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import Header from '../components/Header';
+import ConfirmModal from '../components/ConfirmModal';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -14,6 +15,16 @@ const Services: React.FC = () => {
   const [seller, setSeller] = useState<Seller | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    serviceId: string;
+    serviceName: string;
+  }>({
+    isOpen: false,
+    serviceId: '',
+    serviceName: ''
+  });
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -50,22 +61,33 @@ const Services: React.FC = () => {
     }
   };
 
-  const deleteService = async (serviceId: string) => {
-    if (!confirm('Are you sure you want to delete this service?')) return;
+  const handleDeleteClick = (serviceId: string, serviceName: string) => {
+    setDeleteModal({
+      isOpen: true,
+      serviceId,
+      serviceName
+    });
+  };
 
+  const handleDeleteConfirm = async () => {
+    setDeleting(true);
+    
     try {
       const { error } = await supabase
         .from('services')
         .delete()
-        .eq('id', serviceId);
+        .eq('id', deleteModal.serviceId);
 
       if (error) throw error;
 
-      setServices(services.filter(s => s.id !== serviceId));
+      setServices(services.filter(s => s.id !== deleteModal.serviceId));
       toast.success('Service deleted successfully');
+      setDeleteModal({ isOpen: false, serviceId: '', serviceName: '' });
     } catch (error) {
       console.error('Error deleting service:', error);
       toast.error('Failed to delete service');
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -239,7 +261,7 @@ const Services: React.FC = () => {
                       {service.is_available ? 'Disable' : 'Enable'}
                     </button>
                     <button
-                      onClick={() => deleteService(service.id)}
+                      onClick={() => handleDeleteClick(service.id, service.name)}
                       className="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -273,6 +295,19 @@ const Services: React.FC = () => {
           </div>
         )}
       </motion.div>
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        onClose={() => setDeleteModal({ isOpen: false, serviceId: '', serviceName: '' })}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Service"
+        message={`Are you sure you want to delete "${deleteModal.serviceName}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+        loading={deleting}
+      />
     </div>
   );
 };

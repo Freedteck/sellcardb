@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { supabase, Product, Seller } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import Header from '../components/Header';
+import ConfirmModal from '../components/ConfirmModal';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -14,6 +15,16 @@ const Products: React.FC = () => {
   const [seller, setSeller] = useState<Seller | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    productId: string;
+    productName: string;
+  }>({
+    isOpen: false,
+    productId: '',
+    productName: ''
+  });
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -50,22 +61,33 @@ const Products: React.FC = () => {
     }
   };
 
-  const deleteProduct = async (productId: string) => {
-    if (!confirm('Are you sure you want to delete this product?')) return;
+  const handleDeleteClick = (productId: string, productName: string) => {
+    setDeleteModal({
+      isOpen: true,
+      productId,
+      productName
+    });
+  };
 
+  const handleDeleteConfirm = async () => {
+    setDeleting(true);
+    
     try {
       const { error } = await supabase
         .from('products')
         .delete()
-        .eq('id', productId);
+        .eq('id', deleteModal.productId);
 
       if (error) throw error;
 
-      setProducts(products.filter(p => p.id !== productId));
+      setProducts(products.filter(p => p.id !== deleteModal.productId));
       toast.success('Product deleted successfully');
+      setDeleteModal({ isOpen: false, productId: '', productName: '' });
     } catch (error) {
       console.error('Error deleting product:', error);
       toast.error('Failed to delete product');
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -230,7 +252,7 @@ const Products: React.FC = () => {
                       {product.is_available ? 'Disable' : 'Enable'}
                     </button>
                     <button
-                      onClick={() => deleteProduct(product.id)}
+                      onClick={() => handleDeleteClick(product.id, product.name)}
                       className="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -264,6 +286,19 @@ const Products: React.FC = () => {
           </div>
         )}
       </motion.div>
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        onClose={() => setDeleteModal({ isOpen: false, productId: '', productName: '' })}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Product"
+        message={`Are you sure you want to delete "${deleteModal.productName}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+        loading={deleting}
+      />
     </div>
   );
 };

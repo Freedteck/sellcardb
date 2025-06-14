@@ -17,8 +17,10 @@ import Dashboard from './pages/Dashboard';
 import SetupShop from './pages/SetupShop';
 import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
+import EditProduct from './pages/EditProduct';
 import Services from './pages/Services';
 import AddService from './pages/AddService';
+import EditService from './pages/EditService';
 import Marketplace from './pages/Marketplace';
 import ProductDetail from './pages/ProductDetail';
 import ServiceDetail from './pages/ServiceDetail';
@@ -91,6 +93,11 @@ function App() {
                       <AddProduct />
                     </ProtectedRoute>
                   } />
+                  <Route path="/dashboard/products/edit/:id" element={
+                    <ProtectedRoute>
+                      <EditProduct />
+                    </ProtectedRoute>
+                  } />
                   <Route path="/dashboard/services" element={
                     <ProtectedRoute>
                       <Services />
@@ -99,6 +106,11 @@ function App() {
                   <Route path="/dashboard/services/new" element={
                     <ProtectedRoute>
                       <AddService />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/services/edit/:id" element={
+                    <ProtectedRoute>
+                      <EditService />
                     </ProtectedRoute>
                   } />
                   <Route path="/dashboard/inquiries" element={

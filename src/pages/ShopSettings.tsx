@@ -9,6 +9,7 @@ import Header from '../components/Header';
 import ImageUpload from '../components/ImageUpload';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ThemeToggle from '../components/ThemeToggle';
+import ConfirmModal from '../components/ConfirmModal';
 import toast from 'react-hot-toast';
 
 const ShopSettings: React.FC = () => {
@@ -19,6 +20,8 @@ const ShopSettings: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<'shop' | 'account' | 'stats'>('shop');
+  const [signOutModal, setSignOutModal] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
   const [formData, setFormData] = useState({
     businessName: '',
     description: '',
@@ -178,15 +181,18 @@ const ShopSettings: React.FC = () => {
     }
   };
 
-  const handleSignOut = async () => {
-    if (confirm('Are you sure you want to sign out?')) {
-      try {
-        await signOut();
-        navigate('/');
-      } catch (error) {
-        console.error('Error signing out:', error);
-        toast.error('Failed to sign out');
-      }
+  const handleSignOutConfirm = async () => {
+    setSigningOut(true);
+    
+    try {
+      await signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+      toast.error('Failed to sign out');
+    } finally {
+      setSigningOut(false);
+      setSignOutModal(false);
     }
   };
 
@@ -550,7 +556,7 @@ const ShopSettings: React.FC = () => {
                 {/* Sign Out Button */}
                 <div className="pt-6">
                   <button
-                    onClick={handleSignOut}
+                    onClick={() => setSignOutModal(true)}
                     className="w-full bg-red-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center"
                   >
                     <LogOut size={20} className="mr-2" />
@@ -721,6 +727,19 @@ const ShopSettings: React.FC = () => {
           </motion.div>
         )}
       </motion.div>
+
+      {/* Sign Out Confirmation Modal */}
+      <ConfirmModal
+        isOpen={signOutModal}
+        onClose={() => setSignOutModal(false)}
+        onConfirm={handleSignOutConfirm}
+        title="Sign Out"
+        message="Are you sure you want to sign out of your account?"
+        confirmText="Sign Out"
+        cancelText="Cancel"
+        type="warning"
+        loading={signingOut}
+      />
     </div>
   );
 };
