@@ -627,65 +627,65 @@ const Marketplace: React.FC = () => {
                     </button>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-3">
-                    {availableServices.map((service, index) => (
-                      <motion.div
-                        key={service.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="mobile-card overflow-hidden hover:shadow-lg transition-all"
-                      >
-                        {service.images.length > 0 && (
-                          <div className="aspect-square overflow-hidden">
-                            <img
-                              src={service.images[0]}
-                              alt={service.name}
-                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
-                        )}
-                        
-                        <div className="p-3">
-                          <h3 className="font-semibold mb-1 line-clamp-1 text-sm" style={{ color: 'var(--text-primary)' }}>
-                            {service.name}
-                          </h3>
-                          
-                          <p className="text-xs mb-2 line-clamp-1" style={{ color: 'var(--text-muted)' }}>
-                            {service.description}
-                          </p>
-                          
-                          <div className="flex flex-col gap-2 mb-2">
-                            <div className="flex items-center justify-between">
-                              {service.price ? (
-                                <span className="text-lg font-bold text-green-600 dark:text-green-400">
-                                  ${service.price}
-                                </span>
-                              ) : (
-                                <span className="text-sm font-medium text-green-600 dark:text-green-400">
-                                  Custom Pricing
-                                </span>
-                              )}
-                              
-                              <Link
-                                to={`/service/${service.id}`}
-                                className="mobile-button bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition-colors text-center text-xs"
-                              >
-                                View
-                              </Link>
-                            </div>
-                            
-                            {service.duration_days && (
-                              <div className="flex items-center text-xs" style={{ color: 'var(--text-muted)' }}>
-                                <Calendar className="h-3 w-3 mr-1" />
-                                Delivers in {service.duration_days} days
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
+<div className="overflow-x-auto">
+  <div className="flex space-x-4 pb-4">
+    {availableServices.map((service, index) => (
+      <motion.div
+        key={service.id}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: index * 0.1 }}
+        className="flex-shrink-0 w-64 mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg relative border border-gray-100 dark:border-gray-700"
+      >
+        <Link to={`/service/${service.id}`} className="block h-full group">
+          {/* Image container */}
+          <div className="relative aspect-square overflow-hidden">
+            {service.images.length > 0 && (
+              <img
+                src={service.images[0]}
+                alt={service.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            )}
+          </div>
+          
+          {/* Service info */}
+          <div className="p-3 flex flex-col h-[calc(100%-12rem)]">
+            <div className="flex-1">
+              <h3 className="font-semibold line-clamp-2 text-sm mb-1" style={{ color: 'var(--text-primary)' }}>
+                {service.name}
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+                {service.description}
+              </p>
+            </div>
+            
+            <div className="mt-auto space-y-2">
+              {service.duration_days && (
+                <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                  <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
+                  <span>Delivers in {service.duration_days} days</span>
+                </div>
+              )}
+              
+              <div className="flex items-center justify-between pt-1">
+                {service.price ? (
+                  <span className="text-base font-bold text-green-600 dark:text-green-400">
+                    ${service.price}
+                  </span>
+                ) : (
+                  <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                    Custom Pricing
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </Link>
+      </motion.div>
+    ))}
+  </div>
+</div>
                 </section>
               </motion.div>
             ) : activeTab === 'sellers' ? (
