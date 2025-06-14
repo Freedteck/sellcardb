@@ -101,9 +101,9 @@ const ReviewsList: React.FC<ReviewsListProps> = ({
                 </h4>
                 <div className="flex items-center space-x-1 sm:space-x-2 mt-0.5 sm:mt-1">
                   <RatingStars rating={review.rating} size="xs sm:sm" />
-                  <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  {/* <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                     {review.rating}/5
-                  </span>
+                  </span> */} 
                 </div>
               </div>
             </div>
