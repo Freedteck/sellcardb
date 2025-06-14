@@ -131,6 +131,9 @@
   .mobile-button {
     @apply rounded-xl font-medium transition-all duration-200 active:scale-95;
     min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: var(--shadow-sm);
   }
 
