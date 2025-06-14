@@ -48,30 +48,33 @@ const ReviewsList: React.FC<ReviewsListProps> = ({
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+    const date = new Date(dateString);
+    return window.innerWidth < 640 
+      ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      : date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric' 
+        });
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center py-6 sm:py-8">
-        <LoadingSpinner size="md" />
+      <div className="flex justify-center py-4">
+        <LoadingSpinner size="sm md:md" />
       </div>
     );
   }
 
   if (reviews.length === 0) {
     return (
-      <div className="text-center py-6 sm:py-8">
-        <MessageSquare className="h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
-        <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-1 sm:mb-2">
+      <div className="text-center py-4 px-2">
+        <MessageSquare className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+        <h3 className="text-sm md:text-base font-medium text-gray-900 dark:text-white">
           No reviews yet
         </h3>
-        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
-          Be the first to leave a review for this seller!
+        <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-1">
+          Be the first to review this seller
         </p>
       </div>
     );
@@ -81,48 +84,52 @@ const ReviewsList: React.FC<ReviewsListProps> = ({
   const hasMoreReviews = reviews.length > limit && !showAllReviews;
 
   return (
-    <div className="space-y-3 sm:space-y-4">
+    <div className="space-y-2 md:space-y-3">
       {displayedReviews.map((review, index) => (
         <motion.div
           key={review.id}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
-          className="bg-white dark:bg-gray-800 rounded-lg p-3 sm:p-4 border border-gray-200 dark:border-gray-700"
+          transition={{ delay: index * 0.05 }}
+          className="bg-white dark:bg-gray-800 rounded-lg p-2 md:p-3 border border-gray-100 dark:border-gray-700"
         >
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-0 mb-2 sm:mb-3">
-            <div className="flex items-start space-x-2 sm:space-x-3">
-              <div className="bg-gray-100 dark:bg-gray-700 rounded-full p-1.5 sm:p-2">
-                <User size={14} className="text-gray-600 dark:text-gray-400" />
+          <div className="flex justify-between items-start gap-2 mb-1">
+            <div className="flex items-center min-w-0">
+              <div className="bg-gray-100 dark:bg-gray-700 rounded-full p-1 mr-2 flex-shrink-0">
+                <User className="h-3 w-3 md:h-4 md:w-4 text-gray-500 dark:text-gray-400" />
               </div>
-              <div>
-                <h4 className="font-medium text-sm sm:text-base text-gray-900 dark:text-white">
+              <div className="min-w-0">
+                <h4 className="text-xs md:text-sm font-medium text-gray-900 dark:text-white truncate">
                   {review.customer_name}
                 </h4>
-                <div className="flex items-center space-x-1 sm:space-x-2 mt-0.5 sm:mt-1">
-                  <RatingStars rating={review.rating} size="xs sm:sm" />
-                  <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                <div className="flex items-center mt-0.5">
+                  <RatingStars 
+                    rating={review.rating} 
+                    size="2xs md:xs" 
+                    className="mr-1"
+                  />
+                  <span className="text-2xs md:text-xs text-gray-500 dark:text-gray-400">
                     {review.rating}/5
                   </span>
                 </div>
               </div>
             </div>
-            <div className="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-              <Calendar size={12} className="mr-0.5 sm:mr-1" />
+            <div className="flex items-center text-2xs md:text-xs text-gray-400 whitespace-nowrap">
+              <Calendar className="h-2.5 w-2.5 md:h-3 md:w-3 mr-0.5" />
               {formatDate(review.created_at)}
             </div>
           </div>
 
           {review.comment && (
-            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-xs md:text-sm text-gray-700 dark:text-gray-300 mt-1 line-clamp-3">
               {review.comment}
             </p>
           )}
 
           {review.is_verified && (
-            <div className="mt-2 sm:mt-3 flex items-center">
-              <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xxs sm:text-xs font-medium">
-                Verified Purchase
+            <div className="mt-1 flex">
+              <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-1 py-0.5 rounded-full text-2xs md:text-xs font-medium">
+                Verified
               </span>
             </div>
           )}
@@ -130,10 +137,10 @@ const ReviewsList: React.FC<ReviewsListProps> = ({
       ))}
 
       {hasMoreReviews && (
-        <div className="text-center pt-2 sm:pt-4">
+        <div className="pt-2 text-center">
           <button
             onClick={() => setShowAllReviews(true)}
-            className="text-sm sm:text-base text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors"
+            className="text-xs md:text-sm text-blue-600 dark:text-blue-400 font-medium"
           >
             Show all {reviews.length} reviews
           </button>
