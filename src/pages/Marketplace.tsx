@@ -724,7 +724,7 @@ const Marketplace: React.FC = () => {
                                   <div className="flex items-center">
                                 <Star className="h-3 w-3 text-yellow-400 mr-0.5" />
                                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                                  {item.seller?.rating?.toFixed(1) || "N/A"}
+                                  {product.seller?.rating?.toFixed(1) || "N/A"}
                                 </span>
                               </div>
                                 </div>
