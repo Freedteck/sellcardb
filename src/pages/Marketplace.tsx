@@ -976,7 +976,7 @@ const Marketplace: React.FC = () => {
                                 item.duration_days && (
                                   <span className="bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center">
                                     <Calendar className="h-3 w-3 mr-1" />
-                                    {item.duration_days}d
+                                    Delivers in {item.duration_days}days
                                   </span>
                                 )}
                               <span className="bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
