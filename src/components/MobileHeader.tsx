@@ -52,14 +52,14 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
         </div>
 
         {/* Title */}
-        <h1 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+        <h1 className="text-lg flex-1 font-semibold text-gray-900 dark:text-white truncate text-center">
           {title}
         </h1>
 
         {/* Right side */}
         <div className="flex items-center">
           {rightAction || (
-            <div className="w-10 h-10" /> // Placeholder for alignment
+            <div className="w-10 h-10 none" /> // Placeholder for alignment
           )}
         </div>
       </div>
