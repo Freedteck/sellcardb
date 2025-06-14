@@ -353,24 +353,24 @@ const Inquiries: React.FC = () => {
 <div className="flex space-x-3 w-full">
   <button
     onClick={() => setSelectedInquiry(null)}
-    className="mobile-button flex-1 flex-shrink-0 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors text-center"
+    className="mobile-button flex-1 flex-shrink-0 whitespace-nowrap bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors text-center min-w-0 overflow-hidden"
   >
     Cancel
   </button>
   <button
     onClick={() => sendReply(selectedInquiry)}
     disabled={sending || !replyMessage.trim()}
-    className="mobile-button flex-1 flex-shrink-0 btn-flex bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+    className="mobile-button flex-1 flex-shrink-0 whitespace-nowrap bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center min-w-0 overflow-hidden"
   >
     {sending ? (
       <>
-        <LoadingSpinner size="sm" className="mr-2" />
-        Sending...
+        <LoadingSpinner size="sm" className="mr-2 flex-shrink-0" />
+        <span className="truncate">Sending...</span>
       </>
     ) : (
       <>
-        <Send className="h-4 w-4 mr-2" />
-        Send Reply
+        <Send className="h-4 w-4 mr-2 flex-shrink-0" />
+        <span className="truncate">Send Reply</span>
       </>
     )}
   </button>
