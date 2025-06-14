@@ -558,50 +558,57 @@ const Marketplace: React.FC = () => {
                     </button>
                   </div>
                   
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-  {latestProducts.map((product, index) => (
-    <motion.div
-      key={product.id}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      className="overflow-hidden rounded-lg hover:shadow-md transition-all border border-gray-100 dark:border-gray-700"
-    >
-      <Link to={`/product/${product.id}`} className="block h-full">
-        {/* Product Image */}
-        <div className="aspect-square overflow-hidden">
-          <img
-            src={product.images[0] || '/placeholder-product.jpg'}
-            alt={product.name}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          />
-        </div>
-
-        {/* Product Info */}
-        <div className="p-3">
-          {/* Category badge at the top */}
-          {product.category && (
-            <span className="inline-block text-xs text-gray-500 dark:text-gray-400 mb-1">
-              {product.category}
-            </span>
-          )}
-
-          {/* Product name */}
-          <h3 className="font-medium text-sm line-clamp-2 mb-1" style={{ color: 'var(--text-primary)' }}>
-            {product.name}
-          </h3>
-
-          {/* Price - positioned at bottom but not floating alone */}
-          <div className="mt-2 flex items-center justify-between">
-            <span className="font-bold text-blue-600 dark:text-blue-400">
-              ${product.price}
-            </span>
-            {/* Optional: Add favorite icon or other action here */}
+                  <div className="overflow-x-auto">
+  <div className="flex space-x-4 pb-4">
+    {latestProducts.map((product, index) => (
+      <motion.div
+        key={product.id}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: index * 0.1 }}
+        className="flex-shrink-0 w-60 mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg border border-gray-100 dark:border-gray-700"
+      >
+        <Link to={`/product/${product.id}`} className="block h-full flex flex-col">
+          {/* Product Image */}
+          <div className="relative aspect-square overflow-hidden">
+            <img
+              src={product.images[0] || '/placeholder-product.jpg'}
+              alt={product.name}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            />
+            {product.category && (
+              <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-xs px-2 py-1 rounded">
+                {product.category}
+              </span>
+            )}
           </div>
-        </div>
-      </Link>
-    </motion.div>
-  ))}
+
+          {/* Product Info */}
+          <div className="p-3 flex-grow flex flex-col">
+            <h3 className="font-medium text-sm line-clamp-2 mb-1" style={{ color: 'var(--text-primary)' }}>
+              {product.name}
+            </h3>
+            
+            <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3 flex-grow">
+              {product.description}
+            </p>
+            
+            <div className="flex items-center justify-between mt-auto">
+              <span className="font-bold text-base text-blue-600 dark:text-blue-400">
+                ${product.price.toFixed(2)}
+              </span>
+              {product.rating && (
+                <div className="flex items-center bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs">
+                  <Star className="w-3 h-3 text-yellow-400 mr-1" />
+                  {product.rating.toFixed(1)}
+                </div>
+              )}
+            </div>
+          </div>
+        </Link>
+      </motion.div>
+    ))}
+  </div>
 </div>
                 </section>
 
