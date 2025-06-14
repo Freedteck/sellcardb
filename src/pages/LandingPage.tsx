@@ -90,7 +90,7 @@ const LandingPage: React.FC = () => {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   to={user ? "/dashboard" : "/signup"}
-                  className="mobile-button inline-flex items-center bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                  className="mobile-button inline-flex items-center bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg whitespace-nowrap"
                 >
                   {user ? 'Go to Dashboard' : 'Start Selling Now'}
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -100,7 +100,7 @@ const LandingPage: React.FC = () => {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   to="/marketplace"
-                  className="mobile-button inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
+                  className="mobile-button inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors whitespace-nowrap"
                 >
                   <Search className="mr-2 h-5 w-5" />
                   Browse Marketplace
