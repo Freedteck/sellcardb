@@ -36,7 +36,6 @@ ${customerEmail ? `📧 Email: ${customerEmail}` : ''}
 
 🔗 Respond here: ${responseLink}
 
----
 Powered by SellCard 🛍️`;
 
   const whatsappUrl = `https://wa.me/${sellerWhatsApp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(notificationMessage)}`;
