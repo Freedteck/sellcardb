@@ -21,7 +21,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     location.pathname === page || location.pathname.startsWith('/dashboard')
   );
 
-  if (!shouldShow) return null;
+  // if (!shouldShow) return null;
 
   const fabOptions = [
     {
