@@ -558,51 +558,55 @@ const Marketplace: React.FC = () => {
                     </button>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-3">
-                    {latestProducts.map((product, index) => (
-                      <motion.div
-                        key={product.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="mobile-card overflow-hidden hover:shadow-lg transition-all"
-                      >
-                        {product.images.length > 0 && (
-                          <div className="h-60 overflow-hidden">
-                            <img
-                              src={product.images[0]}
-                              alt={product.name}
-                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
-                        )}
-                        
-                        <div className="p-3">
-                          <h3 className="font-semibold mb-1 line-clamp-1 text-sm" style={{ color: 'var(--text-primary)' }}>
-                            {product.name}
-                          </h3>
-                          
-                          <p className="text-xs mb-2 line-clamp-1" style={{ color: 'var(--text-muted)' }}>
-                            {product.description}
-                          </p>
-                          
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2 justify-between w-full">
-                              <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                                ${product.price}
-                              </span>
-                              <Link
-                                to={`/product/${product.id}`}
-                                className="mobile-button bg-blue-600 text-white px-5 py-1 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
-                              >
-                                View
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                  <div className="overflow-x-auto">
+  <div className="flex space-x-3 pb-4">
+    {latestProducts.map((product, index) => (
+      <motion.div
+        key={product.id}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: index * 0.1 }}
+        className="flex-shrink-0 w-56 mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg"
+      >
+        <Link to={`/product/${product.id}`} className="block h-full">
+          {product.images.length > 0 && (
+            <div className="h-40 overflow-hidden">
+              <img
+                src={product.images[0]}
+                alt={product.name}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          )}
+          
+          <div className="p-3">
+            <div className="flex items-start justify-between mb-1">
+              <h3 className="font-semibold line-clamp-1 text-sm" style={{ color: 'var(--text-primary)' }}>
+                {product.name}
+              </h3>
+            </div>
+            
+            {product.category && (
+              <span className="inline-block bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs px-2 py-1 rounded mb-2">
+                {product.category}
+              </span>
+            )}
+            
+            <p className="text-xs mb-2 line-clamp-2" style={{ color: 'var(--text-muted)' }}>
+              {product.description}
+            </p>
+            
+            <div className="flex items-center justify-between">
+              <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                ${product.price}
+              </span>
+            </div>
+          </div>
+        </Link>
+      </motion.div>
+    ))}
+  </div>
+</div>
                 </section>
 
                 {/* Available Services Section */}
