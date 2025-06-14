@@ -360,7 +360,7 @@ const Inquiries: React.FC = () => {
               <button
                 onClick={() => sendReply(selectedInquiry)}
                 disabled={sending || !replyMessage.trim()}
-                className="mobile-button flex-1 shrink-0 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+                className="mobile-button flex-1 flex-shrink-0 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
               >
                 {sending ? (
                   <>
