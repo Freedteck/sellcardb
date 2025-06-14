@@ -841,125 +841,126 @@ const Marketplace: React.FC = () => {
             ) : activeTab === "sellers" ? (
               /* Sellers Grid */
               <motion.div
-                key="sellers"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+  key="sellers"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  exit={{ opacity: 0, y: -20 }}
+>
+  <div className="mb-4">
+    <p style={{ color: "var(--text-muted)" }}>
+      {filteredSellers.length} shop{filteredSellers.length !== 1 ? "s" : ""} found
+    </p>
+  </div>
+
+  {filteredSellers.length > 0 ? (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {filteredSellers.map((seller, index) => (
+        <motion.div
+          key={seller.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.1 }}
+          className="mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg border border-gray-100 dark:border-gray-700"
+        >
+          <Link to={`/shop/${seller.id}`} className="block">
+            {seller.cover_image_url && (
+              <div className="aspect-video overflow-hidden">
+                <img
+                  src={seller.cover_image_url}
+                  alt={seller.business_name}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            )}
+
+            <div className="p-4">
+              <div className="flex items-start justify-between mb-2">
+                <h3
+                  className="font-semibold line-clamp-1"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  {seller.business_name}
+                </h3>
+                {seller.is_verified && (
+                  <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs font-medium">
+                    Verified
+                  </span>
+                )}
+              </div>
+
+              <p
+                className="text-sm mb-3 line-clamp-2"
+                style={{ color: "var(--text-muted)" }}
               >
-                <div className="mb-4">
-                  <p style={{ color: "var(--text-muted)" }}>
-                    {filteredSellers.length} shop
-                    {filteredSellers.length !== 1 ? "s" : ""} found
-                  </p>
+                {seller.description}
+              </p>
+
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <Star className="h-4 w-4 text-yellow-400 mr-1" />
+                  <span
+                    className="text-sm"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    {seller.rating.toFixed(1)} ({seller.total_reviews})
+                  </span>
                 </div>
-
-                {filteredSellers.length > 0 ? (
-                  <div className="grid grid-cols-1 gap-4">
-                    {filteredSellers.map((seller, index) => (
-                      <motion.div
-                        key={seller.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="mobile-card overflow-hidden hover:shadow-lg transition-all"
-                      >
-                        <Link to={`/shop/${seller.id}`}>
-                          {seller.cover_image_url && (
-                            <div className="aspect-video overflow-hidden">
-                              <img
-                                src={seller.cover_image_url}
-                                alt={seller.business_name}
-                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                              />
-                            </div>
-                          )}
-
-                          <div className="p-4">
-                            <div className="flex items-start justify-between mb-2">
-                              <h3
-                                className="font-semibold line-clamp-1"
-                                style={{ color: "var(--text-primary)" }}
-                              >
-                                {seller.business_name}
-                              </h3>
-                              {seller.is_verified && (
-                                <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs font-medium">
-                                  Verified
-                                </span>
-                              )}
-                            </div>
-
-                            <p
-                              className="text-sm mb-3 line-clamp-2"
-                              style={{ color: "var(--text-muted)" }}
-                            >
-                              {seller.description}
-                            </p>
-
-                            <div className="flex items-center justify-between mb-4">
-                              <div className="flex items-center">
-                                <Star className="h-4 w-4 text-yellow-400 mr-1" />
-                                <span
-                                  className="text-sm"
-                                  style={{ color: "var(--text-muted)" }}
-                                >
-                                  {seller.rating.toFixed(1)} (
-                                  {seller.total_reviews})
-                                </span>
-                              </div>
-                              {seller.location && (
-                                <div
-                                  className="flex items-center text-sm"
-                                  style={{ color: "var(--text-muted)" }}
-                                >
-                                  <MapPin className="h-3 w-3 mr-1" />
-                                  <span className="truncate max-w-24">
-                                    {seller.location}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-
-                            <div
-                              className="flex items-center justify-between text-sm mb-4"
-                              style={{ color: "var(--text-muted)" }}
-                            >
-                              <div className="flex items-center">
-                                <Eye className="h-4 w-4 mr-1" />
-                                {seller.view_count} views
-                              </div>
-                              <span>{seller.total_sales} sales</span>
-                            </div>
-                          </div>
-                        </Link>
-
-                        <div className="px-4 pb-4">
-                          <button
-                            onClick={() => handleContactSeller(seller)}
-                            className="mobile-button w-full bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center"
-                          >
-                            <MessageCircle className="h-4 w-4 mr-2" />
-                            Contact Seller
-                          </button>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-12">
-                    <Store className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                    <h3
-                      className="text-lg font-medium mb-2"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      No shops found
-                    </h3>
-                    <p style={{ color: "var(--text-muted)" }}>
-                      Try adjusting your search terms or filters
-                    </p>
+                {seller.location && (
+                  <div
+                    className="flex items-center text-sm"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    <MapPin className="h-3 w-3 mr-1" />
+                    <span className="truncate max-w-24">
+                      {seller.location}
+                    </span>
                   </div>
                 )}
-              </motion.div>
+              </div>
+
+              <div
+                className="flex items-center justify-between text-sm mb-4"
+                style={{ color: "var(--text-muted)" }}
+              >
+                <div className="flex items-center">
+                  <Eye className="h-4 w-4 mr-1" />
+                  {seller.view_count} views
+                </div>
+                <span>{seller.total_sales} sales</span>
+              </div>
+            </div>
+
+            <div className="px-4 pb-4">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleContactSeller(seller);
+                }}
+                className="mobile-button w-full bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center"
+              >
+                <MessageCircle className="h-4 w-4 mr-2" />
+                Contact Seller
+              </button>
+            </div>
+          </Link>
+        </motion.div>
+      ))}
+    </div>
+  ) : (
+    <div className="text-center py-12">
+      <Store className="h-16 w-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+      <h3
+        className="text-lg font-medium mb-2"
+        style={{ color: "var(--text-primary)" }}
+      >
+        No shops found
+      </h3>
+      <p style={{ color: "var(--text-muted)" }}>
+        Try adjusting your search terms or filters
+      </p>
+    </div>
+  )}
+</motion.div>
             ) : (
               /* Items Grid */
               <motion.div
