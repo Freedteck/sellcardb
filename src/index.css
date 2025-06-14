@@ -107,10 +107,6 @@
     background-size: var(--pattern-size);
   }
 
-  .btn-flex {
-    flex: 1, 0, 0% !important;
-  }
-
   /* Glass morphism */
   .glass {
     background: rgba(255, 255, 255, 0.1);
