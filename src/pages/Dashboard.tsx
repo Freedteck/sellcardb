@@ -155,7 +155,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen pb-20">
       <MobileHeader 
-        title="Dashboard" 
+        title="Dashboard"
       />
       
       <motion.div
