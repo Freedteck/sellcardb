@@ -710,7 +710,7 @@ const Marketplace: React.FC = () => {
                               <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-1">
                                 <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
                                 <span className="line-clamp-1">
-                                  {item.seller.location}
+                                  {product.seller.location}
                                 </span>
                               </div>
                             )}
@@ -799,7 +799,7 @@ const Marketplace: React.FC = () => {
                               <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-1">
                                 <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
                                 <span className="line-clamp-1">
-                                  {item.seller.location}
+                                  {service.seller.location}
                                 </span>
                               </div>
                             )}
