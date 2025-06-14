@@ -997,6 +997,12 @@ const Marketplace: React.FC = () => {
                             >
                               {item.name}
                             </h3>
+                            <p
+                              className="text-xs mb-2 line-clamp-1"
+                              style={{ color: "var(--text-muted)" }}
+                            >
+                              {item.description}
+                            </p>
 
                             {/* Location - now permanently visible above price */}
                             {item.seller?.location && (
