@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import ProtectedRoute from './components/ProtectedRoute';
 import MobileBottomNav from './components/MobileBottomNav';
+import DesktopSidebar from './components/DesktopSidebar';
 
 // Pages
 import LandingPage from './pages/LandingPage';
@@ -42,96 +43,102 @@ function App() {
         <ErrorBoundary>
           <Router>
             <div className="min-h-screen bg-pattern-subtle" style={{ backgroundColor: 'var(--bg-primary)' }}>
-              <Routes>
-                {/* Public routes */}
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/marketplace" element={<Marketplace />} />
-                <Route path="/browse" element={<Marketplace />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/service/:id" element={<ServiceDetail />} />
-                <Route path="/shop/:sellerId" element={<ShopDetail />} />
-                <Route path="/profile/:id" element={<PublicProfile />} />
-                <Route path="/card/:sellerId" element={<BusinessCardView />} />
-                <Route path="/qr/:type/:id" element={<QRLanding />} />
-                
-                {/* Protected routes */}
-                <Route path="/dashboard" element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                } />
-                <Route path="/setup-shop" element={
-                  <ProtectedRoute>
-                    <SetupShop />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/products" element={
-                  <ProtectedRoute>
-                    <Products />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/products/new" element={
-                  <ProtectedRoute>
-                    <AddProduct />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/services" element={
-                  <ProtectedRoute>
-                    <Services />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/services/new" element={
-                  <ProtectedRoute>
-                    <AddService />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/inquiries" element={
-                  <ProtectedRoute>
-                    <Inquiries />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/inquiries/:id" element={
-                  <ProtectedRoute>
-                    <InquiryDetail />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/settings" element={
-                  <ProtectedRoute>
-                    <ShopSettings />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/business-card" element={
-                  <ProtectedRoute>
-                    <BusinessCard />
-                  </ProtectedRoute>
-                } />
-                <Route path="/dashboard/qr-codes" element={
-                  <ProtectedRoute>
-                    <QRCodeManager />
-                  </ProtectedRoute>
-                } />
-                <Route path="/create" element={
-                  <ProtectedRoute>
-                    <CreateProfile />
-                  </ProtectedRoute>
-                } />
-                <Route path="/success/:id" element={
-                  <ProtectedRoute>
-                    <ProfileSuccess />
-                  </ProtectedRoute>
-                } />
-                <Route path="/edit/:id/:token" element={
-                  <ProtectedRoute>
-                    <EditProfile />
-                  </ProtectedRoute>
-                } />
-                
-                {/* 404 */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              {/* Desktop Sidebar */}
+              <DesktopSidebar />
+              
+              {/* Main Content */}
+              <div className="lg:pl-64">
+                <Routes>
+                  {/* Public routes */}
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                  <Route path="/browse" element={<Marketplace />} />
+                  <Route path="/product/:id" element={<ProductDetail />} />
+                  <Route path="/service/:id" element={<ServiceDetail />} />
+                  <Route path="/shop/:sellerId" element={<ShopDetail />} />
+                  <Route path="/profile/:id" element={<PublicProfile />} />
+                  <Route path="/card/:sellerId" element={<BusinessCardView />} />
+                  <Route path="/qr/:type/:id" element={<QRLanding />} />
+                  
+                  {/* Protected routes */}
+                  <Route path="/dashboard" element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/setup-shop" element={
+                    <ProtectedRoute>
+                      <SetupShop />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/products" element={
+                    <ProtectedRoute>
+                      <Products />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/products/new" element={
+                    <ProtectedRoute>
+                      <AddProduct />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/services" element={
+                    <ProtectedRoute>
+                      <Services />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/services/new" element={
+                    <ProtectedRoute>
+                      <AddService />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/inquiries" element={
+                    <ProtectedRoute>
+                      <Inquiries />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/inquiries/:id" element={
+                    <ProtectedRoute>
+                      <InquiryDetail />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/settings" element={
+                    <ProtectedRoute>
+                      <ShopSettings />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/business-card" element={
+                    <ProtectedRoute>
+                      <BusinessCard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/qr-codes" element={
+                    <ProtectedRoute>
+                      <QRCodeManager />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/create" element={
+                    <ProtectedRoute>
+                      <CreateProfile />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/success/:id" element={
+                    <ProtectedRoute>
+                      <ProfileSuccess />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/edit/:id/:token" element={
+                    <ProtectedRoute>
+                      <EditProfile />
+                    </ProtectedRoute>
+                  } />
+                  
+                  {/* 404 */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
               
               {/* Mobile Bottom Navigation */}
               <MobileBottomNav />

@@ -587,15 +587,17 @@ const Marketplace: React.FC = () => {
                           </p>
                           
                           <div className="flex items-center justify-between mb-2">
-                            <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                              ${product.price}
-                            </span>
-                            <Link
-                              to={`/product/${product.id}`}
-                              className="mobile-button bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
-                            >
-                              View
-                            </Link>
+                            <div className="flex items-center gap-2 justify-between w-full">
+                              <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                                ${product.price}
+                              </span>
+                              <Link
+                                to={`/product/${product.id}`}
+                                className="mobile-button bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
+                              >
+                                View
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </motion.div>

@@ -4,7 +4,7 @@ import { MessageSquare, Filter, Search, Eye, Package, Users, Calendar, Phone, Ma
 import { Link } from 'react-router-dom';
 import { supabase, Inquiry, Seller } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
-import Header from '../components/Header';
+import MobileHeader from '../components/MobileHeader';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -137,8 +137,8 @@ const Inquiries: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen">
-        <Header />
+      <div className="min-h-screen pb-20">
+        <MobileHeader title="Inquiries" showBack />
         <div className="flex items-center justify-center py-20">
           <LoadingSpinner size="lg" />
         </div>
@@ -147,34 +147,16 @@ const Inquiries: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen">
-      <Header />
+    <div className="min-h-screen pb-20">
+      <MobileHeader title="Customer Inquiries" showBack />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8"
+        className="px-4 py-6"
       >
-        {/* Header */}
-        <div className="mb-6 sm:mb-8">
-          <Link
-            to="/dashboard"
-            className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-4 transition-colors touch-target"
-          >
-            <ArrowLeft size={20} className="mr-2" />
-            Back to Dashboard
-          </Link>
-          
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Customer Inquiries
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
-            Manage and respond to customer messages
-          </p>
-        </div>
-
         {/* Search */}
-        <div className="mb-4 sm:mb-6">
+        <div className="mb-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
             <input
@@ -182,15 +164,15 @@ const Inquiries: React.FC = () => {
               placeholder="Search inquiries..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="mobile-input w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
 
         {/* Mobile-First Scrollable Tabs */}
-        <div className="mb-6 sm:mb-8">
-          <div className="flex overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
-            <div className="flex space-x-2 min-w-max sm:justify-center sm:w-full">
+        <div className="mb-6">
+          <div className="flex overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
+            <div className="flex space-x-2 min-w-max">
               {[
                 { id: 'all', label: 'All', count: inquiries.length },
                 { id: 'new', label: 'New', count: inquiries.filter(i => i.status === 'new').length },
@@ -200,13 +182,13 @@ const Inquiries: React.FC = () => {
                 <button
                   key={filterOption.id}
                   onClick={() => setFilter(filterOption.id as any)}
-                  className={`flex items-center space-x-2 px-4 py-3 rounded-lg font-medium transition-all whitespace-nowrap touch-target ${
+                  className={`mobile-button flex items-center space-x-2 px-3 py-2 rounded-xl font-medium transition-all whitespace-nowrap ${
                     filter === filterOption.id
                       ? 'bg-blue-600 text-white shadow-lg'
                       : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                   }`}
                 >
-                  <span>{filterOption.label}</span>
+                  <span className="text-sm">{filterOption.label}</span>
                   <span className={`px-2 py-1 rounded-full text-xs ${
                     filter === filterOption.id
                       ? 'bg-blue-500 text-white'
@@ -221,7 +203,7 @@ const Inquiries: React.FC = () => {
         </div>
 
         {/* Results */}
-        <div className="text-sm text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
+        <div className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
           {filteredInquiries.length} inquir{filteredInquiries.length !== 1 ? 'ies' : 'y'} found
         </div>
 
@@ -234,16 +216,16 @@ const Inquiries: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 hover:shadow-xl transition-all"
+                className="mobile-card p-4 hover:shadow-lg transition-all"
               >
-                <div className="flex flex-col space-y-4">
+                <div className="flex flex-col space-y-3">
                   {/* Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between space-y-2 sm:space-y-0">
+                  <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                         {inquiry.customer_name}
                       </h3>
-                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-gray-500 dark:text-gray-400 mt-1">
+                      <div className="flex flex-wrap items-center gap-2 text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
                         <div className="flex items-center">
                           <Calendar className="h-4 w-4 mr-1" />
                           {new Date(inquiry.created_at).toLocaleDateString()}
@@ -268,14 +250,14 @@ const Inquiries: React.FC = () => {
                   </div>
 
                   {/* Message */}
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+                    <p className="leading-relaxed text-sm" style={{ color: 'var(--text-primary)' }}>
                       {inquiry.message}
                     </p>
                   </div>
 
                   {/* Contact Info */}
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
+                  <div className="flex flex-wrap gap-4 text-sm" style={{ color: 'var(--text-muted)' }}>
                     {inquiry.customer_email && (
                       <div className="flex items-center">
                         <Mail className="h-4 w-4 mr-1" />
@@ -291,10 +273,10 @@ const Inquiries: React.FC = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col gap-3">
                     <button
                       onClick={() => setSelectedInquiry(inquiry)}
-                      className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center touch-target"
+                      className="mobile-button bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center"
                     >
                       <Send className="h-4 w-4 mr-2" />
                       Reply
@@ -304,7 +286,7 @@ const Inquiries: React.FC = () => {
                       <select
                         value={inquiry.status}
                         onChange={(e) => updateInquiryStatus(inquiry.id, e.target.value as any)}
-                        className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+                        className="mobile-input flex-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                       >
                         <option value="new">New</option>
                         <option value="replied">Replied</option>
@@ -319,10 +301,10 @@ const Inquiries: React.FC = () => {
         ) : (
           <div className="text-center py-12">
             <MessageSquare className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
               {searchTerm || filter !== 'all' ? 'No inquiries found' : 'No inquiries yet'}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p style={{ color: 'var(--text-muted)' }}>
               {searchTerm || filter !== 'all' 
                 ? 'Try adjusting your search or filter'
                 : 'Customer inquiries will appear here when they contact you'
@@ -338,10 +320,10 @@ const Inquiries: React.FC = () => {
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
+            className="mobile-card p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                 Reply to {selectedInquiry.customer_name}
               </h3>
               <button
@@ -353,8 +335,8 @@ const Inquiries: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 mb-4">
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+              <div className="p-3 rounded-lg mb-4" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                   <strong>Original message:</strong> {selectedInquiry.message}
                 </p>
               </div>
@@ -364,21 +346,21 @@ const Inquiries: React.FC = () => {
                 onChange={(e) => setReplyMessage(e.target.value)}
                 placeholder="Type your reply here..."
                 rows={4}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+                className="mobile-input w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
               />
             </div>
 
             <div className="flex space-x-3">
               <button
                 onClick={() => setSelectedInquiry(null)}
-                className="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors touch-target"
+                className="mobile-button flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={() => sendReply(selectedInquiry)}
                 disabled={sending || !replyMessage.trim()}
-                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center touch-target"
+                className="mobile-button flex-1 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
               >
                 {sending ? (
                   <>
