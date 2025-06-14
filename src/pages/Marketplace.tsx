@@ -960,7 +960,7 @@ const Marketplace: React.FC = () => {
                         >
                           {/* Image with badges */}
                           {item.images.length > 0 && (
-                            <div className="relative aspect-square overflow-hidden">
+                            <div className="relative h-40 overflow-hidden">
                               <img
                                 src={item.images[0]}
                                 alt={item.name}
