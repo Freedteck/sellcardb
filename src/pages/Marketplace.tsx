@@ -568,7 +568,7 @@ const Marketplace: React.FC = () => {
                         className="mobile-card overflow-hidden hover:shadow-lg transition-all"
                       >
                         {product.images.length > 0 && (
-                          <div className="h-40 overflow-hidden">
+                          <div className="h-60 overflow-hidden">
                             <img
                               src={product.images[0]}
                               alt={product.name}
