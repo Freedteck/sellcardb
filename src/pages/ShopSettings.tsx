@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, Store, User, Lock, Bell, BarChart3, Upload, Save, ArrowLeft, Eye, Download, Calendar, MapPin, Phone, Mail, Globe, Instagram } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Settings, Store, User, Lock, Bell, BarChart3, Upload, Save, ArrowLeft, Eye, Download, Calendar, MapPin, Phone, Mail, Globe, Instagram, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase, Seller } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import Header from '../components/Header';
 import ImageUpload from '../components/ImageUpload';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ThemeToggle from '../components/ThemeToggle';
 import toast from 'react-hot-toast';
 
 const ShopSettings: React.FC = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+  const { theme } = useTheme();
+  const navigate = useNavigate();
   const [seller, setSeller] = useState<Seller | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -174,6 +178,18 @@ const ShopSettings: React.FC = () => {
     }
   };
 
+  const handleSignOut = async () => {
+    if (confirm('Are you sure you want to sign out?')) {
+      try {
+        await signOut();
+        navigate('/');
+      } catch (error) {
+        console.error('Error signing out:', error);
+        toast.error('Failed to sign out');
+      }
+    }
+  };
+
   const exportData = async (format: 'csv' | 'json') => {
     try {
       const [productsResult, servicesResult] = await Promise.all([
@@ -229,7 +245,7 @@ const ShopSettings: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen pb-20">
         <Header />
         <div className="flex items-center justify-center py-20">
           <LoadingSpinner size="lg" />
@@ -239,13 +255,13 @@ const ShopSettings: React.FC = () => {
   }
 
   const tabs = [
-    { id: 'shop', label: 'Shop Information', icon: Store },
-    { id: 'account', label: 'Account Settings', icon: User },
-    { id: 'stats', label: 'Statistics & Export', icon: BarChart3 },
+    { id: 'shop', label: 'Shop Info', icon: Store },
+    { id: 'account', label: 'Account', icon: User },
+    { id: 'stats', label: 'Stats', icon: BarChart3 },
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-20">
       <Header />
       
       <motion.div
@@ -271,22 +287,26 @@ const ShopSettings: React.FC = () => {
           </p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex space-x-1 mb-8 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-3 rounded-lg font-medium transition-all ${
-                activeTab === tab.id
-                  ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm'
-                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-              }`}
-            >
-              <tab.icon size={18} />
-              <span>{tab.label}</span>
-            </button>
-          ))}
+        {/* Mobile Tabs */}
+        <div className="mb-6">
+          <div className="flex overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
+            <div className="flex space-x-2 min-w-max">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`mobile-button flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? 'bg-blue-600 text-white shadow-lg'
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                  }`}
+                >
+                  <tab.icon size={16} />
+                  <span className="text-sm">{tab.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Tab Content */}
@@ -492,10 +512,20 @@ const ShopSettings: React.FC = () => {
             {/* Profile Information */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Profile Information
+                Account Settings
               </h2>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
+                {/* Theme Toggle */}
+                <div className="flex items-center justify-between py-3 border-b border-gray-200 dark:border-gray-700">
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">Theme</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Choose your preferred theme</p>
+                  </div>
+                  <ThemeToggle />
+                </div>
+
+                {/* Profile Info */}
                 <div className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700">
                   <span className="text-gray-600 dark:text-gray-300">Email:</span>
                   <span className="font-medium text-gray-900 dark:text-white">{user?.email}</span>
@@ -506,7 +536,7 @@ const ShopSettings: React.FC = () => {
                     {seller && new Date(seller.created_at).toLocaleDateString()}
                   </span>
                 </div>
-                <div className="flex justify-between items-center py-3">
+                <div className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700">
                   <span className="text-gray-600 dark:text-gray-300">Verification status:</span>
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                     seller?.is_verified 
@@ -515,6 +545,17 @@ const ShopSettings: React.FC = () => {
                   }`}>
                     {seller?.is_verified ? 'Verified' : 'Pending'}
                   </span>
+                </div>
+
+                {/* Sign Out Button */}
+                <div className="pt-6">
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full bg-red-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center"
+                  >
+                    <LogOut size={20} className="mr-2" />
+                    Sign Out
+                  </button>
                 </div>
               </div>
             </div>

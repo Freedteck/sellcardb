@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -37,6 +37,8 @@ import EditProfile from './pages/EditProfile';
 import NotFound from './pages/NotFound';
 
 function App() {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
   return (
     <ThemeProvider>
       <AuthProvider>
@@ -44,10 +46,15 @@ function App() {
           <Router>
             <div className="min-h-screen bg-pattern-subtle" style={{ backgroundColor: 'var(--bg-primary)' }}>
               {/* Desktop Sidebar */}
-              <DesktopSidebar />
+              <DesktopSidebar 
+                isCollapsed={sidebarCollapsed}
+                onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+              />
               
               {/* Main Content */}
-              <div className="lg:pl-64">
+              <div className={`transition-all duration-300 ${
+                sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'
+              }`}>
                 <Routes>
                   {/* Public routes */}
                   <Route path="/" element={<LandingPage />} />

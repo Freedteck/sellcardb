@@ -148,12 +148,6 @@
     border-color: var(--accent-blue);
   }
 
-  /* Touch targets */
-  .touch-target {
-    min-height: 48px;
-    min-width: 48px;
-  }
-
   /* Text utilities */
   .text-primary {
     color: var(--text-primary);
