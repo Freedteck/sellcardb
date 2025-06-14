@@ -58,9 +58,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
 
         {/* Right side */}
         <div className="flex items-center">
-          {rightAction || (
-            <div className="w-10 h-10 none" /> // Placeholder for alignment
-          )}
+          {rightAction}
         </div>
       </div>
     </motion.header>
