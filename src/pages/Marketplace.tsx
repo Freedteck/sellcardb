@@ -568,7 +568,7 @@ const Marketplace: React.FC = () => {
                         className="mobile-card overflow-hidden hover:shadow-lg transition-all"
                       >
                         {product.images.length > 0 && (
-                          <div className="aspect-square overflow-hidden">
+                          <div className="h-50 aspect-square overflow-hidden">
                             <img
                               src={product.images[0]}
                               alt={product.name}
@@ -593,7 +593,7 @@ const Marketplace: React.FC = () => {
                               </span>
                               <Link
                                 to={`/product/${product.id}`}
-                                className="mobile-button bg-blue-600 text-white px-5 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
+                                className="mobile-button bg-blue-600 text-white px-5 py-1 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
                               >
                                 View
                               </Link>
