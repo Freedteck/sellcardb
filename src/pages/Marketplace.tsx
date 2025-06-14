@@ -662,7 +662,7 @@ const Marketplace: React.FC = () => {
                               
                               <Link
                                 to={`/service/${service.id}`}
-                                className="mobile-button bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition-colors text-center text-xs"
+                                className="mobile-button bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition-colors text-center text-xs"
                               >
                                 View
                               </Link>
