@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { supabase, Product, Service, Seller } from "../lib/supabase";
 import MobileHeader from "../components/MobileHeader";
 import PullToRefresh from "../components/PullToRefresh";
+import FloatingActionButton from '../components/FloatingActionButton';
 import LoadingSpinner from "../components/LoadingSpinner";
 
 type MarketplaceItem = (Product | Service) & {
@@ -1093,6 +1094,8 @@ const Marketplace: React.FC = () => {
           </AnimatePresence>
         </motion.div>
       </PullToRefresh>
+       {/* Floating Action Button */}
+      <FloatingActionButton />
     </div>
   );
 };
