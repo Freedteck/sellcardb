@@ -16,12 +16,12 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Only show on relevant pages
-  // const showOnPages = ['/dashboard', '/marketplace', '/'];
-  // const shouldShow = showOnPages.some(page => 
-  //   location.pathname === page || location.pathname.startsWith('/dashboard')
-  // );
+  const showOnPages = ['/dashboard', '/marketplace', '/'];
+  const shouldShow = showOnPages.some(page => 
+    location.pathname === page || location.pathname.startsWith('/dashboard')
+  );
 
-  // if (!shouldShow) return null;
+  if (!shouldShow) return null;
 
   const fabOptions = [
     {
