@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 bg-pattern-subtle" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <MobileHeader title="SellCard" transparent />
       
       {/* Hero Section */}
@@ -334,7 +334,7 @@ const LandingPage: React.FC = () => {
       </motion.section>
 
       {/* Floating Action Button */}
-      <FloatingActionButton action="create-profile" />
+      <FloatingActionButton />
     </div>
   );
 };

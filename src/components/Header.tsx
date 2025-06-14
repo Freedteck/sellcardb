@@ -23,11 +23,17 @@ const Header: React.FC = () => {
     setShowMobileMenu(false);
   };
 
+  // Hide header on mobile for app-like experience
+  const hiddenOnMobile = ['/dashboard', '/marketplace', '/'].includes(location.pathname) || 
+    location.pathname.startsWith('/dashboard');
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50"
+      className={`bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 ${
+        hiddenOnMobile ? 'hidden sm:block' : ''
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16">

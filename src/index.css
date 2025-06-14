@@ -29,8 +29,8 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     
-    /* Background patterns */
-    --pattern-dots: radial-gradient(circle, #e5e5e5 1px, transparent 1px);
+    /* Background patterns - VERY SUBTLE */
+    --pattern-dots: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
     --pattern-size: 20px 20px;
   }
 
@@ -60,8 +60,8 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
     
-    /* Dark background patterns */
-    --pattern-dots: radial-gradient(circle, #2a2a2a 1px, transparent 1px);
+    /* Dark background patterns - VERY SUBTLE */
+    --pattern-dots: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   }
 
   html {
@@ -96,7 +96,7 @@
 }
 
 @layer utilities {
-  /* Background patterns */
+  /* Background patterns - EXTREMELY SUBTLE */
   .bg-pattern-dots {
     background-image: var(--pattern-dots);
     background-size: var(--pattern-size);
@@ -105,7 +105,6 @@
   .bg-pattern-subtle {
     background-image: var(--pattern-dots);
     background-size: var(--pattern-size);
-    opacity: 0.3;
   }
 
   /* Glass morphism */
@@ -131,16 +130,17 @@
 
   .mobile-button {
     @apply rounded-xl font-medium transition-all duration-200 active:scale-95;
-    min-height: 44px;
+    min-height: 48px;
     box-shadow: var(--shadow-sm);
   }
 
   .mobile-input {
     @apply rounded-xl border transition-all duration-200;
-    min-height: 44px;
+    min-height: 48px;
     background-color: var(--bg-secondary);
     border-color: var(--border-color);
     color: var(--text-primary);
+    font-size: 16px; /* Prevents zoom on iOS */
   }
 
   .mobile-input:focus {
@@ -150,8 +150,8 @@
 
   /* Touch targets */
   .touch-target {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 48px;
+    min-width: 48px;
   }
 
   /* Text utilities */
@@ -371,12 +371,12 @@
 
   /* Optimize for touch */
   button, .btn, a {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 48px;
+    min-width: 48px;
   }
 
   input, textarea, select {
-    min-height: 44px;
+    min-height: 48px;
     font-size: 16px; /* Prevents zoom on iOS */
   }
 }
