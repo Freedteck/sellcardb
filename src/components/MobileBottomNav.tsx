@@ -43,14 +43,14 @@ const MobileBottomNav: React.FC = () => {
       path: '/marketplace',
       activeColor: 'text-green-500'
     },
-    {
-      id: 'add',
-      label: 'Add',
-      icon: Plus,
-      path: user ? '/dashboard/products/new' : '/signup',
-      activeColor: 'text-purple-500',
-      isSpecial: true
-    },
+    // {
+    //   id: 'add',
+    //   label: 'Add',
+    //   icon: Plus,
+    //   path: user ? '/dashboard/products/new' : '/signup',
+    //   activeColor: 'text-purple-500',
+    //   isSpecial: true
+    // },
     {
       id: 'messages',
       label: 'Messages',
