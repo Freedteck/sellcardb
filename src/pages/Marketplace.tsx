@@ -958,7 +958,7 @@ const Marketplace: React.FC = () => {
                           to={`/${item.type}/${item.id}`}
                           className="block h-full"
                         >
-                          {/* Image container with controlled height */}
+                          {/* Image container */}
                           <div className="relative pt-[100%] overflow-hidden">
                             <img
                               src={item.images[0]}
@@ -990,7 +990,7 @@ const Marketplace: React.FC = () => {
                           </div>
 
                           {/* Content area */}
-                          <div className="p-2">
+                          <div className="p-2 flex flex-col">
                             <h3
                               className="font-semibold line-clamp-2 text-sm mb-1"
                               style={{ color: "var(--text-primary)" }}
@@ -998,23 +998,26 @@ const Marketplace: React.FC = () => {
                               {item.name}
                             </h3>
 
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-baseline gap-1">
+                            {/* Location - now permanently visible above price */}
+                            {item.seller?.location && (
+                              <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-1">
+                                <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
+                                <span className="line-clamp-1">
+                                  {item.seller.location}
+                                </span>
+                              </div>
+                            )}
+
+                            {/* Price and rating row */}
+                            <div className="flex justify-between items-center mt-auto">
+                              <div>
                                 {item.price ? (
                                   <span className="text-base font-bold text-blue-600 dark:text-blue-400">
                                     ${item.price}
                                   </span>
                                 ) : (
                                   <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                                    Custom
-                                  </span>
-                                )}
-                                {item.seller?.location && (
-                                  <span className="hidden xs:flex items-center text-xs text-gray-500 dark:text-gray-400">
-                                    <MapPin className="h-3 w-3 mr-0.5 flex-shrink-0" />
-                                    <span className="truncate max-w-[60px]">
-                                      {item.seller.location.split(",")[0]}
-                                    </span>
+                                    Custom Pricing
                                   </span>
                                 )}
                               </div>
