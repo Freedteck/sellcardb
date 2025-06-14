@@ -88,7 +88,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
                   {/* Label */}
                   <div className="bg-white dark:bg-gray-800 px-3 py-2 rounded-lg shadow-lg mr-3 border border-gray-200 dark:border-gray-700">
                     <span className="text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                      {option.label}
+                      {option.label} jjj
                     </span>
                   </div>
                   
