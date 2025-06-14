@@ -558,54 +558,50 @@ const Marketplace: React.FC = () => {
                     </button>
                   </div>
                   
-                  <div className="overflow-x-auto">
-  <div className="flex space-x-3 pb-4">
-    {latestProducts.map((product, index) => (
-      <motion.div
-        key={product.id}
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: index * 0.1 }}
-        className="flex-shrink-0 w-56 mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg"
-      >
-        <Link to={`/product/${product.id}`} className="block h-full">
-          {product.images.length > 0 && (
-            <div className="h-40 overflow-hidden">
-              <img
-                src={product.images[0]}
-                alt={product.name}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+  {latestProducts.map((product, index) => (
+    <motion.div
+      key={product.id}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
+      className="overflow-hidden rounded-lg hover:shadow-md transition-all border border-gray-100 dark:border-gray-700"
+    >
+      <Link to={`/product/${product.id}`} className="block h-full">
+        {/* Product Image */}
+        <div className="aspect-square overflow-hidden">
+          <img
+            src={product.images[0] || '/placeholder-product.jpg'}
+            alt={product.name}
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+
+        {/* Product Info */}
+        <div className="p-3">
+          {/* Category badge at the top */}
+          {product.category && (
+            <span className="inline-block text-xs text-gray-500 dark:text-gray-400 mb-1">
+              {product.category}
+            </span>
           )}
-          
-          <div className="p-3">
-            <div className="flex items-start justify-between mb-1">
-              <h3 className="font-semibold line-clamp-1 text-sm" style={{ color: 'var(--text-primary)' }}>
-                {product.name}
-              </h3>
-            </div>
-            
-            {product.category && (
-              <span className="inline-block bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs px-2 py-1 rounded mb-2">
-                {product.category}
-              </span>
-            )}
-            
-            <p className="text-xs mb-2 line-clamp-2" style={{ color: 'var(--text-muted)' }}>
-              {product.description}
-            </p>
-            
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                ${product.price}
-              </span>
-            </div>
+
+          {/* Product name */}
+          <h3 className="font-medium text-sm line-clamp-2 mb-1" style={{ color: 'var(--text-primary)' }}>
+            {product.name}
+          </h3>
+
+          {/* Price - positioned at bottom but not floating alone */}
+          <div className="mt-2 flex items-center justify-between">
+            <span className="font-bold text-blue-600 dark:text-blue-400">
+              ${product.price}
+            </span>
+            {/* Optional: Add favorite icon or other action here */}
           </div>
-        </Link>
-      </motion.div>
-    ))}
-  </div>
+        </div>
+      </Link>
+    </motion.div>
+  ))}
 </div>
                 </section>
 
