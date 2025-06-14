@@ -108,7 +108,7 @@
   }
 
   .btn-flex {
-    flex-basis: 0%;
+    flex; 1 1 0% !important;
   }
 
   /* Glass morphism */
