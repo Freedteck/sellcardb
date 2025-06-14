@@ -18,7 +18,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   // Only show on relevant pages
   const showOnPages = ['/dashboard', '/marketplace', '/'];
   const shouldShow = showOnPages.some(page => 
-    location.pathname === page || location.pathname.startsWith('/dashboard')
+    location.pathname === page || location.pathname.startsWith(page)
   );
 
   if (!shouldShow) return null;
