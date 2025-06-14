@@ -945,66 +945,61 @@ const Marketplace: React.FC = () => {
                 </div>
 
                 {filteredItems.length > 0 ? (
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                     {filteredItems.map((item, index) => (
                       <motion.div
                         key={`${item.type}-${item.id}`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg border border-gray-100 dark:border-gray-700 relative"
+                        className="group overflow-hidden hover:shadow-lg transition-all rounded-lg border border-gray-100 dark:border-gray-700 relative"
                       >
                         <Link
                           to={`/${item.type}/${item.id}`}
                           className="block h-full"
                         >
-                          {/* Image with badges */}
-                          {item.images.length > 0 && (
-                            <div className="relative h-40 overflow-hidden">
-                              <img
-                                src={item.images[0]}
-                                alt={item.name}
-                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                              />
-                              {/* Top-left badge */}
+                          {/* Image container with controlled height */}
+                          <div className="relative pt-[100%] overflow-hidden">
+                            <img
+                              src={item.images[0]}
+                              alt={item.name}
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            {/* Badges */}
+                            <div className="absolute top-0 left-0 right-0 p-2 flex justify-between items-start">
                               {item.type === "product" && item.category && (
-                                <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+                                <span className="bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm">
                                   {item.category}
                                 </span>
                               )}
                               {item.type === "service" &&
                                 item.duration_days && (
-                                  <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center">
+                                  <span className="bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center">
                                     <Calendar className="h-3 w-3 mr-1" />
                                     {item.duration_days}d
                                   </span>
                                 )}
-                              {/* Top-right type indicator */}
-                              <div className="absolute top-2 right-2 bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
+                              <span className="bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
                                 {item.type === "product" ? (
                                   <Package className="h-4 w-4 text-blue-500" />
                                 ) : (
                                   <Users className="h-4 w-4 text-green-500" />
                                 )}
-                              </div>
+                              </span>
                             </div>
-                          )}
+                          </div>
 
                           {/* Content area */}
-                          <div className="p-3">
+                          <div className="p-2">
                             <h3
                               className="font-semibold line-clamp-2 text-sm mb-1"
                               style={{ color: "var(--text-primary)" }}
                             >
                               {item.name}
                             </h3>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
-                              {item.description}
-                            </p>
 
-                            {/* Price and location row */}
-                            <div className="flex items-center justify-between mb-1">
-                              <div className="flex items-center gap-1">
+                            <div className="flex justify-between items-center">
+                              <div className="flex items-baseline gap-1">
                                 {item.price ? (
                                   <span className="text-base font-bold text-blue-600 dark:text-blue-400">
                                     ${item.price}
@@ -1014,9 +1009,9 @@ const Marketplace: React.FC = () => {
                                     Custom
                                   </span>
                                 )}
-                                {item.seller.location && (
-                                  <span className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-                                    <MapPin className="h-3 w-3 mr-0.5" />
+                                {item.seller?.location && (
+                                  <span className="hidden xs:flex items-center text-xs text-gray-500 dark:text-gray-400">
+                                    <MapPin className="h-3 w-3 mr-0.5 flex-shrink-0" />
                                     <span className="truncate max-w-[60px]">
                                       {item.seller.location.split(",")[0]}
                                     </span>
@@ -1024,11 +1019,10 @@ const Marketplace: React.FC = () => {
                                 )}
                               </div>
 
-                              {/* Rating - moved here to save space */}
                               <div className="flex items-center">
                                 <Star className="h-3 w-3 text-yellow-400 mr-0.5" />
                                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                                  {item.seller.rating.toFixed(1)}
+                                  {item.seller?.rating?.toFixed(1) || "N/A"}
                                 </span>
                               </div>
                             </div>
