@@ -979,13 +979,13 @@ const Marketplace: React.FC = () => {
                                     Delivers in {item.duration_days} days
                                   </span>
                                 )}
-                              <span className="bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
+                              {/* <span className="bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
                                 {item.type === "product" ? (
                                   <Package className="h-4 w-4 text-blue-500" />
                                 ) : (
                                   <Users className="h-4 w-4 text-green-500" />
                                 )}
-                              </span>
+                              </span> */}
                             </div>
                           </div>
 
