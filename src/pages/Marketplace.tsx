@@ -593,7 +593,7 @@ const Marketplace: React.FC = () => {
                               </span>
                               <Link
                                 to={`/product/${product.id}`}
-                                className="mobile-button bg-blue-600 text-white px-5 py-1 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
+                                className="mobile-button bg-blue-600 text-white px-5 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
                               >
                                 View
                               </Link>
