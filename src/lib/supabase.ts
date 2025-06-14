@@ -59,6 +59,7 @@ export type Product = {
   category: string;
   images: string[];
   stock_quantity: number;
+  location?: string;
   is_available: boolean;
   view_count: number;
   created_at: string;
@@ -75,6 +76,7 @@ export type Service = {
   category: string;
   images: string[];
   duration_days?: number;
+  location?: string;
   is_available: boolean;
   availability_schedule: Record<string, any>;
   view_count: number;

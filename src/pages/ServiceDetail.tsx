@@ -258,6 +258,14 @@ const ServiceDetail: React.FC = () => {
                   </div>
                 )}
               </div>
+
+              {/* Location */}
+              {(service.location || service.seller.location) && (
+                <div className="flex items-center text-gray-600 dark:text-gray-300 mb-4">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  {service.location || service.seller.location}
+                </div>
+              )}
               
               {service.price ? (
                 <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-4">

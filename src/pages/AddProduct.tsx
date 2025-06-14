@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, DollarSign, Tag, FileText, Hash, ArrowLeft } from 'lucide-react';
+import { Package, DollarSign, Tag, FileText, Hash, ArrowLeft, MapPin } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase, Seller } from '../lib/supabase';
 import Header from '../components/Header';
@@ -21,6 +21,7 @@ const AddProduct: React.FC = () => {
     category: '',
     images: [] as string[],
     stockQuantity: '',
+    location: '',
   });
 
   const categories = [
@@ -36,6 +37,29 @@ const AddProduct: React.FC = () => {
     'Automotive',
     'Art & Crafts',
     'Other'
+  ];
+
+  const nigerianCities = [
+    'Lagos',
+    'Abuja',
+    'Kano',
+    'Ibadan',
+    'Port Harcourt',
+    'Benin City',
+    'Kaduna',
+    'Enugu',
+    'Ilorin',
+    'Aba',
+    'Jos',
+    'Warri',
+    'Calabar',
+    'Akure',
+    'Abeokuta',
+    'Osogbo',
+    'Uyo',
+    'Sokoto',
+    'Maiduguri',
+    'Zaria'
   ];
 
   useEffect(() => {
@@ -54,6 +78,12 @@ const AddProduct: React.FC = () => {
 
       if (error) throw error;
       setSeller(data);
+      
+      // Pre-fill location from seller profile
+      setFormData(prev => ({
+        ...prev,
+        location: data.location || ''
+      }));
     } catch (error) {
       console.error('Error fetching seller:', error);
       navigate('/dashboard');
@@ -107,6 +137,7 @@ const AddProduct: React.FC = () => {
             category: formData.category,
             images: formData.images,
             stock_quantity: parseInt(formData.stockQuantity) || 0,
+            location: formData.location || seller.location || null,
             is_available: true,
           }
         ])
@@ -190,8 +221,8 @@ const AddProduct: React.FC = () => {
             />
           </div>
 
-          {/* Price and Stock */}
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Price, Stock, and Location */}
+          <div className="grid md:grid-cols-3 gap-6">
             <div>
               <label htmlFor="price" className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 <DollarSign size={16} className="mr-2" />
@@ -226,6 +257,30 @@ const AddProduct: React.FC = () => {
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 placeholder="0"
               />
+            </div>
+
+            <div>
+              <label htmlFor="location" className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <MapPin size={16} className="mr-2" />
+                Location
+              </label>
+              <select
+                id="location"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                <option value="">Select location</option>
+                {nigerianCities.map(city => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                {seller?.location ? `Default: ${seller.location}` : 'Will use your shop location if not specified'}
+              </p>
             </div>
           </div>
 

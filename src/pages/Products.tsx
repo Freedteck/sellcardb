@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Package, Plus, Edit, Trash2, Eye, Search } from 'lucide-react';
+import { Package, Plus, Edit, Trash2, Eye, Search, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase, Product, Seller } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
@@ -90,7 +90,8 @@ const Products: React.FC = () => {
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.category.toLowerCase().includes(searchTerm.toLowerCase())
+    product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (product.location && product.location.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   if (loading) {
@@ -184,6 +185,14 @@ const Products: React.FC = () => {
                   <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
                     {product.description}
                   </p>
+                  
+                  {/* Location */}
+                  {product.location && (
+                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      {product.location}
+                    </div>
+                  )}
                   
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">

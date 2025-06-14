@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Plus, Edit, Trash2, Eye, Search, Calendar } from 'lucide-react';
+import { Users, Plus, Edit, Trash2, Eye, Search, Calendar, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase, Service, Seller } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
@@ -90,7 +90,8 @@ const Services: React.FC = () => {
 
   const filteredServices = services.filter(service =>
     service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    service.category.toLowerCase().includes(searchTerm.toLowerCase())
+    service.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (service.location && service.location.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   if (loading) {
@@ -185,10 +186,24 @@ const Services: React.FC = () => {
                     {service.description}
                   </p>
                   
+                  {/* Location */}
+                  {service.location && (
+                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      {service.location}
+                    </div>
+                  )}
+                  
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-green-600 dark:text-green-400">
-                      ${service.price}
-                    </span>
+                    {service.price ? (
+                      <span className="text-2xl font-bold text-green-600 dark:text-green-400">
+                        ${service.price}
+                      </span>
+                    ) : (
+                      <span className="text-lg font-semibold text-green-600 dark:text-green-400">
+                        Custom Pricing
+                      </span>
+                    )}
                     {service.duration_days && (
                       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                         <Calendar className="h-4 w-4 mr-1" />
