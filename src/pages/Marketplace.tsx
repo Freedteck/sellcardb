@@ -705,6 +705,15 @@ const Marketplace: React.FC = () => {
                                   {product.description}
                                 </p>
                               </div>
+                              {/* Location - now permanently visible above price */}
+                            {product.seller?.location && (
+                              <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-1">
+                                <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
+                                <span className="line-clamp-1">
+                                  {item.seller.location}
+                                </span>
+                              </div>
+                            )}
 
                               <div className="mt-auto">
                                 <div className="flex items-center justify-between">
@@ -786,7 +795,7 @@ const Marketplace: React.FC = () => {
                                 {service.description}
                               </p>
 {/* Location - now permanently visible above price */}
-                            {item.seller?.location && (
+                            {service.seller?.location && (
                               <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-1">
                                 <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
                                 <span className="line-clamp-1">
