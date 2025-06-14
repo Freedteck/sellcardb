@@ -706,11 +706,11 @@ const Marketplace: React.FC = () => {
                                 </p>
                               </div>
                               {/* Location - now permanently visible above price */}
-                            {product.seller?.location && (
+                            {product?.location && (
                               <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-1">
                                 <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
                                 <span className="line-clamp-1">
-                                  {product.seller.location}
+                                  {product.location}
                                 </span>
                               </div>
                             )}
@@ -801,11 +801,11 @@ const Marketplace: React.FC = () => {
                                 {service.description}
                               </p>
 {/* Location - now permanently visible above price */}
-                            {service.seller?.location && (
+                            {service?.location && (
                               <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-1">
                                 <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
                                 <span className="line-clamp-1">
-                                  {service.seller.location}
+                                  {service.location}
                                 </span>
                               </div>
                             )}
@@ -1037,11 +1037,11 @@ const Marketplace: React.FC = () => {
                             </p>
 
                             {/* Location - now permanently visible above price */}
-                            {item.seller?.location && (
+                            {item?.location && (
                               <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-1">
                                 <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
                                 <span className="line-clamp-1">
-                                  {item.seller.location}
+                                  {item.location}
                                 </span>
                               </div>
                             )}
