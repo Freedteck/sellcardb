@@ -54,7 +54,7 @@ function App() {
               />
               
               {/* Main Content */}
-              <div className={`transition-all duration-300 ${
+              <div className={`transition-all duration-300 pb-20 ${
                 sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'
               }`}>
                 <Routes>
