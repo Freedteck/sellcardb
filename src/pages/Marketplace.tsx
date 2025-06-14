@@ -566,43 +566,43 @@ const Marketplace: React.FC = () => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: index * 0.1 }}
-        className="flex-shrink-0 w-60 mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg border border-gray-100 dark:border-gray-700"
+        className="flex-shrink-0 w-60 mobile-card overflow-hidden hover:shadow-lg transition-all rounded-lg relative border border-gray-100 dark:border-gray-700"
       >
-        <Link to={`/product/${product.id}`} className="block h-full flex flex-col">
-          {/* Product Image */}
-          <div className="relative h-40 aspect-square overflow-hidden">
-            <img
-              src={product.images[0] || '/placeholder-product.jpg'}
-              alt={product.name}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
+        <Link to={`/product/${product.id}`} className="block h-full group">
+          {/* Image container with category badge */}
+          <div className="relative h-40 overflow-hidden">
+            {product.images.length > 0 && (
+              <img
+                src={product.images[0]}
+                alt={product.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            )}
             {product.category && (
-              <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-xs px-2 py-1 rounded">
+              <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm">
                 {product.category}
               </span>
             )}
           </div>
-
-          {/* Product Info */}
-          <div className="p-3 flex-grow flex flex-col">
-            <h3 className="font-medium text-sm line-clamp-2 mb-1" style={{ color: 'var(--text-primary)' }}>
-              {product.name}
-            </h3>
+          
+          {/* Product info */}
+          <div className="p-3 flex flex-col h-[calc(100%-10rem)]">
+            <div className="flex-1">
+              <h3 className="font-semibold line-clamp-2 text-sm mb-1" style={{ color: 'var(--text-primary)' }}>
+                {product.name}
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+                {product.description}
+              </p>
+            </div>
             
-            <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3 flex-grow">
-              {product.description}
-            </p>
-            
-            <div className="flex items-center justify-between mt-auto">
-              <span className="font-bold text-base text-blue-600 dark:text-blue-400">
-                ${product.price.toFixed(2)}
-              </span>
-              {product.rating && (
-                <div className="flex items-center bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs">
-                  <Star className="w-3 h-3 text-yellow-400 mr-1" />
-                  {product.rating.toFixed(1)}
-                </div>
-              )}
+            <div className="mt-auto">
+              <div className="flex items-center justify-between">
+                <span className="text-base font-bold text-blue-600 dark:text-blue-400">
+                  ${product.price}
+                </span>
+                {/* Optional: Add favorite icon or other actions */}
+              </div>
             </div>
           </div>
         </Link>
