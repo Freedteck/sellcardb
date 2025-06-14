@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Store, Package, Users, Eye, TrendingUp, Plus, Settings, MessageSquare, CreditCard, QrCode } from 'lucide-react';
+import { Store, Package, Users, Eye, TrendingUp, Plus, Settings, MessageSquare, CreditCard, QrCode, Sun, Moon } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { supabase, Seller, Product, Service, Inquiry } from '../lib/supabase';
 import MobileHeader from '../components/MobileHeader';
 import FloatingActionButton from '../components/FloatingActionButton';
@@ -11,6 +12,7 @@ import toast from 'react-hot-toast';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [seller, setSeller] = useState<Seller | null>(null);
   const [stats, setStats] = useState({
     totalProducts: 0,
@@ -152,7 +154,17 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen pb-20">
-      <MobileHeader title="Dashboard" />
+      <MobileHeader 
+        title="Dashboard" 
+        rightAction={
+          <button
+            onClick={toggleTheme}
+            className="mobile-button p-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          >
+            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+          </button>
+        }
+      />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}

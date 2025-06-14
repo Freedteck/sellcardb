@@ -3,8 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Star, MapPin, MessageCircle, Phone, Mail, Globe, Instagram, Eye, Store, Package, Users, Calendar, TrendingUp, Award, Share2 } from 'lucide-react';
 import { supabase, Seller, Product, Service } from '../lib/supabase';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import MobileHeader from '../components/MobileHeader';
 import LoadingSpinner from '../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -106,8 +105,8 @@ const ShopDetail: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen">
-        <Header />
+      <div className="min-h-screen pb-20">
+        <MobileHeader title="Shop" showBack />
         <div className="flex items-center justify-center py-20">
           <LoadingSpinner size="lg" />
         </div>
@@ -117,12 +116,16 @@ const ShopDetail: React.FC = () => {
 
   if (!seller) {
     return (
-      <div className="min-h-screen">
-        <Header />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+      <div className="min-h-screen pb-20">
+        <MobileHeader title="Shop Not Found" showBack />
+        <div className="px-4 py-16 text-center">
           <Store className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Shop Not Found</h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">The shop you're looking for doesn't exist or is no longer active.</p>
+          <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
+            Shop Not Found
+          </h1>
+          <p className="mb-4" style={{ color: 'var(--text-muted)' }}>
+            The shop you're looking for doesn't exist or is no longer active.
+          </p>
           <Link to="/marketplace" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline">
             Browse other shops
           </Link>
@@ -138,55 +141,49 @@ const ShopDetail: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen">
-      <Header />
+    <div className="min-h-screen pb-20">
+      <MobileHeader 
+        title={seller.business_name} 
+        showBack 
+        rightAction={
+          <button
+            onClick={shareShop}
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors touch-target"
+          >
+            <Share2 size={20} className="text-gray-700 dark:text-gray-300" />
+          </button>
+        }
+      />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8"
+        className="px-4 py-6"
       >
-        <div className="mb-4 sm:mb-6">
-          <Link
-            to="/marketplace"
-            className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
-          >
-            <ArrowLeft size={20} className="mr-2" />
-            Back to Marketplace
-          </Link>
-        </div>
-
         {/* Shop Banner */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden mb-6 sm:mb-8">
+        <div className="mobile-card overflow-hidden mb-6">
           {/* Cover Image */}
           {seller.cover_image_url && (
-            <div className="h-48 sm:h-64 md:h-80 overflow-hidden relative">
+            <div className="h-48 overflow-hidden relative">
               <img
                 src={seller.cover_image_url}
                 alt={seller.business_name}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-              <button
-                onClick={shareShop}
-                className="absolute top-4 right-4 bg-white bg-opacity-90 text-gray-700 p-2 rounded-full hover:bg-opacity-100 transition-all touch-target"
-                title="Share shop"
-              >
-                <Share2 size={20} />
-              </button>
             </div>
           )}
           
           {/* Shop Info */}
-          <div className="p-4 sm:p-6 md:p-8">
-            <div className="flex flex-col space-y-4 sm:space-y-6">
+          <div className="p-4">
+            <div className="flex flex-col space-y-4">
               <div>
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
+                <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
-                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    <h1 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
                       {seller.business_name}
                     </h1>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-sm text-gray-500 dark:text-gray-400 space-y-1 sm:space-y-0">
+                    <div className="flex flex-col space-y-1 text-sm" style={{ color: 'var(--text-muted)' }}>
                       {seller.location && (
                         <div className="flex items-center">
                           <MapPin className="h-4 w-4 mr-1" />
@@ -200,64 +197,40 @@ const ShopDetail: React.FC = () => {
                     </div>
                   </div>
                   {seller.is_verified && (
-                    <div className="flex items-center bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full mt-2 sm:mt-0 self-start">
-                      <Award className="h-4 w-4 mr-1" />
-                      <span className="text-sm font-medium">Verified</span>
+                    <div className="flex items-center bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
+                      <Award className="h-3 w-3 mr-1" />
+                      <span className="text-xs font-medium">Verified</span>
                     </div>
                   )}
                 </div>
                 
-                <p className="text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 leading-relaxed">
+                <p className="mb-4 leading-relaxed text-sm" style={{ color: 'var(--text-muted)' }}>
                   {seller.description}
                 </p>
                 
                 {/* Stats */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
-                  <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  <div className="text-center p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
                     <div className="flex items-center justify-center mb-1">
-                      <Star className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400 mr-1" />
-                      <span className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+                      <Star className="h-4 w-4 text-yellow-400 mr-1" />
+                      <span className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
                         {seller.rating.toFixed(1)}
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                       {seller.total_reviews} reviews
                     </p>
                   </div>
                   
-                  <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div className="text-center p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
                     <div className="flex items-center justify-center mb-1">
-                      <Package className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500 mr-1" />
-                      <span className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+                      <Package className="h-4 w-4 text-blue-500 mr-1" />
+                      <span className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
                         {totalItems}
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                       Total items
-                    </p>
-                  </div>
-                  
-                  <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div className="flex items-center justify-center mb-1">
-                      <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mr-1" />
-                      <span className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
-                        {seller.total_sales}
-                      </span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                      Sales
-                    </p>
-                  </div>
-                  
-                  <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div className="flex items-center justify-center mb-1">
-                      <Eye className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500 mr-1" />
-                      <span className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
-                        {seller.view_count}
-                      </span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                      Views
                     </p>
                   </div>
                 </div>
@@ -267,7 +240,7 @@ const ShopDetail: React.FC = () => {
               <div className="space-y-3">
                 <button
                   onClick={() => handleContactSeller('whatsapp')}
-                  className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center font-medium touch-target"
+                  className="mobile-button w-full bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center font-medium"
                 >
                   <MessageCircle className="h-5 w-5 mr-2" />
                   Contact via WhatsApp
@@ -277,22 +250,20 @@ const ShopDetail: React.FC = () => {
                   {seller.phone_number && (
                     <button
                       onClick={() => handleContactSeller('phone')}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center touch-target"
+                      className="mobile-button bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center"
                     >
                       <Phone className="h-4 w-4 mr-2" />
-                      <span className="hidden sm:inline">Call</span>
-                      <span className="sm:hidden">📞</span>
+                      Call
                     </button>
                   )}
                   
                   {seller.email && (
                     <button
                       onClick={() => handleContactSeller('email')}
-                      className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center touch-target"
+                      className="mobile-button bg-gray-600 text-white px-4 py-2 rounded-xl hover:bg-gray-700 transition-colors flex items-center justify-center"
                     >
                       <Mail className="h-4 w-4 mr-2" />
-                      <span className="hidden sm:inline">Email</span>
-                      <span className="sm:hidden">✉️</span>
+                      Email
                     </button>
                   )}
                 </div>
@@ -331,9 +302,9 @@ const ShopDetail: React.FC = () => {
         </div>
 
         {/* Mobile-First Tabs */}
-        <div className="mb-6 sm:mb-8">
-          <div className="flex overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
-            <div className="flex space-x-2 min-w-max sm:justify-center sm:w-full">
+        <div className="mb-6">
+          <div className="flex overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
+            <div className="flex space-x-2 min-w-max">
               {[
                 { id: 'products', label: `Products (${products.length})`, icon: Package },
                 { id: 'services', label: `Services (${services.length})`, icon: Users },
@@ -342,15 +313,14 @@ const ShopDetail: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex items-center space-x-2 px-4 py-3 rounded-lg font-medium transition-all whitespace-nowrap touch-target ${
+                  className={`mobile-button flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'bg-blue-600 text-white shadow-lg'
                       : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                   }`}
                 >
-                  <tab.icon size={18} />
-                  <span className="hidden sm:inline">{tab.label}</span>
-                  <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
+                  <tab.icon size={16} />
+                  <span className="text-sm">{tab.label}</span>
                 </button>
               ))}
             </div>
@@ -367,17 +337,17 @@ const ShopDetail: React.FC = () => {
               exit={{ opacity: 0, y: -20 }}
             >
               {products.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+                <div className="grid grid-cols-2 gap-3">
                   {products.map((product, index) => (
                     <motion.div
                       key={product.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all"
+                      className="mobile-card overflow-hidden hover:shadow-lg transition-all"
                     >
                       {product.images.length > 0 && (
-                        <div className="aspect-square sm:aspect-video overflow-hidden">
+                        <div className="aspect-square overflow-hidden">
                           <img
                             src={product.images[0]}
                             alt={product.name}
@@ -386,27 +356,27 @@ const ShopDetail: React.FC = () => {
                         </div>
                       )}
                       
-                      <div className="p-3 sm:p-4">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2 line-clamp-1 text-sm sm:text-base">
+                      <div className="p-3">
+                        <h3 className="font-semibold mb-1 line-clamp-1 text-sm" style={{ color: 'var(--text-primary)' }}>
                           {product.name}
                         </h3>
                         
-                        <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">
+                        <p className="text-xs mb-2 line-clamp-2" style={{ color: 'var(--text-muted)' }}>
                           {product.description}
                         </p>
                         
-                        <div className="flex items-center justify-between mb-3 sm:mb-4">
-                          <span className="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
                             ${product.price}
                           </span>
-                          <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                             Stock: {product.stock_quantity}
                           </span>
                         </div>
                         
                         <Link
                           to={`/product/${product.id}`}
-                          className="block w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center touch-target text-sm sm:text-base"
+                          className="mobile-button block w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-sm"
                         >
                           View Details
                         </Link>
@@ -417,10 +387,10 @@ const ShopDetail: React.FC = () => {
               ) : (
                 <div className="text-center py-12">
                   <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
                     No products available
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p style={{ color: 'var(--text-muted)' }}>
                     This shop hasn't added any products yet.
                   </p>
                 </div>
@@ -436,17 +406,17 @@ const ShopDetail: React.FC = () => {
               exit={{ opacity: 0, y: -20 }}
             >
               {services.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+                <div className="grid grid-cols-2 gap-3">
                   {services.map((service, index) => (
                     <motion.div
                       key={service.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all"
+                      className="mobile-card overflow-hidden hover:shadow-lg transition-all"
                     >
                       {service.images.length > 0 && (
-                        <div className="aspect-square sm:aspect-video overflow-hidden">
+                        <div className="aspect-square overflow-hidden">
                           <img
                             src={service.images[0]}
                             alt={service.name}
@@ -455,22 +425,28 @@ const ShopDetail: React.FC = () => {
                         </div>
                       )}
                       
-                      <div className="p-3 sm:p-4">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2 line-clamp-1 text-sm sm:text-base">
+                      <div className="p-3">
+                        <h3 className="font-semibold mb-1 line-clamp-1 text-sm" style={{ color: 'var(--text-primary)' }}>
                           {service.name}
                         </h3>
                         
-                        <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">
+                        <p className="text-xs mb-2 line-clamp-2" style={{ color: 'var(--text-muted)' }}>
                           {service.description}
                         </p>
                         
-                        <div className="flex items-center justify-between mb-3 sm:mb-4">
-                          <span className="text-lg sm:text-xl font-bold text-green-600 dark:text-green-400">
-                            ${service.price}
-                          </span>
+                        <div className="flex items-center justify-between mb-3">
+                          {service.price ? (
+                            <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                              ${service.price}
+                            </span>
+                          ) : (
+                            <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                              Custom Pricing
+                            </span>
+                          )}
                           {service.duration_days && (
-                            <div className="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                              <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                            <div className="flex items-center text-xs" style={{ color: 'var(--text-muted)' }}>
+                              <Calendar className="h-3 w-3 mr-1" />
                               {service.duration_days} days
                             </div>
                           )}
@@ -478,7 +454,7 @@ const ShopDetail: React.FC = () => {
                         
                         <Link
                           to={`/service/${service.id}`}
-                          className="block w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-center touch-target text-sm sm:text-base"
+                          className="mobile-button block w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-center text-sm"
                         >
                           View Details
                         </Link>
@@ -489,10 +465,10 @@ const ShopDetail: React.FC = () => {
               ) : (
                 <div className="text-center py-12">
                   <Users className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
                     No services available
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p style={{ color: 'var(--text-muted)' }}>
                     This shop hasn't added any services yet.
                   </p>
                 </div>
@@ -506,38 +482,38 @@ const ShopDetail: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 md:p-8"
+              className="mobile-card p-4"
             >
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
+              <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                 About {seller.business_name}
               </h2>
               
-              <div className="space-y-4 sm:space-y-6">
+              <div className="space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  <h3 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                     Business Description
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <p className="leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                     {seller.description}
                   </p>
                 </div>
                 
-                <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                <div className="grid gap-4">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    <h3 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                       Contact Information
                     </h3>
                     <div className="space-y-2">
                       <div className="flex items-center">
                         <MessageCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-                        <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
                           {seller.whatsapp_number}
                         </span>
                       </div>
                       {seller.phone_number && (
                         <div className="flex items-center">
                           <Phone className="h-4 w-4 text-blue-500 mr-2 flex-shrink-0" />
-                          <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+                          <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
                             {seller.phone_number}
                           </span>
                         </div>
@@ -545,7 +521,7 @@ const ShopDetail: React.FC = () => {
                       {seller.email && (
                         <div className="flex items-center">
                           <Mail className="h-4 w-4 text-gray-500 mr-2 flex-shrink-0" />
-                          <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base break-all">
+                          <span className="text-sm break-all" style={{ color: 'var(--text-muted)' }}>
                             {seller.email}
                           </span>
                         </div>
@@ -553,7 +529,7 @@ const ShopDetail: React.FC = () => {
                       {seller.location && (
                         <div className="flex items-center">
                           <MapPin className="h-4 w-4 text-red-500 mr-2 flex-shrink-0" />
-                          <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+                          <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
                             {seller.location}
                           </span>
                         </div>
@@ -562,29 +538,29 @@ const ShopDetail: React.FC = () => {
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    <h3 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                       Shop Statistics
                     </h3>
                     <div className="space-y-2">
                       <div className="flex justify-between">
-                        <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Member since:</span>
-                        <span className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{memberSince}</span>
+                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Member since:</span>
+                        <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{memberSince}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Total products:</span>
-                        <span className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{products.length}</span>
+                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Total products:</span>
+                        <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{products.length}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Total services:</span>
-                        <span className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{services.length}</span>
+                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Total services:</span>
+                        <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{services.length}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Total sales:</span>
-                        <span className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{seller.total_sales}</span>
+                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Total sales:</span>
+                        <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{seller.total_sales}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Profile views:</span>
-                        <span className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{seller.view_count}</span>
+                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Profile views:</span>
+                        <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{seller.view_count}</span>
                       </div>
                     </div>
                   </div>
@@ -594,38 +570,6 @@ const ShopDetail: React.FC = () => {
           )}
         </AnimatePresence>
       </motion.div>
-
-      {/* Sticky Contact Bar for Mobile */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 z-40">
-        <div className="flex space-x-3">
-          <button
-            onClick={() => handleContactSeller('whatsapp')}
-            className="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center font-medium touch-target"
-          >
-            <MessageCircle className="h-5 w-5 mr-2" />
-            WhatsApp
-          </button>
-          {seller?.phone_number && (
-            <button
-              onClick={() => handleContactSeller('phone')}
-              className="bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors touch-target"
-            >
-              <Phone className="h-5 w-5" />
-            </button>
-          )}
-          <button
-            onClick={shareShop}
-            className="bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors touch-target"
-          >
-            <Share2 className="h-5 w-5" />
-          </button>
-        </div>
-      </div>
-
-      {/* Add bottom padding to account for sticky contact bar on mobile */}
-      <div className="sm:hidden h-20"></div>
-
-      <Footer />
     </div>
   );
 };

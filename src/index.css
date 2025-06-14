@@ -29,7 +29,7 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     
-    /* Background patterns - VERY SUBTLE */
+    /* Background patterns - EXTREMELY SUBTLE */
     --pattern-dots: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
     --pattern-size: 20px 20px;
   }
@@ -60,8 +60,8 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
     
-    /* Dark background patterns - VERY SUBTLE */
-    --pattern-dots: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    /* Dark background patterns - EXTREMELY SUBTLE */
+    --pattern-dots: radial-gradient(circle, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   }
 
   html {
@@ -144,7 +144,7 @@
   }
 
   .mobile-input:focus {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
     border-color: var(--accent-blue);
   }
 

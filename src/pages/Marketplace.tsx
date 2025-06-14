@@ -287,18 +287,8 @@ const Marketplace: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="px-4 py-6"
         >
-          {/* Header */}
-          <div className="text-center mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-              Marketplace
-            </h1>
-            <p className="text-base sm:text-lg" style={{ color: 'var(--text-muted)' }}>
-              Discover amazing products and services
-            </p>
-          </div>
-
           {/* Mobile-First Tab Navigation */}
-          <div className="mb-6">
+          <div className="mb-4">
             <div className="flex overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4">
               <div className="flex space-x-2 min-w-max">
                 {tabs.map((tab) => (
@@ -307,14 +297,14 @@ const Marketplace: React.FC = () => {
                     onClick={() => setActiveTab(tab.id as any)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`mobile-button flex items-center space-x-2 px-4 py-3 rounded-xl font-medium transition-all whitespace-nowrap ${
+                    className={`mobile-button flex items-center space-x-2 px-3 py-2 rounded-xl font-medium transition-all whitespace-nowrap ${
                       activeTab === tab.id
                         ? 'bg-blue-600 text-white shadow-lg'
                         : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                     }`}
                   >
-                    <tab.icon size={18} />
-                    <span>{tab.label}</span>
+                    <tab.icon size={16} />
+                    <span className="text-sm">{tab.label}</span>
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       activeTab === tab.id
                         ? 'bg-blue-500 text-white'
@@ -344,13 +334,13 @@ const Marketplace: React.FC = () => {
 
           {/* Mobile Filter Button & Active Filters */}
           <div className="mb-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="mobile-button flex items-center space-x-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="mobile-button flex items-center space-x-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
-                <SlidersHorizontal size={20} />
-                <span>Filters</span>
+                <SlidersHorizontal size={18} />
+                <span className="text-sm">Filters</span>
                 {activeFilters.length > 0 && (
                   <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-xs">
                     {activeFilters.length}
@@ -370,7 +360,7 @@ const Marketplace: React.FC = () => {
 
             {/* Active Filter Chips */}
             {activeFilters.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-2 mb-3">
                 {activeFilters.map((filter, index) => (
                   <motion.div
                     key={index}
@@ -399,7 +389,7 @@ const Marketplace: React.FC = () => {
                   exit={{ opacity: 0, height: 0 }}
                   className="mobile-card p-4 space-y-4"
                 >
-                  <div className="grid grid-cols-1 gap-4">
+                  <div className="space-y-4">
                     {/* Category Filter */}
                     <div>
                       <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
@@ -477,14 +467,14 @@ const Marketplace: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="space-y-8"
+                className="space-y-6"
               >
                 {/* Featured Shops Section */}
                 <section>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <Award className="h-5 w-5 text-yellow-500" />
-                      <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>Featured Shops</h2>
+                      <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Featured Shops</h2>
                     </div>
                     <button
                       onClick={() => setActiveTab('sellers')}
@@ -495,18 +485,18 @@ const Marketplace: React.FC = () => {
                   </div>
                   
                   <div className="overflow-x-auto">
-                    <div className="flex space-x-4 pb-4">
+                    <div className="flex space-x-3 pb-4">
                       {featuredSellers.map((seller, index) => (
                         <motion.div
                           key={seller.id}
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}
-                          className="flex-shrink-0 w-72 mobile-card overflow-hidden hover:shadow-lg transition-all"
+                          className="flex-shrink-0 w-64 mobile-card overflow-hidden hover:shadow-lg transition-all"
                         >
                           <Link to={`/shop/${seller.id}`}>
                             {seller.cover_image_url && (
-                              <div className="h-24 overflow-hidden">
+                              <div className="h-20 overflow-hidden">
                                 <img
                                   src={seller.cover_image_url}
                                   alt={seller.business_name}
@@ -515,7 +505,7 @@ const Marketplace: React.FC = () => {
                               </div>
                             )}
                             
-                            <div className="p-4">
+                            <div className="p-3">
                               <div className="flex items-start justify-between mb-2">
                                 <h3 className="font-semibold line-clamp-1 text-sm" style={{ color: 'var(--text-primary)' }}>
                                   {seller.business_name}
@@ -527,7 +517,7 @@ const Marketplace: React.FC = () => {
                                 )}
                               </div>
                               
-                              <p className="text-xs mb-3 line-clamp-2" style={{ color: 'var(--text-muted)' }}>
+                              <p className="text-xs mb-2 line-clamp-2" style={{ color: 'var(--text-muted)' }}>
                                 {seller.description}
                               </p>
                               
@@ -541,7 +531,7 @@ const Marketplace: React.FC = () => {
                                 {seller.location && (
                                   <div className="flex items-center text-xs" style={{ color: 'var(--text-muted)' }}>
                                     <MapPin className="h-3 w-3 mr-1" />
-                                    <span className="truncate max-w-20">{seller.location}</span>
+                                    <span className="truncate max-w-16">{seller.location}</span>
                                   </div>
                                 )}
                               </div>
@@ -558,7 +548,7 @@ const Marketplace: React.FC = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <TrendingUp className="h-5 w-5 text-blue-500" />
-                      <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>Latest Products</h2>
+                      <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Latest Products</h2>
                     </div>
                     <button
                       onClick={() => setActiveTab('products')}
@@ -602,7 +592,7 @@ const Marketplace: React.FC = () => {
                             </span>
                             <Link
                               to={`/product/${product.id}`}
-                              className="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
+                              className="mobile-button bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
                             >
                               View
                             </Link>
@@ -618,7 +608,7 @@ const Marketplace: React.FC = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <Users className="h-5 w-5 text-green-500" />
-                      <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>Available Services</h2>
+                      <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Available Services</h2>
                     </div>
                     <button
                       onClick={() => setActiveTab('services')}
@@ -670,7 +660,7 @@ const Marketplace: React.FC = () => {
                               
                               <Link
                                 to={`/service/${service.id}`}
-                                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition-colors text-center text-xs"
+                                className="mobile-button bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition-colors text-center text-xs"
                               >
                                 View
                               </Link>
@@ -697,7 +687,7 @@ const Marketplace: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
               >
-                <div className="mb-6">
+                <div className="mb-4">
                   <p style={{ color: 'var(--text-muted)' }}>
                     {filteredSellers.length} shop{filteredSellers.length !== 1 ? 's' : ''} found
                   </p>
@@ -797,7 +787,7 @@ const Marketplace: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
               >
-                <div className="mb-6">
+                <div className="mb-4">
                   <p style={{ color: 'var(--text-muted)' }}>
                     {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''} found
                   </p>
@@ -854,7 +844,7 @@ const Marketplace: React.FC = () => {
                               )}
                               <Link
                                 to={`/${item.type}/${item.id}`}
-                                className="bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
+                                className="mobile-button bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-700 transition-colors text-center text-xs"
                               >
                                 View
                               </Link>

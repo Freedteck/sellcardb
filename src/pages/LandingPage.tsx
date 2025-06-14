@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pb-20 bg-pattern-subtle" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen pb-20">
       <MobileHeader title="SellCard" transparent />
       
       {/* Hero Section */}
