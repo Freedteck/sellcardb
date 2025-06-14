@@ -699,7 +699,7 @@ const Marketplace: React.FC = () => {
                                   className="font-semibold line-clamp-2 text-sm mb-1"
                                   style={{ color: "var(--text-primary)" }}
                                 >
-                                  {product.name}
+                                  {product.name} 
                                 </h3>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
                                   {product.description}
