@@ -350,31 +350,31 @@ const Inquiries: React.FC = () => {
               />
             </div>
 
-            <div className="flex space-x-3">
-              <button
-                onClick={() => setSelectedInquiry(null)}
-                className="mobile-button flex-grow-1 flex-shrink-0 flex-basis-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => sendReply(selectedInquiry)}
-                disabled={sending || !replyMessage.trim()}
-                className="mobile-button flex-grow-1 flex-shrink-0  flex-basis-0 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
-              >
-                {sending ? (
-                  <>
-                    <LoadingSpinner size="sm" className="mr-2" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4 mr-2" />
-                    Send Reply
-                  </>
-                )}
-              </button>
-            </div>
+<div className="flex space-x-3 w-full">
+  <button
+    onClick={() => setSelectedInquiry(null)}
+    className="mobile-button flex-1 flex-shrink-0 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors text-center"
+  >
+    Cancel
+  </button>
+  <button
+    onClick={() => sendReply(selectedInquiry)}
+    disabled={sending || !replyMessage.trim()}
+    className="mobile-button flex-1 flex-shrink-0 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+  >
+    {sending ? (
+      <>
+        <LoadingSpinner size="sm" className="mr-2" />
+        Sending...
+      </>
+    ) : (
+      <>
+        <Send className="h-4 w-4 mr-2" />
+        Send Reply
+      </>
+    )}
+  </button>
+</div>
           </motion.div>
         </div>
       )}
