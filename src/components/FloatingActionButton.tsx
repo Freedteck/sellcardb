@@ -62,7 +62,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
       </AnimatePresence>
 
       {/* FAB Container */}
-      <div className={`fixed bottom-30 right-4 z-50 ${className}`}>
+      <div className={`fixed bottom-20 right-4 z-50 ${className}`}>
         {/* Option Buttons */}
         <AnimatePresence>
           {isExpanded && (
