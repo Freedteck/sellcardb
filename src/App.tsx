@@ -5,6 +5,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import ProtectedRoute from './components/ProtectedRoute';
+import MobileBottomNav from './components/MobileBottomNav';
 
 // Pages
 import LandingPage from './pages/LandingPage';
@@ -40,7 +41,7 @@ function App() {
       <AuthProvider>
         <ErrorBoundary>
           <Router>
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 transition-colors duration-300">
+            <div className="min-h-screen bg-pattern-subtle" style={{ backgroundColor: 'var(--bg-primary)' }}>
               <Routes>
                 {/* Public routes */}
                 <Route path="/" element={<LandingPage />} />
@@ -131,16 +132,24 @@ function App() {
                 {/* 404 */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              
+              {/* Mobile Bottom Navigation */}
+              <MobileBottomNav />
+              
+              {/* Toast Notifications */}
               <Toaster 
                 position="top-center"
                 toastOptions={{
                   duration: 3000,
                   style: {
-                    background: 'var(--toast-bg)',
-                    color: 'var(--toast-color)',
-                    border: '1px solid var(--toast-border)',
+                    background: 'var(--card-bg)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '12px',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    boxShadow: 'var(--shadow-lg)',
                   },
-                  className: 'dark:bg-gray-800 dark:text-white dark:border-gray-700',
                 }}
               />
             </div>

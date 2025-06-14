@@ -4,15 +4,64 @@
 
 @layer base {
   :root {
-    --toast-bg: #363636;
-    --toast-color: #fff;
-    --toast-border: #4a4a4a;
+    /* Light theme colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #fafafa;
+    --bg-tertiary: #f5f5f5;
+    --card-bg: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #333333;
+    --text-muted: #666666;
+    --border-color: #e5e5e5;
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    --nav-border: rgba(229, 229, 229, 0.5);
+    
+    /* Accent colors */
+    --accent-blue: #3b82f6;
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-purple: #8b5cf6;
+    --accent-pink: #ec4899;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* Background patterns */
+    --pattern-dots: radial-gradient(circle, #e5e5e5 1px, transparent 1px);
+    --pattern-size: 20px 20px;
   }
 
   .dark {
-    --toast-bg: #1f2937;
-    --toast-color: #f9fafb;
-    --toast-border: #374151;
+    /* Dark theme colors */
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-tertiary: #1a1a1a;
+    --card-bg: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #e5e5e5;
+    --text-muted: #a3a3a3;
+    --border-color: #2a2a2a;
+    --nav-bg: rgba(0, 0, 0, 0.95);
+    --nav-border: rgba(42, 42, 42, 0.5);
+    
+    /* Accent colors for dark mode */
+    --accent-blue: #60a5fa;
+    --accent-green: #34d399;
+    --accent-orange: #fbbf24;
+    --accent-purple: #a78bfa;
+    --accent-pink: #f472b6;
+    
+    /* Dark shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+    
+    /* Dark background patterns */
+    --pattern-dots: radial-gradient(circle, #2a2a2a 1px, transparent 1px);
   }
 
   html {
@@ -21,12 +70,104 @@
 
   body {
     @apply transition-colors duration-300;
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
     line-height: 1.5;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  }
+
+  /* Safe area support for mobile */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-right {
+    padding-right: env(safe-area-inset-right);
   }
 }
 
 @layer utilities {
+  /* Background patterns */
+  .bg-pattern-dots {
+    background-image: var(--pattern-dots);
+    background-size: var(--pattern-size);
+  }
+
+  .bg-pattern-subtle {
+    background-image: var(--pattern-dots);
+    background-size: var(--pattern-size);
+    opacity: 0.3;
+  }
+
+  /* Glass morphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Mobile app styles */
+  .mobile-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+  }
+
+  .mobile-button {
+    @apply rounded-xl font-medium transition-all duration-200 active:scale-95;
+    min-height: 44px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mobile-input {
+    @apply rounded-xl border transition-all duration-200;
+    min-height: 44px;
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+  }
+
+  .mobile-input:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: var(--accent-blue);
+  }
+
+  /* Touch targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Text utilities */
+  .text-primary {
+    color: var(--text-primary);
+  }
+
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  /* Line clamp utilities */
   .line-clamp-1 {
     overflow: hidden;
     display: -webkit-box;
@@ -48,6 +189,7 @@
     -webkit-line-clamp: 3;
   }
 
+  /* Scrollbar utilities */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -57,102 +199,82 @@
     display: none;
   }
 
-  /* Touch-friendly minimum sizes */
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
+  /* Animation utilities */
+  .animate-bounce-gentle {
+    animation: bounce-gentle 2s infinite;
   }
 
-  /* Mobile-optimized spacing */
-  .mobile-padding {
-    @apply px-4;
+  @keyframes bounce-gentle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
   }
 
-  @screen lg {
-    .mobile-padding {
-      @apply px-6;
-    }
+  /* Haptic feedback simulation */
+  .haptic-light {
+    @apply active:scale-95 transition-transform duration-75;
+  }
+
+  .haptic-medium {
+    @apply active:scale-90 transition-transform duration-100;
+  }
+
+  .haptic-heavy {
+    @apply active:scale-85 transition-transform duration-150;
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar for webkit browsers */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  background: var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  background: var(--border-color);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
+  background: var(--text-muted);
 }
 
 /* Smooth transitions for theme changes */
 * {
-  transition-property: background-color, border-color, color, fill, stroke;
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  transition-duration: 200ms;
 }
 
 /* Mobile-first responsive typography */
 @layer base {
-  /* Mobile typography (default) */
   h1 {
-    @apply text-xl font-bold leading-tight;
+    @apply text-2xl font-bold leading-tight;
   }
   
   h2 {
-    @apply text-lg font-semibold leading-tight;
+    @apply text-xl font-semibold leading-tight;
   }
   
   h3 {
-    @apply text-base font-medium leading-tight;
+    @apply text-lg font-medium leading-tight;
   }
   
   p, span, div {
-    @apply text-sm leading-relaxed;
+    @apply text-base leading-relaxed;
   }
   
-  /* Button styling */
   button {
-    @apply text-sm font-medium;
+    @apply text-base font-medium;
   }
   
-  /* Form elements */
   input, textarea, select {
     @apply text-base;
   }
   
-  /* Tablet and up */
   @screen sm {
-    h1 {
-      @apply text-2xl;
-    }
-    
-    h2 {
-      @apply text-xl;
-    }
-    
-    h3 {
-      @apply text-lg;
-    }
-    
-    p, span, div {
-      @apply text-base;
-    }
-    
-    button {
-      @apply text-base;
-    }
-  }
-  
-  /* Desktop and up */
-  @screen lg {
     h1 {
       @apply text-3xl;
     }
@@ -167,98 +289,6 @@
   }
 }
 
-/* Mobile-first spacing system */
-@layer utilities {
-  /* Container padding */
-  .container-padding {
-    @apply px-4;
-  }
-  
-  @screen sm {
-    .container-padding {
-      @apply px-6;
-    }
-  }
-  
-  @screen lg {
-    .container-padding {
-      @apply px-8;
-    }
-  }
-  
-  /* Section spacing */
-  .section-spacing {
-    @apply py-8;
-  }
-  
-  @screen sm {
-    .section-spacing {
-      @apply py-12;
-    }
-  }
-  
-  @screen lg {
-    .section-spacing {
-      @apply py-16;
-    }
-  }
-}
-
-/* Mobile-specific optimizations */
-@media (max-width: 640px) {
-  /* Ensure text is readable without zooming */
-  body {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  /* Optimize button sizes for touch */
-  button, .btn {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0.5rem 0.75rem;
-  }
-
-  /* Improve form input sizes */
-  input, textarea, select {
-    min-height: 44px;
-    font-size: 16px; /* Prevents zoom on iOS */
-    padding: 0.75rem;
-  }
-
-  /* Optimize card layouts */
-  .card-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-
-  /* Improve spacing for mobile */
-  .mobile-spacing {
-    padding: 1rem;
-  }
-
-  /* Optimize image aspect ratios */
-  .mobile-image {
-    aspect-ratio: 1 / 1;
-  }
-}
-
-/* Tablet optimizations */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .card-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-}
-
-/* Desktop optimizations */
-@media (min-width: 1025px) {
-  .card-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-}
-
 /* Loading skeleton animations */
 @keyframes shimmer {
   0% {
@@ -270,14 +300,9 @@
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--border-color) 50%, var(--bg-tertiary) 75%);
   background-size: 200px 100%;
   animation: shimmer 1.5s infinite;
-}
-
-.dark .skeleton {
-  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
-  background-size: 200px 100%;
 }
 
 /* Pull-to-refresh indicator */
@@ -290,32 +315,18 @@
   transform: translateY(0);
 }
 
-/* Improved focus states for accessibility */
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-a:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .bg-gray-50 {
-    @apply bg-white;
+  :root {
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --border-color: #000000;
   }
   
-  .bg-gray-100 {
-    @apply bg-gray-200;
-  }
-  
-  .text-gray-600 {
-    @apply text-gray-800;
-  }
-  
-  .border-gray-200 {
-    @apply border-gray-400;
+  .dark {
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --border-color: #ffffff;
   }
 }
 
@@ -341,102 +352,41 @@ a:focus-visible {
     background: white !important;
     color: black !important;
   }
-  
-  .bg-gradient-to-r,
-  .bg-gradient-to-br {
-    background: white !important;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .mobile-spacing {
+    padding: 1rem;
+  }
+
+  .mobile-image {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Optimize for touch */
+  button, .btn, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  input, textarea, select {
+    min-height: 44px;
+    font-size: 16px; /* Prevents zoom on iOS */
   }
 }
 
-/* Dark theme color fixes */
-.dark {
-  /* Ensure proper text contrast in dark mode */
-  color-scheme: dark;
-}
-
-/* .dark .text-gray-900 {
-  @apply text-gray-100;
-} */
-
-/* .dark .text-gray-800 {
-  @apply text-gray-200;
-}
-
-.dark .text-gray-700 {
-  @apply text-gray-300;
-}
-
-.dark .text-gray-600 {
-  @apply text-gray-400;
-} */
-
-/* .dark .text-gray-500 {
-  @apply text-gray-500;
-} */
-
-/* Dark mode background fixes */
-.dark .bg-gray-50 {
-  @apply bg-gray-900;
-}
-
-.dark .bg-gray-100 {
-  @apply bg-gray-800; 
-}
-
-.dark .bg-gray-200 {
-  @apply bg-gray-700;
-}
-
-.dark .bg-gray-300 {
-  @apply bg-gray-600;
-}
-
-/* Dark mode border fixes */
-.dark .border-gray-200 {
-  @apply border-gray-700;
-}
-
-.dark .border-gray-300 {
-  @apply border-gray-600;
-}
-
-/* Ensure proper contrast for interactive elements */
-.dark button:not(.bg-blue-600):not(.bg-green-600):not(.bg-red-600):not(.bg-purple-600):not(.bg-orange-600):not(.bg-yellow-600) {
-  @apply bg-gray-700 text-gray-200 hover:bg-gray-600;
-}
-
-.dark input:not([type="submit"]):not([type="button"]),
-.dark textarea,
-.dark select {
-  @apply bg-gray-800 text-gray-200 border-gray-600;
-}
-
-.dark input:not([type="submit"]):not([type="button"]):focus,
-.dark textarea:focus,
-.dark select:focus {
-  @apply border-blue-500 ring-blue-500;
-}
-
-/* Fix placeholder text in dark mode */
-.dark input::placeholder,
-.dark textarea::placeholder {
-  @apply text-gray-500;
-}
-
-/* Ensure proper link colors in dark mode */
-.dark a:not(.bg-blue-600):not(.bg-green-600):not(.bg-red-600):not(.bg-purple-600):not(.bg-orange-600) {
-  @apply text-blue-400 hover:text-blue-300;
-}
-
-/* Fix card shadows in dark mode */
-.dark .shadow-lg {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-}
-
-.dark .shadow-xl {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-}
-
-.dark .shadow-2xl {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+/* Focus states for accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
 }

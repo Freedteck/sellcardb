@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Store, Share2, Smartphone, Zap, Search, QrCode, BarChart3, Shield, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import MobileHeader from '../components/MobileHeader';
+import FloatingActionButton from '../components/FloatingActionButton';
 
 const LandingPage: React.FC = () => {
   const { user } = useAuth();
@@ -25,16 +25,16 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <Header />
+    <div className="min-h-screen pb-20">
+      <MobileHeader title="SellCard" transparent />
       
       {/* Hero Section */}
-<motion.section
-  initial="hidden"
-  animate="visible"
-  variants={containerVariants}
-  className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 text-white overflow-hidden"
->
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 text-white overflow-hidden"
+      >
         <div className="absolute inset-0 bg-black opacity-10"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
         
@@ -63,53 +63,53 @@ const LandingPage: React.FC = () => {
           ))}
         </div>
 
-<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
-    <div className="text-center">
-<motion.h1
-  variants={itemVariants}
-  className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight"
->
-  Build Your Online <br />
-  <span className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-    Marketplace
-  </span>{' '}
-  in Minutes
-</motion.h1>
-      
-      <motion.p
-        variants={itemVariants}
-        className="text-xl sm:text-2xl mb-8 text-blue-100 px-4 max-w-2xl mx-auto"
-      >
-        Create your professional shop and connect with customers
-      </motion.p>
-      
-      <motion.div
-        variants={itemVariants}
-        className="flex flex-col sm:flex-row gap-4 justify-center"
-      >
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link
-            to={user ? "/dashboard" : "/signup"}
-            className="inline-flex items-center bg-white text-blue-600 px-8 py-3 sm:py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
-          >
-            {user ? 'Go to Dashboard' : 'Start Selling Now'}
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
-        </motion.div>
-        
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link
-            to="/marketplace"
-            className="inline-flex items-center border-2 border-white text-white px-8 py-3 sm:py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-          >
-            <Search className="mr-2 h-5 w-5" />
-            Browse Marketplace
-          </Link>
-        </motion.div>
-      </motion.div>
-    </div>
-  </div>
-</motion.section>
+        <div className="relative px-4 py-16 sm:py-20 lg:py-24">
+          <div className="text-center">
+            <motion.h1
+              variants={itemVariants}
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight"
+            >
+              Build Your Online <br />
+              <span className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                Marketplace
+              </span>{' '}
+              in Minutes
+            </motion.h1>
+            
+            <motion.p
+              variants={itemVariants}
+              className="text-lg sm:text-xl mb-8 text-blue-100 px-4 max-w-2xl mx-auto"
+            >
+              Create your professional shop and connect with customers
+            </motion.p>
+            
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row gap-4 justify-center px-4"
+            >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to={user ? "/dashboard" : "/signup"}
+                  className="mobile-button inline-flex items-center bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                >
+                  {user ? 'Go to Dashboard' : 'Start Selling Now'}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </motion.div>
+              
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to="/marketplace"
+                  className="mobile-button inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
+                >
+                  <Search className="mr-2 h-5 w-5" />
+                  Browse Marketplace
+                </Link>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Features Section */}
       <motion.section
@@ -117,19 +117,20 @@ const LandingPage: React.FC = () => {
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerVariants}
-        className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-900"
+        className="py-12 sm:py-16 lg:py-20"
+        style={{ backgroundColor: 'var(--bg-secondary)' }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <motion.div variants={itemVariants} className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
               Everything You Need to Sell Online
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-lg lg:text-xl" style={{ color: 'var(--text-muted)' }}>
               Professional tools for modern entrepreneurs
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {[
               {
                 icon: Store,
@@ -157,17 +158,19 @@ const LandingPage: React.FC = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className={`text-center p-4 sm:p-6 rounded-xl bg-gradient-to-br ${feature.color} hover:shadow-lg transition-all duration-300`}
+                className="mobile-card text-center p-6 hover:shadow-lg transition-all duration-300"
               >
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 360 }}
                   transition={{ duration: 0.5 }}
-                  className={`${feature.iconColor} text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center mx-auto mb-3 sm:mb-4`}
+                  className={`${feature.iconColor} text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}
                 >
-                  <feature.icon size={20} className="sm:w-8 sm:h-8" />
+                  <feature.icon size={24} />
                 </motion.div>
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-2 sm:mb-3 text-gray-900 dark:text-white">{feature.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
+                <h3 className="text-lg lg:text-xl font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
+                  {feature.title}
+                </h3>
+                <p className="text-sm sm:text-base" style={{ color: 'var(--text-muted)' }}>
                   {feature.description}
                 </p>
               </motion.div>
@@ -182,19 +185,20 @@ const LandingPage: React.FC = () => {
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerVariants}
-        className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-800"
+        className="py-12 sm:py-16 lg:py-20"
+        style={{ backgroundColor: 'var(--bg-primary)' }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <motion.div variants={itemVariants} className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
               Advanced Features
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-lg lg:text-xl" style={{ color: 'var(--text-muted)' }}>
               Professional tools to grow your business
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {[
               {
                 icon: Shield,
@@ -216,11 +220,15 @@ const LandingPage: React.FC = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ scale: 1.02 }}
-                className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
+                className="mobile-card p-6 hover:shadow-xl transition-all"
               >
-                <feature.icon className="h-6 w-6 sm:h-8 sm:w-8 lg:h-12 lg:w-12 text-blue-600 dark:text-blue-400 mb-3 sm:mb-4" />
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-2 sm:mb-3 text-gray-900 dark:text-white">{feature.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{feature.description}</p>
+                <feature.icon className="h-12 w-12 text-blue-600 dark:text-blue-400 mb-4" />
+                <h3 className="text-lg lg:text-xl font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
+                  {feature.title}
+                </h3>
+                <p className="text-sm sm:text-base" style={{ color: 'var(--text-muted)' }}>
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -233,19 +241,20 @@ const LandingPage: React.FC = () => {
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerVariants}
-        className="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-900"
+        className="py-12 sm:py-16 lg:py-20"
+        style={{ backgroundColor: 'var(--bg-secondary)' }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <motion.div variants={itemVariants} className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
               How It Works
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-lg lg:text-xl" style={{ color: 'var(--text-muted)' }}>
               Three simple steps to your online business
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
             {[
               {
                 step: "1",
@@ -270,12 +279,16 @@ const LandingPage: React.FC = () => {
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center mx-auto mb-3 sm:mb-4 text-lg sm:text-xl font-bold shadow-lg"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg"
                 >
                   {step.step}
                 </motion.div>
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-2 sm:mb-3 text-gray-900 dark:text-white">{step.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{step.description}</p>
+                <h3 className="text-lg lg:text-xl font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
+                  {step.title}
+                </h3>
+                <p className="text-sm sm:text-base" style={{ color: 'var(--text-muted)' }}>
+                  {step.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -294,13 +307,13 @@ const LandingPage: React.FC = () => {
         <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <motion.h2
             variants={itemVariants}
-            className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-4 sm:mb-6"
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6"
           >
             Ready to Start Your Online Business?
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 text-blue-100"
+            className="text-lg lg:text-xl mb-8 text-blue-100"
           >
             Join thousands of entrepreneurs who've built successful online businesses with SellCard
           </motion.p>
@@ -311,16 +324,17 @@ const LandingPage: React.FC = () => {
           >
             <Link
               to={user ? "/dashboard" : "/signup"}
-              className="inline-flex items-center bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base lg:text-lg font-semibold hover:bg-gray-100 transition-colors shadow-xl hover:shadow-2xl touch-target"
+              className="mobile-button inline-flex items-center bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-xl hover:shadow-2xl"
             >
               {user ? 'Go to Dashboard' : 'Start Selling Today'}
-              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </motion.div>
         </div>
       </motion.section>
 
-      <Footer />
+      {/* Floating Action Button */}
+      <FloatingActionButton action="create-profile" />
     </div>
   );
 };
