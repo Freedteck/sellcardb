@@ -958,7 +958,7 @@ const Marketplace: React.FC = () => {
                           to={`/${item.type}/${item.id}`}
                           className="block h-full"
                         >
-                          {/* Image with type indicator and absolute badge */}
+                          {/* Image with badges */}
                           {item.images.length > 0 && (
                             <div className="relative aspect-square overflow-hidden">
                               <img
@@ -966,7 +966,7 @@ const Marketplace: React.FC = () => {
                                 alt={item.name}
                                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                               />
-                              {/* Absolute badge for type-specific info */}
+                              {/* Top-left badge */}
                               {item.type === "product" && item.category && (
                                 <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm">
                                   {item.category}
@@ -979,7 +979,7 @@ const Marketplace: React.FC = () => {
                                     {item.duration_days}d
                                   </span>
                                 )}
-                              {/* Type indicator in top-right */}
+                              {/* Top-right type indicator */}
                               <div className="absolute top-2 right-2 bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
                                 {item.type === "product" ? (
                                   <Package className="h-4 w-4 text-blue-500" />
@@ -991,70 +991,46 @@ const Marketplace: React.FC = () => {
                           )}
 
                           {/* Content area */}
-                          <div className="p-3 flex flex-col h-[calc(100%-10rem)]">
-                            <div className="flex-1">
-                              <h3
-                                className="font-semibold line-clamp-2 text-sm mb-1"
-                                style={{ color: "var(--text-primary)" }}
-                              >
-                                {item.name}
-                              </h3>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
-                                {item.description}
-                              </p>
-                            </div>
+                          <div className="p-3">
+                            <h3
+                              className="font-semibold line-clamp-2 text-sm mb-1"
+                              style={{ color: "var(--text-primary)" }}
+                            >
+                              {item.name}
+                            </h3>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+                              {item.description}
+                            </p>
 
-                            {/* Price section */}
-                            <div className="mt-2">
-                              {item.price ? (
-                                <span className="text-base font-bold text-blue-600 dark:text-blue-400">
-                                  ${item.price}
-                                </span>
-                              ) : (
-                                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                                  Custom Pricing
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Seller info */}
-                            <div className="mt-2 pt-2 border-t border-gray-100 dark:border-gray-700">
-                              <Link
-                                to={`/shop/${item.seller.id}`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="block hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <div className="flex-1 min-w-0">
-                                    <p
-                                      className="font-medium text-xs truncate"
-                                      style={{ color: "var(--text-primary)" }}
-                                    >
-                                      {item.seller.business_name}
-                                    </p>
-                                    {item.seller.location && (
-                                      <div className="flex items-center">
-                                        <MapPin className="h-3 w-3 mr-1 flex-shrink-0 text-gray-400 dark:text-gray-500" />
-                                        <p
-                                          className="text-xs truncate"
-                                          style={{ color: "var(--text-muted)" }}
-                                        >
-                                          {item.seller.location}
-                                        </p>
-                                      </div>
-                                    )}
-                                  </div>
-                                  <div className="flex items-center">
-                                    <Star className="h-3 w-3 text-yellow-400 mr-0.5" />
-                                    <span
-                                      className="text-xs"
-                                      style={{ color: "var(--text-muted)" }}
-                                    >
-                                      {item.seller.rating.toFixed(1)}
+                            {/* Price and location row */}
+                            <div className="flex items-center justify-between mb-1">
+                              <div className="flex items-center gap-1">
+                                {item.price ? (
+                                  <span className="text-base font-bold text-blue-600 dark:text-blue-400">
+                                    ${item.price}
+                                  </span>
+                                ) : (
+                                  <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                                    Custom
+                                  </span>
+                                )}
+                                {item.seller.location && (
+                                  <span className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                                    <MapPin className="h-3 w-3 mr-0.5" />
+                                    <span className="truncate max-w-[60px]">
+                                      {item.seller.location.split(",")[0]}
                                     </span>
-                                  </div>
-                                </div>
-                              </Link>
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Rating - moved here to save space */}
+                              <div className="flex items-center">
+                                <Star className="h-3 w-3 text-yellow-400 mr-0.5" />
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                  {item.seller.rating.toFixed(1)}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </Link>
