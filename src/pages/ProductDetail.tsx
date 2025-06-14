@@ -247,10 +247,10 @@ const ProductDetail: React.FC = () => {
                 <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full">
                   {product.category}
                 </span>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <Eye className="h-4 w-4 mr-1" />
                   {product.view_count} views
-                </div>
+                </div> */}
                 <span>Stock: {product.stock_quantity}</span>
               </div>
               
