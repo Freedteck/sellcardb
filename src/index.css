@@ -1,0 +1,442 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --toast-bg: #363636;
+    --toast-color: #fff;
+    --toast-border: #4a4a4a;
+  }
+
+  .dark {
+    --toast-bg: #1f2937;
+    --toast-color: #f9fafb;
+    --toast-border: #374151;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply transition-colors duration-300;
+    font-size: 16px; /* Prevents zoom on iOS */
+    line-height: 1.5;
+  }
+}
+
+@layer utilities {
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Touch-friendly minimum sizes */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Mobile-optimized spacing */
+  .mobile-padding {
+    @apply px-4;
+  }
+
+  @screen lg {
+    .mobile-padding {
+      @apply px-6;
+    }
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Mobile-first responsive typography */
+@layer base {
+  /* Mobile typography (default) */
+  h1 {
+    @apply text-xl font-bold leading-tight;
+  }
+  
+  h2 {
+    @apply text-lg font-semibold leading-tight;
+  }
+  
+  h3 {
+    @apply text-base font-medium leading-tight;
+  }
+  
+  p, span, div {
+    @apply text-sm leading-relaxed;
+  }
+  
+  /* Button styling */
+  button {
+    @apply text-sm font-medium;
+  }
+  
+  /* Form elements */
+  input, textarea, select {
+    @apply text-base;
+  }
+  
+  /* Tablet and up */
+  @screen sm {
+    h1 {
+      @apply text-2xl;
+    }
+    
+    h2 {
+      @apply text-xl;
+    }
+    
+    h3 {
+      @apply text-lg;
+    }
+    
+    p, span, div {
+      @apply text-base;
+    }
+    
+    button {
+      @apply text-base;
+    }
+  }
+  
+  /* Desktop and up */
+  @screen lg {
+    h1 {
+      @apply text-3xl;
+    }
+    
+    h2 {
+      @apply text-2xl;
+    }
+    
+    h3 {
+      @apply text-xl;
+    }
+  }
+}
+
+/* Mobile-first spacing system */
+@layer utilities {
+  /* Container padding */
+  .container-padding {
+    @apply px-4;
+  }
+  
+  @screen sm {
+    .container-padding {
+      @apply px-6;
+    }
+  }
+  
+  @screen lg {
+    .container-padding {
+      @apply px-8;
+    }
+  }
+  
+  /* Section spacing */
+  .section-spacing {
+    @apply py-8;
+  }
+  
+  @screen sm {
+    .section-spacing {
+      @apply py-12;
+    }
+  }
+  
+  @screen lg {
+    .section-spacing {
+      @apply py-16;
+    }
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  /* Ensure text is readable without zooming */
+  body {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* Optimize button sizes for touch */
+  button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Improve form input sizes */
+  input, textarea, select {
+    min-height: 44px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.75rem;
+  }
+
+  /* Optimize card layouts */
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  /* Improve spacing for mobile */
+  .mobile-spacing {
+    padding: 1rem;
+  }
+
+  /* Optimize image aspect ratios */
+  .mobile-image {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Loading skeleton animations */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.dark .skeleton {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200px 100%;
+}
+
+/* Pull-to-refresh indicator */
+.pull-to-refresh {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.pull-to-refresh.active {
+  transform: translateY(0);
+}
+
+/* Improved focus states for accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bg-gray-50 {
+    @apply bg-white;
+  }
+  
+  .bg-gray-100 {
+    @apply bg-gray-200;
+  }
+  
+  .text-gray-600 {
+    @apply text-gray-800;
+  }
+  
+  .border-gray-200 {
+    @apply border-gray-400;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .bg-gradient-to-r,
+  .bg-gradient-to-br {
+    background: white !important;
+  }
+}
+
+/* Dark theme color fixes */
+.dark {
+  /* Ensure proper text contrast in dark mode */
+  color-scheme: dark;
+}
+
+/* .dark .text-gray-900 {
+  @apply text-gray-100;
+} */
+
+/* .dark .text-gray-800 {
+  @apply text-gray-200;
+}
+
+.dark .text-gray-700 {
+  @apply text-gray-300;
+}
+
+.dark .text-gray-600 {
+  @apply text-gray-400;
+} */
+
+/* .dark .text-gray-500 {
+  @apply text-gray-500;
+} */
+
+/* Dark mode background fixes */
+.dark .bg-gray-50 {
+  @apply bg-gray-900;
+}
+
+.dark .bg-gray-100 {
+  @apply bg-gray-800; 
+}
+
+.dark .bg-gray-200 {
+  @apply bg-gray-700;
+}
+
+.dark .bg-gray-300 {
+  @apply bg-gray-600;
+}
+
+/* Dark mode border fixes */
+.dark .border-gray-200 {
+  @apply border-gray-700;
+}
+
+.dark .border-gray-300 {
+  @apply border-gray-600;
+}
+
+/* Ensure proper contrast for interactive elements */
+.dark button:not(.bg-blue-600):not(.bg-green-600):not(.bg-red-600):not(.bg-purple-600):not(.bg-orange-600):not(.bg-yellow-600) {
+  @apply bg-gray-700 text-gray-200 hover:bg-gray-600;
+}
+
+.dark input:not([type="submit"]):not([type="button"]),
+.dark textarea,
+.dark select {
+  @apply bg-gray-800 text-gray-200 border-gray-600;
+}
+
+.dark input:not([type="submit"]):not([type="button"]):focus,
+.dark textarea:focus,
+.dark select:focus {
+  @apply border-blue-500 ring-blue-500;
+}
+
+/* Fix placeholder text in dark mode */
+.dark input::placeholder,
+.dark textarea::placeholder {
+  @apply text-gray-500;
+}
+
+/* Ensure proper link colors in dark mode */
+.dark a:not(.bg-blue-600):not(.bg-green-600):not(.bg-red-600):not(.bg-purple-600):not(.bg-orange-600) {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* Fix card shadows in dark mode */
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+.dark .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.dark .shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
