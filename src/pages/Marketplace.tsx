@@ -721,6 +721,12 @@ const Marketplace: React.FC = () => {
                                     ${product.price}
                                   </span>
                                   {/* Optional: Add favorite icon or other actions */}
+                                  <div className="flex items-center">
+                                <Star className="h-3 w-3 text-yellow-400 mr-0.5" />
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                  {item.seller?.rating?.toFixed(1) || "N/A"}
+                                </span>
+                              </div>
                                 </div>
                               </div>
                             </div>
@@ -803,19 +809,27 @@ const Marketplace: React.FC = () => {
                                 </span>
                               </div>
                             )}
-                              <div className="flex items-center justify-between mt-auto">
+                                                          {/* Price and rating row */}
+                            <div className="flex justify-between items-center mt-auto">
+                              <div>
                                 {service.price ? (
-                                  <span className="text-base font-bold text-green-600 dark:text-green-400">
+                                  <span className="text-base font-bold text-blue-600 dark:text-blue-400">
                                     ${service.price}
                                   </span>
                                 ) : (
-                                  <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                                  <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
                                     Custom Pricing
                                   </span>
                                 )}
-
-                                {/* Optional: Add rating or other info here */}
                               </div>
+
+                              <div className="flex items-center">
+                                <Star className="h-3 w-3 text-yellow-400 mr-0.5" />
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                  {service.seller?.rating?.toFixed(1) || "N/A"}
+                                </span>
+                              </div>
+                            </div>
                             </div>
                           </Link>
                         </motion.div>
