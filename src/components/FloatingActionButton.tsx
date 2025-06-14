@@ -18,7 +18,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
   // Only show on relevant pages
   const showOnPages = ['/dashboard', '/marketplace', '/'];
   const shouldShow = showOnPages.some(page => 
-    location.pathname === page || location.pathname.startsWith(page)
+    location.pathname === page || location.pathname.startsWith('/dashboard')
   );
 
   if (!shouldShow) return null;
@@ -62,7 +62,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
       </AnimatePresence>
 
       {/* FAB Container */}
-      <div className={`fixed bottom-20 right-4 z-50 ${className}`}>
+      <div className={`fixed bottom-22 right-4 z-50 ${className}`}>
         {/* Option Buttons */}
         <AnimatePresence>
           {isExpanded && (
