@@ -26,7 +26,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen pb-20">
-      <MobileHeader title="SellCard" transparent />
+      <MobileHeader title="SellCard" />
       
       {/* Hero Section */}
       <motion.section
