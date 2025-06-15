@@ -287,7 +287,8 @@ const ShopDetail: React.FC = () => {
                       className="text-2xs sm:text-xs" // Extra small on mobile
                       style={{ color: "var(--text-muted)" }}
                     >
-                      {seller.total_reviews} reviews
+                      {seller.total_reviews} review
+                      {seller.total_reviews <=1 < 640 ? "" : "s"}
                     </p>
                   </div>
 
