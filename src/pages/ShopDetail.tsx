@@ -264,7 +264,7 @@ const ShopDetail: React.FC = () => {
                 </p>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4 align-center">
                   {/* Rating Box */}
                   <div
                     className="text-center p-2 sm:p-2 rounded-lg"
