@@ -470,7 +470,7 @@ const ProductDetail: React.FC = () => {
               </div>
             </div>
 
-            <ReviewsList sellerId={product.seller.id} limit={3} />
+            <ReviewsList sellerId={product.seller.id} refreshKey={refreshKey} limit={3} />
           </div>
         </div>
       </motion.div>
