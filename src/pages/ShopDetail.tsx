@@ -226,7 +226,7 @@ const ShopDetail: React.FC = () => {
               <div>
                 {/* Header Section */}
                 <div className="flex items-start justify-between mb-2 sm:mb-3">
-                  <div className="flex-1">
+                  <div className="flex-1 mr-2 sm:mr-0">
                     <h1
                       className="text-lg sm:text-xl font-bold mb-1 sm:mb-2"
                       style={{ color: "var(--text-primary)" }}
@@ -250,7 +250,7 @@ const ShopDetail: React.FC = () => {
                     </div>
                   </div>
                   {seller.is_verified && (
-                    <div className="flex items-center bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full ml-2">
+                    <div className="flex items-center bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full shrink-0">
                       <Award className="h-3 w-3 mr-1" />
                       <span className="text-xs font-medium">Verified</span>
                     </div>
@@ -285,7 +285,7 @@ const ShopDetail: React.FC = () => {
                       </span>
                     </div>
                     <p
-                      className="text-2xs sm:text-xs"
+                      className="text-xs"
                       style={{ color: "var(--text-muted)" }}
                     >
                       {seller.total_reviews} reviews
@@ -306,7 +306,7 @@ const ShopDetail: React.FC = () => {
                       </span>
                     </div>
                     <p
-                      className="text-2xs sm:text-xs"
+                      className="text-xs"
                       style={{ color: "var(--text-muted)" }}
                     >
                       Total items
