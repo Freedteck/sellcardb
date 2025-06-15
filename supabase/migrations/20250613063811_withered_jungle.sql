@@ -250,28 +250,29 @@ CREATE POLICY "Sellers can manage their own shop settings"
 CREATE OR REPLACE FUNCTION update_seller_rating()
 RETURNS TRIGGER AS $$
 BEGIN
-  UPDATE sellers 
-  SET 
+  UPDATE sellers
+  SET
     rating = (
-      SELECT COALESCE(AVG(rating), 0) 
-      FROM reviews 
+      SELECT COALESCE(AVG(rating), 0)
+      FROM reviews
       WHERE seller_id = NEW.seller_id
     ),
     total_reviews = (
-      SELECT COUNT(*) 
-      FROM reviews 
+      SELECT COUNT(*)
+      FROM reviews
       WHERE seller_id = NEW.seller_id
     )
   WHERE id = NEW.seller_id;
-  
+
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER; -- Add SECURITY DEFINER here
 
-CREATE TRIGGER SECURITY DEFINER update_seller_rating_trigger
+CREATE TRIGGER update_seller_rating_trigger
   AFTER INSERT OR UPDATE ON reviews
   FOR EACH ROW
   EXECUTE FUNCTION update_seller_rating();
+
 
 -- Function to increment view counts
 CREATE OR REPLACE FUNCTION increment_seller_views(seller_uuid uuid)
