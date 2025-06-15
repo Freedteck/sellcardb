@@ -7,6 +7,7 @@ import LoadingSpinner from './LoadingSpinner';
 
 interface ReviewsListProps {
   sellerId: string;
+  refreshKey: number;
   limit?: number;
   showAll?: boolean;
 }
