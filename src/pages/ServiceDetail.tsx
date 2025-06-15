@@ -493,7 +493,7 @@ const ServiceDetail: React.FC = () => {
                 </div>
               </div>
             </div>
-            <ReviewsList sellerId={service.seller.id} limit={3} />
+            <ReviewsList sellerId={service.seller.id} refreshKey={refreshKey} limit={3} />
           </div>
         </div>
       </motion.div>
