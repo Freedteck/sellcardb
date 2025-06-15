@@ -37,13 +37,15 @@ const ShopDetail: React.FC = () => {
     "products" | "services" | "reviews" | "about"
   >("products");
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (sellerId) {
       fetchShopData();
       incrementViewCount();
     }
-  }, [sellerId]);
+    console.log(refreshKey)
+  }, [sellerId, refreshKey]);
 
   const fetchShopData = async () => {
     try {
@@ -141,6 +143,7 @@ const ShopDetail: React.FC = () => {
   const handleReviewSubmitted = () => {
     // Refresh seller data to update rating
     fetchShopData();
+    setRefreshKey((prev) => prev++)
   };
 
   if (loading) {
