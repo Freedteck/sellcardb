@@ -186,7 +186,7 @@ const ServiceDetail: React.FC = () => {
   const handleReviewSubmitted = () => {
     // Refresh service data to update seller rating
     fetchService();
-    setRefreshKey((prev) => prev++)
+    setRefreshKey((prev) => prev + 1)
   };
 
   if (loading) {
