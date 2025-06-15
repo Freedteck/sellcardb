@@ -266,7 +266,7 @@ const ShopDetail: React.FC = () => {
                 </p>
 
                 {/* Stats */}
-                <div className="flex justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div className="flex justify-between gap-2 sm:gap-3 mb-3 sm:mb-4 mr-2 sm:mr-0">
                   <div
                     className="text-center p-1 rounded-lg flex-1"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
