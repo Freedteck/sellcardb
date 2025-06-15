@@ -268,7 +268,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER update_seller_rating_trigger
+CREATE TRIGGER SECURITY DEFINER update_seller_rating_trigger
   AFTER INSERT OR UPDATE ON reviews
   FOR EACH ROW
   EXECUTE FUNCTION update_seller_rating();
