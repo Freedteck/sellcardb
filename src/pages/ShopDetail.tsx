@@ -287,12 +287,31 @@ const ShopDetail: React.FC = () => {
                       className="text-2xs sm:text-xs" // Extra small on mobile
                       style={{ color: "var(--text-muted)" }}
                     >
-                      {seller.total_reviews}{" "}
-                      {window.innerWidth < 640 ? "" : "reviews"}
+                      {seller.total_reviews} reviews
                     </p>
                   </div>
 
-
+                  {/* Items Box */}
+                  {/* <div
+                    className="text-center p-2 sm:p-3 rounded-lg"
+                    style={{ backgroundColor: "var(--bg-tertiary)" }}
+                  >
+                    <div className="flex items-center justify-center mb-1">
+                      <Package className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 mr-1" />
+                      <span
+                        className="text-base sm:text-lg font-bold" // Smaller text on mobile
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        {totalItems}
+                      </span>
+                    </div>
+                    <p
+                      className="text-2xs sm:text-xs" // Extra small on mobile
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      {window.innerWidth < 640 ? "Items" : "Total items"}
+                    </p>
+                  </div> */}
                 </div>
               </div>
 
