@@ -266,9 +266,9 @@ const ShopDetail: React.FC = () => {
                 </p>
 
                 {/* Stats */}
-                <div className="flex justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div
-                    className="text-center p-2 rounded-lg flex-1"
+                    className="text-center p-2 sm:p-3 rounded-lg"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
                     <div className="flex items-center justify-center mb-1">
@@ -289,27 +289,6 @@ const ShopDetail: React.FC = () => {
                       style={{ color: "var(--text-muted)" }}
                     >
                       {seller.total_reviews} reviews
-                    </p>
-                  </div>
-
-                  <div
-                    className="text-center p-2 sm:p-3 rounded-lg flex-1"
-                    style={{ backgroundColor: "var(--bg-tertiary)" }}
-                  >
-                    <div className="flex items-center justify-center mb-1">
-                      <Package className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 mr-1" />
-                      <span
-                        className="text-base sm:text-lg font-bold"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        {totalItems}
-                      </span>
-                    </div>
-                    <p
-                      className="text-xs"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      Total items
                     </p>
                   </div>
                 </div>
