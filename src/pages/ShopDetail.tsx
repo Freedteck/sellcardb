@@ -291,7 +291,8 @@ const ShopDetail: React.FC = () => {
                       {window.innerWidth < 640 ? "" : "reviews"}
                     </p>
                   </div>
-                  </div>
+
+
                 </div>
               </div>
 
