@@ -143,7 +143,7 @@ const ShopDetail: React.FC = () => {
   const handleReviewSubmitted = () => {
     // Refresh seller data to update rating
     fetchShopData();
-    setRefreshKey((prev) => prev++)
+    setRefreshKey((prev) => prev + 1)
   };
 
   if (loading) {
