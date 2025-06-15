@@ -653,7 +653,7 @@ const ShopDetail: React.FC = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> 
 
               <ReviewsList sellerId={seller.id} refreshKey={refreshKey} showAll />
             </motion.div>
