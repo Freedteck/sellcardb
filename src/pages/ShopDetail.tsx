@@ -273,7 +273,7 @@ const ShopDetail: React.FC = () => {
                     <div className="flex items-center justify-center mb-1">
                       <RatingStars
                         rating={seller.rating}
-                        size="xs sm:sm" // Smaller on mobile
+                        size="xs sm:sm" 
                         className="mr-1 sm:mr-2"
                       />
                       <span
@@ -288,8 +288,7 @@ const ShopDetail: React.FC = () => {
                       style={{ color: "var(--text-muted)" }}
                     >
                       {seller.total_reviews}{" "}
-                      {window.innerWidth < 640 ? "" : "reviews"} // Shorten on
-                      mobile
+                      {window.innerWidth < 640 ? "" : "reviews"}
                     </p>
                   </div>
 
@@ -311,8 +310,7 @@ const ShopDetail: React.FC = () => {
                       className="text-2xs sm:text-xs" // Extra small on mobile
                       style={{ color: "var(--text-muted)" }}
                     >
-                      {window.innerWidth < 640 ? "Items" : "Total items"} //
-                      Shorten on mobile
+                      {window.innerWidth < 640 ? "Items" : "Total items"}
                     </p>
                   </div>
                 </div>
