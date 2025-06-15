@@ -15,6 +15,7 @@ interface ReviewsListProps {
 const ReviewsList: React.FC<ReviewsListProps> = ({
   sellerId,
   limit = 5,
+  refreshKey,
   showAll = false
 }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
