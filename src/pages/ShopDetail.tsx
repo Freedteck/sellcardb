@@ -268,14 +268,14 @@ const ShopDetail: React.FC = () => {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div
-                    className="text-center p-2 rounded-lg"
+                    className="text-center p-2 sm:p-3 rounded-lg"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
                     <div className="flex items-center justify-center mb-1">
                       <RatingStars
                         rating={seller.rating}
                         size="xs sm:sm"
-                        className="mr-1 sm:mr-2"
+                        className="mr-2 sm:mr-0"
                       />
                       <span
                         className="text-base sm:text-lg font-bold"
