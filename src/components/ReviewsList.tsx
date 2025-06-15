@@ -23,7 +23,7 @@ const ReviewsList: React.FC<ReviewsListProps> = ({
 
   useEffect(() => {
     fetchReviews();
-  }, [sellerId]);
+  }, [sellerId, refreshKey]);
 
   const fetchReviews = async () => {
     try {
