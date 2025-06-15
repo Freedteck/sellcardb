@@ -39,13 +39,15 @@ const ProductDetail: React.FC = () => {
     customerPhone: "",
     message: "",
   });
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (id) {
       fetchProduct();
       incrementViewCount();
     }
-  }, [id]);
+    console.log(refreshKey)
+  }, [id, refreshKey]);
 
   const fetchProduct = async () => {
     try {
@@ -183,6 +185,7 @@ const ProductDetail: React.FC = () => {
   const handleReviewSubmitted = () => {
     // Refresh product data to update seller rating
     fetchProduct();
+    setRefreshKey((prev) => prev++)
   };
 
   if (loading) {
