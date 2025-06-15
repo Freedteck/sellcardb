@@ -11,10 +11,11 @@ import {
   Globe,
   Instagram,
   Eye,
-  Package,
+  Users,
   Share2,
+  Calendar,
 } from "lucide-react";
-import { supabase, Product, Seller } from "../lib/supabase";
+import { supabase, Service, Seller } from "../lib/supabase";
 import { sendWhatsAppNotification } from "../utils/whatsappNotifications";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -24,9 +25,9 @@ import ReviewsList from "../components/ReviewsList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import toast from "react-hot-toast";
 
-const ProductDetail: React.FC = () => {
+const ServiceDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<(Product & { seller: Seller }) | null>(
+  const [service, setService] = useState<(Service & { seller: Seller }) | null>(
     null
   );
   const [loading, setLoading] = useState(true);
@@ -42,15 +43,15 @@ const ProductDetail: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetchProduct();
+      fetchService();
       incrementViewCount();
     }
   }, [id]);
 
-  const fetchProduct = async () => {
+  const fetchService = async () => {
     try {
       const { data, error } = await supabase
-        .from("products")
+        .from("services")
         .select(
           `
           *,
@@ -62,9 +63,9 @@ const ProductDetail: React.FC = () => {
         .single();
 
       if (error) throw error;
-      setProduct(data);
+      setService(data);
     } catch (error) {
-      console.error("Error fetching product:", error);
+      console.error("Error fetching service:", error);
     } finally {
       setLoading(false);
     }
@@ -72,35 +73,35 @@ const ProductDetail: React.FC = () => {
 
   const incrementViewCount = async () => {
     try {
-      await supabase.rpc("increment_product_views", { product_uuid: id });
+      await supabase.rpc("increment_service_views", { service_uuid: id });
     } catch (error) {
       console.error("Error incrementing view count:", error);
     }
   };
 
   const handleContactSeller = (method: "whatsapp" | "phone" | "email") => {
-    if (!product) return;
+    if (!service) return;
 
-    const message = `Hi! I'm interested in your product "${product.name}". Can you provide more details?`;
+    const message = `Hi! I'm interested in your service "${service.name}". Can you provide more details?`;
 
     switch (method) {
       case "whatsapp":
-        const whatsappUrl = `https://wa.me/${product.seller.whatsapp_number.replace(
+        const whatsappUrl = `https://wa.me/${service.seller.whatsapp_number.replace(
           /[^0-9]/g,
           ""
         )}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, "_blank");
         break;
       case "phone":
-        if (product.seller.phone_number) {
-          window.open(`tel:${product.seller.phone_number}`, "_blank");
+        if (service.seller.phone_number) {
+          window.open(`tel:${service.seller.phone_number}`, "_blank");
         }
         break;
       case "email":
-        if (product.seller.email) {
+        if (service.seller.email) {
           window.open(
-            `mailto:${product.seller.email}?subject=Inquiry about ${
-              product.name
+            `mailto:${service.seller.email}?subject=Inquiry about ${
+              service.name
             }&body=${encodeURIComponent(message)}`,
             "_blank"
           );
@@ -122,8 +123,8 @@ const ProductDetail: React.FC = () => {
         .from("inquiries")
         .insert([
           {
-            seller_id: product?.seller.id,
-            product_id: product?.id,
+            seller_id: service?.seller.id,
+            service_id: service?.id,
             customer_name: inquiryForm.customerName,
             customer_email: inquiryForm.customerEmail || null,
             customer_phone: inquiryForm.customerPhone || null,
@@ -136,14 +137,14 @@ const ProductDetail: React.FC = () => {
       if (error) throw error;
 
       // Send WhatsApp notification to seller
-      if (product) {
+      if (service) {
         sendWhatsAppNotification({
-          sellerWhatsApp: product.seller.whatsapp_number,
+          sellerWhatsApp: service.seller.whatsapp_number,
           customerName: inquiryForm.customerName,
           customerPhone: inquiryForm.customerPhone,
           customerEmail: inquiryForm.customerEmail,
-          itemName: product.name,
-          itemType: "product",
+          itemName: service.name,
+          itemType: "service",
           message: inquiryForm.message,
           inquiryId: data.id,
         });
@@ -163,26 +164,26 @@ const ProductDetail: React.FC = () => {
     }
   };
 
-  const shareProduct = () => {
-    const productUrl = window.location.href;
-    const shareText = product
-      ? `Check out ${product.name} on SellCard`
-      : "Check out this product on SellCard";
+  const shareService = () => {
+    const serviceUrl = window.location.href;
+    const shareText = service
+      ? `Check out ${service.name} on SellCard`
+      : "Check out this service on SellCard";
 
     if (navigator.share) {
       navigator.share({
         title: shareText,
-        url: productUrl,
+        url: serviceUrl,
       });
     } else {
-      navigator.clipboard.writeText(productUrl);
-      toast.success("Product link copied to clipboard!");
+      navigator.clipboard.writeText(serviceUrl);
+      toast.success("Service link copied to clipboard!");
     }
   };
 
   const handleReviewSubmitted = () => {
-    // Refresh product data to update seller rating
-    fetchProduct();
+    // Refresh service data to update seller rating
+    fetchService();
   };
 
   if (loading) {
@@ -196,24 +197,24 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  if (!product) {
+  if (!service) {
     return (
       <div className="min-h-screen">
         <Header />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+          <Users className="h-16 w-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Product Not Found
+            Service Not Found
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mb-4">
-            The product you're looking for doesn't exist or is no longer
+            The service you're looking for doesn't exist or is no longer
             available.
           </p>
           <Link
             to="/marketplace"
             className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline"
           >
-            Browse other products
+            Browse other services
           </Link>
         </div>
       </div>
@@ -240,20 +241,20 @@ const ProductDetail: React.FC = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Product Images */}
+          {/* Service Images */}
           <div className="space-y-4">
             <div className="aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
               <img
-                src={product.images[0] || "/placeholder-product.jpg"}
-                alt={product.name}
+                src={service.images[0] || "/placeholder-service.jpg"}
+                alt={service.name}
                 className="w-full h-full object-cover cursor-pointer"
-                onClick={() => setSelectedImage(product.images[0])}
+                onClick={() => setSelectedImage(service.images[0])}
               />
             </div>
 
-            {product.images.length > 1 && (
+            {service.images.length > 1 && (
               <div className="grid grid-cols-4 gap-2">
-                {product.images.slice(1, 5).map((image, index) => (
+                {service.images.slice(1, 5).map((image, index) => (
                   <div
                     key={index}
                     className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800 cursor-pointer hover:opacity-75 transition-opacity"
@@ -261,7 +262,7 @@ const ProductDetail: React.FC = () => {
                   >
                     <img
                       src={image}
-                      alt={`${product.name} ${index + 2}`}
+                      alt={`${service.name} ${index + 2}`}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -270,75 +271,98 @@ const ProductDetail: React.FC = () => {
             )}
           </div>
 
-          {/* Product Info */}
+          {/* Service Info */}
           <div className="space-y-6">
             <div>
               <div className="flex items-start justify-between mb-2">
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                  {product.name}
+                  {service.name}
                 </h1>
                 <button
-                  onClick={shareProduct}
+                  onClick={shareService}
                   className="p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  title="Share product"
+                  title="Share service"
                 >
                   <Share2 size={20} />
                 </button>
               </div>
 
-              <div className="flex items-center justify-between space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
-                <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full">
-                  {product.category}
+              <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+                <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
+                  {service.category}
                 </span>
-                <span>Stock: {product.stock_quantity}</span>
+                <div className="flex items-center">
+                  <Eye className="h-4 w-4 mr-1" />
+                  {service.view_count} views
+                </div>
+                {service.duration_days && (
+                  <div className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    {service.duration_days} days
+                  </div>
+                )}
               </div>
 
-              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4">
-                ${product.price}
-              </div>
+              {/* Location */}
+              {(service.location || service.seller.location) && (
+                <div className="flex items-center text-gray-600 dark:text-gray-300 mb-4">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  {service.location || service.seller.location}
+                </div>
+              )}
+
+              {service.price ? (
+                <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-4">
+                  ${service.price}
+                </div>
+              ) : (
+                <div className="text-xl font-semibold text-green-600 dark:text-green-400 mb-4">
+                  Custom Pricing - Contact for Quote
+                </div>
+              )}
 
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                {product.description}
+                {service.description}
               </p>
             </div>
 
             {/* Seller Info */}
             <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 sm:p-6">
               <h3 className="text-md sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
-                Sold by {product.seller.business_name}
+                Offered by {service.seller.business_name}
               </h3>
 
               <div className="space-y-2 sm:space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
                   <div className="flex items-center">
                     <RatingStars
-                      rating={product.seller.rating}
+                      rating={service.seller.rating}
                       size="sm sm:md" // Smaller on mobile
                       className="mr-1 sm:mr-2"
                     />
                     <span className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">
-                      {product.seller.rating.toFixed(1)}
+                      {service.seller.rating.toFixed(1)}
                     </span>
                     <span className="text-gray-500 dark:text-gray-400 ml-1 text-sm sm:text-base">
-                      ({product.seller.total_reviews})
+                      ({service.seller.total_reviews})
                     </span>
                   </div>
-                  {product.seller.is_verified && (
+                  {service.seller.is_verified && (
                     <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs font-medium self-start sm:self-auto">
                       Verified
                     </span>
                   )}
                 </div>
 
-                {product.seller.location && (
+                {service.seller.location && (
                   <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                     <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                    {product.seller.location}
+                    {service.seller.location}
                   </div>
                 )}
 
                 <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-                  {product.seller.description}
+                  {service.seller.description}
                 </p>
               </div>
             </div>
@@ -347,7 +371,7 @@ const ProductDetail: React.FC = () => {
             <div className="space-y-3">
               <button
                 onClick={() => handleContactSeller("whatsapp")}
-                className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center font-medium"
+                className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center font-medium touch-target"
               >
                 <MessageCircle className="h-5 w-5 mr-2" />
                 Contact via WhatsApp
@@ -356,7 +380,7 @@ const ProductDetail: React.FC = () => {
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() => setShowReviewForm(true)}
-                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center justify-center"
+                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center justify-center touch-target"
                 >
                   <Star className="h-4 w-4 mr-2" />
                   Rate Seller
@@ -364,27 +388,27 @@ const ProductDetail: React.FC = () => {
 
                 <button
                   onClick={() => setShowInquiryForm(true)}
-                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors font-medium touch-target"
                 >
                   Send Inquiry
                 </button>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                {product.seller.phone_number && (
+                {service.seller.phone_number && (
                   <button
                     onClick={() => handleContactSeller("phone")}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center touch-target"
                   >
                     <Phone className="h-4 w-4 mr-2" />
                     Call
                   </button>
                 )}
 
-                {product.seller.email && (
+                {service.seller.email && (
                   <button
                     onClick={() => handleContactSeller("email")}
-                    className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center"
+                    className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center touch-target"
                   >
                     <Mail className="h-4 w-4 mr-2" />
                     Email
@@ -394,14 +418,14 @@ const ProductDetail: React.FC = () => {
             </div>
 
             {/* Additional Seller Links */}
-            {(product.seller.website || product.seller.instagram) && (
+            {(service.seller.website || service.seller.instagram) && (
               <div className="flex space-x-3">
-                {product.seller.website && (
+                {service.seller.website && (
                   <a
                     href={
-                      product.seller.website.startsWith("http")
-                        ? product.seller.website
-                        : `https://${product.seller.website}`
+                      service.seller.website.startsWith("http")
+                        ? service.seller.website
+                        : `https://${service.seller.website}`
                     }
                     target="_blank"
                     rel="noopener noreferrer"
@@ -412,9 +436,9 @@ const ProductDetail: React.FC = () => {
                   </a>
                 )}
 
-                {product.seller.instagram && (
+                {service.seller.instagram && (
                   <a
-                    href={`https://instagram.com/${product.seller.instagram.replace(
+                    href={`https://instagram.com/${service.seller.instagram.replace(
                       "@",
                       ""
                     )}`}
@@ -452,22 +476,21 @@ const ProductDetail: React.FC = () => {
               <div className="flex items-center justify-center space-x-2 sm:space-x-4">
                 <div className="text-center">
                   <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-                    {product.seller.rating.toFixed(1)}
+                    {service.seller.rating.toFixed(1)}
                   </div>
                   <RatingStars
-                    rating={product.seller.rating}
+                    rating={service.seller.rating}
                     size="sm sm:md" // Responsive star size
                     className="justify-center mb-1"
                   />
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                    Based on {product.seller.total_reviews} review
-                    {product.seller.total_reviews !== 1 ? "s" : ""}
+                    Based on {service.seller.total_reviews} review
+                    {service.seller.total_reviews !== 1 ? "s" : ""}
                   </p>
                 </div>
               </div>
             </div>
-
-            <ReviewsList sellerId={product.seller.id} limit={3} />
+            <ReviewsList sellerId={service.seller.id} limit={3} />
           </div>
         </div>
       </motion.div>
@@ -487,7 +510,7 @@ const ProductDetail: React.FC = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               src={selectedImage}
-              alt="Product"
+              alt="Service"
               className="max-w-full max-h-full object-contain rounded-lg"
               onClick={(e) => e.stopPropagation()}
             />
@@ -595,13 +618,13 @@ const ProductDetail: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowInquiryForm(false)}
-                    className="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
+                    className="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors touch-target"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors touch-target"
                   >
                     Send Inquiry
                   </button>
@@ -614,8 +637,8 @@ const ProductDetail: React.FC = () => {
 
       {/* Review Form Modal */}
       <ReviewForm
-        sellerId={product.seller.id}
-        sellerName={product.seller.business_name}
+        sellerId={service.seller.id}
+        sellerName={service.seller.business_name}
         isOpen={showReviewForm}
         onClose={() => setShowReviewForm(false)}
         onReviewSubmitted={handleReviewSubmitted}
@@ -626,4 +649,4 @@ const ProductDetail: React.FC = () => {
   );
 };
 
-export default ProductDetail;
+export default ServiceDetail;
