@@ -270,11 +270,11 @@ const ShopDetail: React.FC = () => {
                     className="text-center p-2 sm:p-3 rounded-lg"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
-                    <div className="flex items-center justify-center mb-1 gap-1 sm:gap-2">
+                    <div className="flex items-center justify-center mb-1">
                       <RatingStars
                         rating={seller.rating}
-                        size="sm"
-                        className="mr-0 sm:mr-1" // Adjusted margin for mobile
+                        size="xs sm:sm" 
+                        className="mr-1 sm:mr-2"
                       />
                       <span
                         className="text-base sm:text-lg font-bold" // Smaller text on mobile
@@ -284,10 +284,11 @@ const ShopDetail: React.FC = () => {
                       </span>
                     </div>
                     <p
-                      className="text-xs"
+                      className="text-2xs sm:text-xs" // Extra small on mobile
                       style={{ color: "var(--text-muted)" }}
                     >
-                      {seller.total_reviews} reviews
+                      {seller.total_reviews}{" "}
+                      {window.innerWidth < 640 ? "" : "reviews"}
                     </p>
                   </div>
 
@@ -296,9 +297,8 @@ const ShopDetail: React.FC = () => {
                     className="text-center p-2 sm:p-3 rounded-lg"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
-                    <div className="flex items-center justify-center mb-1 gap-1 sm:gap-2">
-                      <Package className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 mr-0 sm:mr-1" />{" "}
-                      {/* Smaller icon on mobile */}
+                    <div className="flex items-center justify-center mb-1">
+                      <Package className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 mr-1" />
                       <span
                         className="text-base sm:text-lg font-bold" // Smaller text on mobile
                         style={{ color: "var(--text-primary)" }}
@@ -307,10 +307,10 @@ const ShopDetail: React.FC = () => {
                       </span>
                     </div>
                     <p
-                      className="text-xs"
+                      className="text-2xs sm:text-xs" // Extra small on mobile
                       style={{ color: "var(--text-muted)" }}
                     >
-                      Total items
+                      {window.innerWidth < 640 ? "Items" : "Total items"}
                     </p>
                   </div>
                 </div>
