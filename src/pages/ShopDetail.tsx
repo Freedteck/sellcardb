@@ -221,64 +221,62 @@ const ShopDetail: React.FC = () => {
           )}
 
           {/* Shop Info */}
-          <div className="p-3 sm:p-4">
-            <div className="flex flex-col space-y-3 sm:space-y-4">
+          <div className="p-4">
+            <div className="flex flex-col space-y-4">
               <div>
-                {/* Header Section */}
-                <div className="flex items-start justify-between mb-2 sm:mb-3">
-                  <div className="flex-1 mr-2 sm:mr-0">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex-1">
                     <h1
-                      className="text-lg sm:text-xl font-bold mb-1 sm:mb-2"
+                      className="text-xl font-bold mb-2"
                       style={{ color: "var(--text-primary)" }}
                     >
                       {seller.business_name}
                     </h1>
                     <div
-                      className="flex flex-col space-y-1 text-xs sm:text-sm"
+                      className="flex flex-col space-y-1 text-sm"
                       style={{ color: "var(--text-muted)" }}
                     >
                       {seller.location && (
                         <div className="flex items-center">
-                          <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                          <MapPin className="h-4 w-4 mr-1" />
                           {seller.location}
                         </div>
                       )}
                       <div className="flex items-center">
-                        <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        <Calendar className="h-4 w-4 mr-1" />
                         Member since {memberSince}
                       </div>
                     </div>
                   </div>
                   {seller.is_verified && (
-                    <div className="flex items-center bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full shrink-0">
+                    <div className="flex items-center bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
                       <Award className="h-3 w-3 mr-1" />
                       <span className="text-xs font-medium">Verified</span>
                     </div>
                   )}
                 </div>
 
-                {/* Description */}
                 <p
-                  className="mb-3 sm:mb-4 leading-relaxed text-xs sm:text-sm"
+                  className="mb-4 leading-relaxed text-sm"
                   style={{ color: "var(--text-muted)" }}
                 >
                   {seller.description}
                 </p>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div className="grid grid-cols-2 gap-3 mb-4">
                   <div
-                    className="text-center p-2 sm:p-3 rounded-lg"
+                    className="text-center p-3 rounded-lg"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
                     <div className="flex items-center justify-center mb-1">
                       <RatingStars
                         rating={seller.rating}
-                        size="xs sm:sm"
-                        className="mr-1 sm:mr-2"
+                        size="sm"
+                        className="mr-2"
                       />
                       <span
-                        className="text-base sm:text-lg font-bold"
+                        className="text-lg font-bold"
                         style={{ color: "var(--text-primary)" }}
                       >
                         {seller.rating.toFixed(1)}
@@ -293,13 +291,13 @@ const ShopDetail: React.FC = () => {
                   </div>
 
                   <div
-                    className="text-center p-2 sm:p-3 rounded-lg"
+                    className="text-center p-3 rounded-lg"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
                     <div className="flex items-center justify-center mb-1">
-                      <Package className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 mr-1" />
+                      <Package className="h-4 w-4 text-blue-500 mr-1" />
                       <span
-                        className="text-base sm:text-lg font-bold"
+                        className="text-lg font-bold"
                         style={{ color: "var(--text-primary)" }}
                       >
                         {totalItems}
@@ -316,30 +314,30 @@ const ShopDetail: React.FC = () => {
               </div>
 
               {/* Contact Actions */}
-              <div className="space-y-2 sm:space-y-3">
+              <div className="space-y-3">
                 <button
                   onClick={() => handleContactSeller("whatsapp")}
-                  className="mobile-button w-full bg-green-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg sm:rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center font-medium text-sm sm:text-base"
+                  className="mobile-button w-full bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center font-medium"
                 >
-                  <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
+                  <MessageCircle className="h-5 w-5 mr-2" />
                   Contact via WhatsApp
                 </button>
 
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => setShowReviewForm(true)}
-                    className="mobile-button bg-yellow-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl hover:bg-yellow-700 transition-colors flex items-center justify-center text-xs sm:text-sm"
+                    className="mobile-button bg-yellow-600 text-white px-4 py-2 rounded-xl hover:bg-yellow-700 transition-colors flex items-center justify-center"
                   >
-                    <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                    <Star className="h-4 w-4 mr-2" />
                     Rate Shop
                   </button>
 
                   {seller.phone_number && (
                     <button
                       onClick={() => handleContactSeller("phone")}
-                      className="mobile-button bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center text-xs sm:text-sm"
+                      className="mobile-button bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center"
                     >
-                      <Phone className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                      <Phone className="h-4 w-4 mr-2" />
                       Call
                     </button>
                   )}
@@ -347,9 +345,9 @@ const ShopDetail: React.FC = () => {
                   {seller.email && (
                     <button
                       onClick={() => handleContactSeller("email")}
-                      className="mobile-button bg-gray-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl hover:bg-gray-700 transition-colors flex items-center justify-center text-xs sm:text-sm"
+                      className="mobile-button bg-gray-600 text-white px-4 py-2 rounded-xl hover:bg-gray-700 transition-colors flex items-center justify-center"
                     >
-                      <Mail className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                      <Mail className="h-4 w-4 mr-2" />
                       Email
                     </button>
                   )}
@@ -357,7 +355,7 @@ const ShopDetail: React.FC = () => {
 
                 {/* Social Links */}
                 {(seller.website || seller.instagram) && (
-                  <div className="flex justify-center space-x-3 sm:space-x-4 pt-1 sm:pt-2">
+                  <div className="flex justify-center space-x-4 pt-2">
                     {seller.website && (
                       <a
                         href={
@@ -367,9 +365,9 @@ const ShopDetail: React.FC = () => {
                         }
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors touch-target text-xs sm:text-sm"
+                        className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors touch-target"
                       >
-                        <Globe className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        <Globe className="h-4 w-4 mr-1" />
                         Website
                       </a>
                     )}
@@ -382,9 +380,9 @@ const ShopDetail: React.FC = () => {
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 transition-colors touch-target text-xs sm:text-sm"
+                        className="flex items-center text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 transition-colors touch-target"
                       >
-                        <Instagram className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        <Instagram className="h-4 w-4 mr-1" />
                         Instagram
                       </a>
                     )}
