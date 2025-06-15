@@ -270,7 +270,7 @@ const ShopDetail: React.FC = () => {
                     className="text-center p-2 sm:p-2 rounded-lg"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
-                    <div className="flex items-center justify-center mb-1">
+                    <div className="flex items-center mb-1">
                       <RatingStars
                         rating={seller.rating}
                         size="xs sm:sm" 
