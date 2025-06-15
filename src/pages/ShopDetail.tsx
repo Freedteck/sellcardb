@@ -267,7 +267,7 @@ const ShopDetail: React.FC = () => {
                 <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4">
                   {/* Rating Box */}
                   <div
-                    className="text-center p-2 sm:p-3 rounded-lg"
+                    className="text-center p-2 sm:p-2 rounded-lg"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
                     <div className="flex items-center justify-center mb-1">
