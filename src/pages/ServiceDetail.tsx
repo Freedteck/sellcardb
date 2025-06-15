@@ -40,13 +40,15 @@ const ServiceDetail: React.FC = () => {
     customerPhone: "",
     message: "",
   });
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (id) {
       fetchService();
       incrementViewCount();
     }
-  }, [id]);
+    console.log(refreshKey)
+  }, [id, refreshKey]);
 
   const fetchService = async () => {
     try {
@@ -184,6 +186,7 @@ const ServiceDetail: React.FC = () => {
   const handleReviewSubmitted = () => {
     // Refresh service data to update seller rating
     fetchService();
+    setRefreshKey((prev) => prev++)
   };
 
   if (loading) {
