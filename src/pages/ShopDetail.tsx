@@ -268,10 +268,10 @@ const ShopDetail: React.FC = () => {
                 {/* Stats */}
                 <div className="flex justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div
-                    className="text-center p-1 rounded-lg flex-1"
+                    className="text-center p-1 sm:p-3 rounded-lg flex-1"
                     style={{ backgroundColor: "var(--bg-tertiary)" }}
                   >
-                    <div className="flex items-center justify-center mb-1 mr-2 sm:mr-0">
+                    <div className="flex items-center justify-center mb-1">
                       <RatingStars
                         rating={seller.rating}
                         size="xs sm:sm"
