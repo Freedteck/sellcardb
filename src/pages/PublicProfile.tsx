@@ -125,6 +125,27 @@ const PublicProfile: React.FC = () => {
     );
   }
 
+  <Helmet prioritizeSeoTags>
+  <title>{profile.business_name}</title>
+
+  {/* Basic Meta */}
+  <meta name="description" content={profile.description} />
+
+  {/* Open Graph Tags */}
+  <meta property="og:title" content={profile.business_name} />
+  <meta property="og:description" content={profile.description} />
+  <meta property="og:image" content={profile.images[0]} />
+  <meta property="og:url" content={window.location.href} />
+  <meta property="og:type" content="profile" />
+
+  {/* Twitter Tags */}
+  <meta name="twitter:title" content={profile.business_name} />
+  <meta name="twitter:description" content={profile.description} />
+  <meta name="twitter:image" content={profile.images[0]} />
+  <meta name="twitter:card" content="summary_large_image" />
+</Helmet>
+
+
   const profileUrl = window.location.href;
 
   return (
