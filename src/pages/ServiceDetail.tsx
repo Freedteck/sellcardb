@@ -336,7 +336,7 @@ const ServiceDetail: React.FC = () => {
 
               {service.price ? (
                 <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-4">
-                  ${service.price}
+                  ₦{service.price}
                 </div>
               ) : (
                 <div className="text-xl font-semibold text-green-600 dark:text-green-400 mb-4">
