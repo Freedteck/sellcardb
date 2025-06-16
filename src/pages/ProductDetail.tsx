@@ -243,7 +243,6 @@ const ProductDetail: React.FC = () => {
   <meta name="twitter:card" content="summary_large_image" />
 </Helmet>
 
-
   return (
     <div className="min-h-screen">
       <Header />
