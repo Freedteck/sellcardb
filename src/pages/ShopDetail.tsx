@@ -26,6 +26,7 @@ import ReviewsList from "../components/ReviewsList";
 import RatingStars from "../components/RatingStars";
 import LoadingSpinner from "../components/LoadingSpinner";
 import toast from "react-hot-toast";
+import {Helmet} from "react-helmet-async"
 
 const ShopDetail: React.FC = () => {
   const { sellerId } = useParams<{ sellerId: string }>();
@@ -182,6 +183,27 @@ const ShopDetail: React.FC = () => {
       </div>
     );
   }
+
+  <Helmet prioritizeSeoTags>
+  <title>{seller.business_name}</title>
+
+  {/* Basic Meta */}
+  <meta name="description" content={seller.description} />
+
+  {/* Open Graph Tags */}
+  <meta property="og:title" content={seller.business_name} />
+  <meta property="og:description" content={seller.description} />
+  <meta property="og:image" content={seller.cover_image_url || seller.avatar_url} />
+  <meta property="og:url" content={window.location.href} />
+  <meta property="og:type" content="website" />
+
+  {/* Twitter Tags */}
+  <meta name="twitter:title" content={seller.business_name} />
+  <meta name="twitter:description" content={seller.description} />
+  <meta name="twitter:image" content={seller.cover_image_url || seller.avatar_url} />
+  <meta name="twitter:card" content="summary_large_image" />
+</Helmet>
+
 
   const totalItems = products.length + services.length;
   const memberSince = new Date(seller.created_at).toLocaleDateString("en-US", {
