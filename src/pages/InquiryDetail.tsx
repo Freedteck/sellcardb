@@ -237,7 +237,7 @@ const InquiryDetail: React.FC = () => {
                         {inquiry.product?.name || inquiry.service?.name}
                       </h4>
                       <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                        ${inquiry.product?.price || inquiry.service?.price}
+                        ₦{inquiry.product?.price || inquiry.service?.price}
                       </p>
                     </div>
                   </div>
