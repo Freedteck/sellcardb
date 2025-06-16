@@ -223,7 +223,10 @@ const ProductDetail: React.FC = () => {
       </div>
     );
   }
-<Helmet prioritizeSeoTags>
+
+  return (
+    <div className="min-h-screen">
+      <Helmet prioritizeSeoTags>
   <title>{product.name}</title>
 
   {/* Basic Meta */}
@@ -242,9 +245,6 @@ const ProductDetail: React.FC = () => {
   <meta name="twitter:image" content={product.images[0]} />
   <meta name="twitter:card" content="summary_large_image" />
 </Helmet>
-
-  return (
-    <div className="min-h-screen">
       <Header />
 
       <motion.div
