@@ -556,9 +556,9 @@ const ShopDetail: React.FC = () => {
                                 Delivers in {service.duration_days} days
                               </span>
                             )}
-                            <span className="absolute top-2 right-2 bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
+                            {/* <span className="absolute top-2 right-2 bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
                               <Users className="h-4 w-4 text-green-500" />
-                            </span>
+                            </span> */}
                           </div>
                         )}
 
