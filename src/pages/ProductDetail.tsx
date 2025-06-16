@@ -23,6 +23,7 @@ import ReviewForm from "../components/ReviewForm";
 import ReviewsList from "../components/ReviewsList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import toast from "react-hot-toast";
+import {Helmet} from "react-helmet-async";
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -222,6 +223,13 @@ const ProductDetail: React.FC = () => {
       </div>
     );
   }
+  <Helmet prioritizeSeoTags>
+  <title>A fancy webpage</title>
+  <link rel="notImportant" href="https://www.chipotle.com" />
+  <meta name="whatever" value="notImportant" />
+  <link rel="canonical" href="https://www.tacobell.com" />
+  <meta property="og:title" content="A very important title"/>
+</Helmet>
 
   return (
     <div className="min-h-screen">
