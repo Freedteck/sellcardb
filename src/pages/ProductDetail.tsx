@@ -224,9 +224,9 @@ const ProductDetail: React.FC = () => {
     );
   }
   <Helmet prioritizeSeoTags>
-  <title>A fancy webpage</title>
+  <title>{product.name}</title>
   <link rel="notImportant" href="https://www.chipotle.com" />
-  <meta name="whatever" value="notImportant" />
+  <meta name="description" property="og:description" content={product.description} />
   <link rel="canonical" href="https://www.tacobell.com" />
   <meta property="og:title" content="A very important title"/>
 </Helmet>
