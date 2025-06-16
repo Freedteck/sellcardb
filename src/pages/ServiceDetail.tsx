@@ -290,7 +290,7 @@ const ServiceDetail: React.FC = () => {
                 </button>
               </div>
 
-              <div className="flex items-center justify-between flex-wrap space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+              <div className="flex items-center justify-between space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
                 <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
                   {service.category}
                 </span>
@@ -299,9 +299,9 @@ const ServiceDetail: React.FC = () => {
                   {service.view_count} views
                 </div> */}
                 {service.duration_days && (
-                  <div className="flex items-center">
+                  <div className="flex items-center" title={`${service.duration_days} Days Delivery`}>
                     <Calendar className="h-4 w-4 mr-1" />
-                    Delivers in {service.duration_days} days
+                    {service.duration_days} days
                   </div>
                 )}
               </div>
