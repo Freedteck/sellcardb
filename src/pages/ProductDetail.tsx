@@ -223,13 +223,26 @@ const ProductDetail: React.FC = () => {
       </div>
     );
   }
-  <Helmet prioritizeSeoTags>
+<Helmet prioritizeSeoTags>
   <title>{product.name}</title>
-  <link rel="notImportant" href="https://www.chipotle.com" />
-  <meta name="description" property="og:description" content={product.description} />
-  <link rel="canonical" href="https://www.tacobell.com" />
-  <meta property="og:title" content="A very important title"/>
+
+  {/* Basic Meta */}
+  <meta name="description" content={product.description} />
+
+  {/* Open Graph Tags */}
+  <meta property="og:title" content={product.name} />
+  <meta property="og:description" content={product.description} />
+  <meta property="og:image" content={product.images[0]} />
+  <meta property="og:url" content={window.location.href} />
+  <meta property="og:type" content="product" />
+
+  {/* Twitter Tags */}
+  <meta name="twitter:title" content={product.name} />
+  <meta name="twitter:description" content={product.description} />
+  <meta name="twitter:image" content={product.images[0]} />
+  <meta name="twitter:card" content="summary_large_image" />
 </Helmet>
+
 
   return (
     <div className="min-h-screen">
