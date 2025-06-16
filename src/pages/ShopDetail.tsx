@@ -495,9 +495,12 @@ const ShopDetail: React.FC = () => {
                             <span className="text-base font-bold text-blue-600 dark:text-blue-400">
                               ${product.price}
                             </span>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">
-                              Stock: {product.stock_quantity}
-                            </span>
+<div className="flex items-center">
+                                <Star className="h-3 w-3 text-yellow-400 mr-0.5" />
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                  {product.seller?.rating?.toFixed(1) || "N/A"}
+                                </span>
+                              </div>
                           </div>
                         </div>
                       </Link>
