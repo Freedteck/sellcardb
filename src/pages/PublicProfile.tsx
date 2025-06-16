@@ -125,7 +125,11 @@ const PublicProfile: React.FC = () => {
     );
   }
 
-  <Helmet prioritizeSeoTags>
+  const profileUrl = window.location.href;
+
+  return (
+    <div className="min-h-screen">
+        <Helmet prioritizeSeoTags>
   <title>{profile.business_name}</title>
 
   {/* Basic Meta */}
@@ -144,12 +148,6 @@ const PublicProfile: React.FC = () => {
   <meta name="twitter:image" content={profile.images[0]} />
   <meta name="twitter:card" content="summary_large_image" />
 </Helmet>
-
-
-  const profileUrl = window.location.href;
-
-  return (
-    <div className="min-h-screen">
       {/* Header */}
       <motion.div
         initial={{ y: -100 }}
