@@ -493,7 +493,7 @@ const ShopDetail: React.FC = () => {
                           {/* Price and stock info */}
                           <div className="flex justify-between items-center mt-auto">
                             <span className="text-base font-bold text-blue-600 dark:text-blue-400">
-                              ${product.price} 
+                              ${product.price}
                             </span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               Stock: {product.stock_quantity}
