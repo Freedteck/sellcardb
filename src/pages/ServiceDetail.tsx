@@ -226,22 +226,22 @@ const ServiceDetail: React.FC = () => {
   }
 
   <Helmet prioritizeSeoTags>
-  <title>{product.name}</title>
+  <title>{service.name}</title>
 
   {/* Basic Meta */}
-  <meta name="description" content={product.description} />
+  <meta name="description" content={service.description} />
 
   {/* Open Graph Tags */}
-  <meta property="og:title" content={product.name} />
-  <meta property="og:description" content={product.description} />
-  <meta property="og:image" content={product.images[0]} />
+  <meta property="og:title" content={service.name} />
+  <meta property="og:description" content={service.description} />
+  <meta property="og:image" content={service.images[0]} />
   <meta property="og:url" content={window.location.href} />
-  <meta property="og:type" content="product" />
+  <meta property="og:type" content="service" />
 
   {/* Twitter Tags */}
-  <meta name="twitter:title" content={product.name} />
-  <meta name="twitter:description" content={product.description} />
-  <meta name="twitter:image" content={product.images[0]} />
+  <meta name="twitter:title" content={service.name} />
+  <meta name="twitter:description" content={service.description} />
+  <meta name="twitter:image" content={service.images[0]} />
   <meta name="twitter:card" content="summary_large_image" />
 </Helmet>
 
