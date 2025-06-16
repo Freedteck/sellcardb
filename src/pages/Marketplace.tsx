@@ -266,8 +266,8 @@ const Marketplace: React.FC = () => {
     if (searchTerm) filters.push(`Search: ${searchTerm}`);
     if (selectedCategory) filters.push(`Category: ${selectedCategory}`);
     if (locationFilter) filters.push(`Location: ${locationFilter}`);
-    if (priceRange.min) filters.push(`Min: $${priceRange.min}`);
-    if (priceRange.max) filters.push(`Max: $${priceRange.max}`);
+    if (priceRange.min) filters.push(`Min: ₦${priceRange.min}`);
+    if (priceRange.max) filters.push(`Max: ₦${priceRange.max}`);
     setActiveFilters(filters);
   };
 
@@ -718,7 +718,7 @@ const Marketplace: React.FC = () => {
                               <div className="mt-auto">
                                 <div className="flex items-center justify-between">
                                   <span className="text-base font-bold text-blue-600 dark:text-blue-400">
-                                    ${product.price}
+                                    ₦{product.price}
                                   </span>
                                   {/* Optional: Add favorite icon or other actions */}
                                   <div className="flex items-center">
@@ -814,7 +814,7 @@ const Marketplace: React.FC = () => {
                               <div>
                                 {service.price ? (
                                   <span className="text-base font-bold text-blue-600 dark:text-blue-400">
-                                    ${service.price}
+                                    ₦{service.price}
                                   </span>
                                 ) : (
                                   <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
@@ -1051,7 +1051,7 @@ const Marketplace: React.FC = () => {
                               <div>
                                 {item.price ? (
                                   <span className="text-base font-bold text-blue-600 dark:text-blue-400">
-                                    ${item.price}
+                                    ₦{item.price}
                                   </span>
                                 ) : (
                                   <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
