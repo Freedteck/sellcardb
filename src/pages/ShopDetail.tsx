@@ -194,7 +194,7 @@ const ShopDetail: React.FC = () => {
     <div className="min-h-screen pb-20">
       <Helmet prioritizeSeoTags>
   <title>{seller.business_name}</title>
-
+ 
   {/* Basic Meta */}
   <meta name="description" content={seller.description} />
 
