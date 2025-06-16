@@ -24,6 +24,7 @@ import ReviewForm from "../components/ReviewForm";
 import ReviewsList from "../components/ReviewsList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import toast from "react-hot-toast";
+import {Helmet} from "react-helmet-async";
 
 const ServiceDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -223,6 +224,27 @@ const ServiceDetail: React.FC = () => {
       </div>
     );
   }
+
+  <Helmet prioritizeSeoTags>
+  <title>{product.name}</title>
+
+  {/* Basic Meta */}
+  <meta name="description" content={product.description} />
+
+  {/* Open Graph Tags */}
+  <meta property="og:title" content={product.name} />
+  <meta property="og:description" content={product.description} />
+  <meta property="og:image" content={product.images[0]} />
+  <meta property="og:url" content={window.location.href} />
+  <meta property="og:type" content="product" />
+
+  {/* Twitter Tags */}
+  <meta name="twitter:title" content={product.name} />
+  <meta name="twitter:description" content={product.description} />
+  <meta name="twitter:image" content={product.images[0]} />
+  <meta name="twitter:card" content="summary_large_image" />
+</Helmet>
+
 
   return (
     <div className="min-h-screen">
