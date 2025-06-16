@@ -218,7 +218,7 @@ const Products: React.FC = () => {
                   
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                      ${product.price}
+                      ₦{product.price}
                     </span>
                     <span className="text-sm text-gray-500 dark:text-gray-400">
                       Stock: {product.stock_quantity}
