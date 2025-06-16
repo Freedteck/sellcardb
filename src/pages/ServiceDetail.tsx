@@ -301,7 +301,7 @@ const ServiceDetail: React.FC = () => {
                 {service.duration_days && (
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 mr-1" />
-                    {service.duration_days} days
+                    Delivers in {service.duration_days} days
                   </div>
                 )}
               </div>
