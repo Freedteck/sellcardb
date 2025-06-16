@@ -529,74 +529,74 @@ const ShopDetail: React.FC = () => {
               exit={{ opacity: 0, y: -20 }}
             >
               {services.length > 0 ? (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                   {services.map((service, index) => (
                     <motion.div
                       key={service.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="mobile-card overflow-hidden hover:shadow-lg transition-all"
+                      className="group overflow-hidden hover:shadow-lg transition-all rounded-lg border border-gray-100 dark:border-gray-700 relative"
                     >
-                      {service.images.length > 0 && (
-                        <div className="aspect-square overflow-hidden">
-                          <img
-                            src={service.images[0]}
-                            alt={service.name}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                      )}
-
-                      <div className="p-3">
-                        <h3
-                          className="font-semibold mb-1 line-clamp-1 text-sm"
-                          style={{ color: "var(--text-primary)" }}
-                        >
-                          {service.name}
-                        </h3>
-
-                        <p
-                          className="text-xs mb-2 line-clamp-2"
-                          style={{ color: "var(--text-muted)" }}
-                        >
-                          {service.description}
-                        </p>
-
-                        <div className="flex items-center justify-between mb-3">
-                          {service.price ? (
-                            <span className="text-lg font-bold text-green-600 dark:text-green-400">
-                              ${service.price}
+                      <Link
+                        to={`/service/${service.id}`}
+                        className="block h-full"
+                      >
+                        {/* Image with duration days badge */}
+                        {service.images.length > 0 && (
+                          <div className="relative pt-[100%] overflow-hidden">
+                            <img
+                              src={service.images[0]}
+                              alt={service.name}
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            {service.duration_days && (
+                              <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center">
+                                <Calendar className="h-3 w-3 mr-1" />
+                                {service.duration_days}d
+                              </span>
+                            )}
+                            <span className="absolute top-2 right-2 bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
+                              <Users className="h-4 w-4 text-green-500" />
                             </span>
-                          ) : (
-                            <span className="text-sm font-medium text-green-600 dark:text-green-400">
-                              Custom Pricing
-                            </span>
-                          )}
-                          {service.duration_days && (
-                            <div
-                              className="flex items-center text-xs"
-                              style={{ color: "var(--text-muted)" }}
-                            >
-                              <Calendar className="h-3 w-3 mr-1" />
-                              {service.duration_days} days
-                            </div>
-                          )}
-                        </div>
+                          </div>
+                        )}
 
-                        <Link
-                          to={`/service/${service.id}`}
-                          className="mobile-button block w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-center text-sm"
-                        >
-                          View Details
-                        </Link>
-                      </div>
+                        {/* Service info */}
+                        <div className="p-2 flex flex-col">
+                          <h3
+                            className="font-semibold line-clamp-2 text-sm mb-1"
+                            style={{ color: "var(--text-primary)" }}
+                          >
+                            {service.name}
+                          </h3>
+
+                          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+                            {service.description}
+                          </p>
+
+                          {/* Price and optional info */}
+                          <div className="flex justify-between items-center mt-auto">
+                            {service.price ? (
+                              <span className="text-base font-bold text-green-600 dark:text-green-400">
+                                ${service.price}
+                              </span>
+                            ) : (
+                              <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                                Custom
+                              </span>
+                            )}
+
+                            {/* Additional service info could go here */}
+                          </div>
+                        </div>
+                      </Link>
                     </motion.div>
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <Users className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                  <Users className="h-16 w-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
                   <h3
                     className="text-lg font-medium mb-2"
                     style={{ color: "var(--text-primary)" }}
