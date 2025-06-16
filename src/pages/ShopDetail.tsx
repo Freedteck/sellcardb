@@ -183,8 +183,16 @@ const ShopDetail: React.FC = () => {
       </div>
     );
   }
+  
+  const totalItems = products.length + services.length;
+  const memberSince = new Date(seller.created_at).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+  });
 
-  <Helmet prioritizeSeoTags>
+  return (
+    <div className="min-h-screen pb-20">
+      <Helmet prioritizeSeoTags>
   <title>{seller.business_name}</title>
 
   {/* Basic Meta */}
@@ -203,16 +211,6 @@ const ShopDetail: React.FC = () => {
   <meta name="twitter:image" content={seller.cover_image_url || seller.avatar_url} />
   <meta name="twitter:card" content="summary_large_image" />
 </Helmet>
-
-
-  const totalItems = products.length + services.length;
-  const memberSince = new Date(seller.created_at).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-  });
-
-  return (
-    <div className="min-h-screen pb-20">
       <MobileHeader
         title={seller.business_name}
         showBack
