@@ -219,7 +219,7 @@ const Services: React.FC = () => {
                   <div className="flex items-center justify-between mb-4">
                     {service.price ? (
                       <span className="text-2xl font-bold text-green-600 dark:text-green-400">
-                        ${service.price}
+                        ₦{service.price}
                       </span>
                     ) : (
                       <span className="text-lg font-semibold text-green-600 dark:text-green-400">
