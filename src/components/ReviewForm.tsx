@@ -97,7 +97,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           </button>
         </div>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {/* Rating */}
           <div className="text-center">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
@@ -181,7 +181,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
               type="submit"
               disabled={submitting || rating === 0}
               className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center touch-target"
-              onClick={handleSubmit}
             >
               {submitting ? (
                 <>
