@@ -294,10 +294,10 @@ const ServiceDetail: React.FC = () => {
                 <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
                   {service.category}
                 </span>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <Eye className="h-4 w-4 mr-1" />
                   {service.view_count} views
-                </div>
+                </div> */}
                 {service.duration_days && (
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 mr-1" />
