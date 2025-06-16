@@ -44,7 +44,7 @@ const ShopDetail: React.FC = () => {
       fetchShopData();
       incrementViewCount();
     }
-    console.log(refreshKey)
+    console.log(refreshKey);
   }, [sellerId, refreshKey]);
 
   const fetchShopData = async () => {
@@ -143,7 +143,7 @@ const ShopDetail: React.FC = () => {
   const handleReviewSubmitted = () => {
     // Refresh seller data to update rating
     // fetchShopData();
-    setRefreshKey((prev) => prev + 1)
+    setRefreshKey((prev) => prev + 1);
   };
 
   if (loading) {
@@ -276,7 +276,7 @@ const ShopDetail: React.FC = () => {
                     <div className="flex items-center mb-1">
                       <RatingStars
                         rating={seller.rating}
-                        size="xs sm:sm" 
+                        size="xs sm:sm"
                         className="mr-1 sm:mr-2"
                       />
                       <span
@@ -291,7 +291,7 @@ const ShopDetail: React.FC = () => {
                       style={{ color: "var(--text-muted)" }}
                     >
                       {seller.total_reviews} review
-                      {seller.total_reviews <=1 < 640 ? "" : "s"}
+                      {seller.total_reviews <= 1 < 640 ? "" : "s"}
                     </p>
                   </div>
 
@@ -448,65 +448,65 @@ const ShopDetail: React.FC = () => {
               exit={{ opacity: 0, y: -20 }}
             >
               {products.length > 0 ? (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                   {products.map((product, index) => (
                     <motion.div
                       key={product.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="mobile-card overflow-hidden hover:shadow-lg transition-all"
+                      className="group overflow-hidden hover:shadow-lg transition-all rounded-lg border border-gray-100 dark:border-gray-700 relative"
                     >
-                      {product.images.length > 0 && (
-                        <div className="aspect-square overflow-hidden">
-                          <img
-                            src={product.images[0]}
-                            alt={product.name}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                      )}
+                      <Link
+                        to={`/product/${product.id}`}
+                        className="block h-full"
+                      >
+                        {/* Image with absolute category badge */}
+                        {product.images.length > 0 && (
+                          <div className="relative pt-[100%] overflow-hidden">
+                            <img
+                              src={product.images[0]}
+                              alt={product.name}
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            {product.category && (
+                              <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+                                {product.category}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
-                      <div className="p-3">
-                        <h3
-                          className="font-semibold mb-1 line-clamp-1 text-sm"
-                          style={{ color: "var(--text-primary)" }}
-                        >
-                          {product.name}
-                        </h3>
-
-                        <p
-                          className="text-xs mb-2 line-clamp-2"
-                          style={{ color: "var(--text-muted)" }}
-                        >
-                          {product.description}
-                        </p>
-
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                            ${product.price}
-                          </span>
-                          <span
-                            className="text-xs"
-                            style={{ color: "var(--text-muted)" }}
+                        {/* Product info */}
+                        <div className="p-2 flex flex-col">
+                          <h3
+                            className="font-semibold line-clamp-2 text-sm mb-1"
+                            style={{ color: "var(--text-primary)" }}
                           >
-                            Stock: {product.stock_quantity}
-                          </span>
-                        </div>
+                            {product.name}
+                          </h3>
 
-                        <Link
-                          to={`/product/${product.id}`}
-                          className="mobile-button block w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-sm"
-                        >
-                          View Details
-                        </Link>
-                      </div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+                            {product.description}
+                          </p>
+
+                          {/* Price and stock info */}
+                          <div className="flex justify-between items-center mt-auto">
+                            <span className="text-base font-bold text-blue-600 dark:text-blue-400">
+                              ${product.price}
+                            </span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                              Stock: {product.stock_quantity}
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
                     </motion.div>
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                  <Package className="h-16 w-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
                   <h3
                     className="text-lg font-medium mb-2"
                     style={{ color: "var(--text-primary)" }}
@@ -653,9 +653,13 @@ const ShopDetail: React.FC = () => {
                     </p>
                   </div>
                 </div>
-              </div> 
+              </div>
 
-              <ReviewsList sellerId={seller.id} refreshKey={refreshKey} showAll />
+              <ReviewsList
+                sellerId={seller.id}
+                refreshKey={refreshKey}
+                showAll
+              />
             </motion.div>
           )}
 
