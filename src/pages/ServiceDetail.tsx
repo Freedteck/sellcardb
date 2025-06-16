@@ -225,7 +225,9 @@ const ServiceDetail: React.FC = () => {
     );
   }
 
-  <Helmet prioritizeSeoTags>
+  return (
+    <div className="min-h-screen">
+        <Helmet prioritizeSeoTags>
   <title>{service.name}</title>
 
   {/* Basic Meta */}
@@ -244,10 +246,6 @@ const ServiceDetail: React.FC = () => {
   <meta name="twitter:image" content={service.images[0]} />
   <meta name="twitter:card" content="summary_large_image" />
 </Helmet>
-
-
-  return (
-    <div className="min-h-screen">
       <Header />
 
       <motion.div
