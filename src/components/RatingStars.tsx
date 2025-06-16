@@ -41,6 +41,7 @@ const RatingStars: React.FC<RatingStarsProps> = ({
         return (
           <motion.button
             key={index}
+            type="button"
             onClick={() => handleStarClick(starRating)}
             disabled={!interactive}
             whileHover={interactive ? { scale: 1.1 } : {}}
