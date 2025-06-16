@@ -317,7 +317,7 @@ const ProductDetail: React.FC = () => {
               </div>
 
               <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4">
-                ${product.price}
+                ₦{product.price}
               </div>
 
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
