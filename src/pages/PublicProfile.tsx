@@ -9,6 +9,7 @@ import QRCodeGenerator from '../components/QRCodeGenerator';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ThemeToggle from '../components/ThemeToggle';
 import toast from 'react-hot-toast';
+import {Helmet} from "react-helmet-async";
 
 const PublicProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
