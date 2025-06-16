@@ -553,7 +553,7 @@ const ShopDetail: React.FC = () => {
                             {service.duration_days && (
                               <span className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-200 text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center">
                                 <Calendar className="h-3 w-3 mr-1" />
-                                {service.duration_days}d
+                                Delivers in {service.duration_days} days
                               </span>
                             )}
                             <span className="absolute top-2 right-2 bg-white/80 dark:bg-gray-800/80 p-1 rounded-full backdrop-blur-sm">
