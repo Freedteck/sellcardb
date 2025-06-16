@@ -289,7 +289,7 @@ END:VCARD`;
                       </div>
                       {item.price && (
                         <span className="font-bold text-blue-600 dark:text-blue-400">
-                          ${item.price}
+                          ₦{item.price}
                         </span>
                       )}
                     </div>
