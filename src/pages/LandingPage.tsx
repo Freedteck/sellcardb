@@ -27,7 +27,6 @@ const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen pb-20">
       <MobileHeader title="ShopLink" />
-      lll
       <div className="fixed top-12 right-4 z-50">
         <a
           href="https://bolt.new/"
