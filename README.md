@@ -1,1 +1,1 @@
-sell-card
+shop-link

@@ -48,7 +48,7 @@ const ServiceDetail: React.FC = () => {
       fetchService();
       incrementViewCount();
     }
-    console.log(refreshKey)
+    console.log(refreshKey);
   }, [id, refreshKey]);
 
   const fetchService = async () => {
@@ -170,8 +170,8 @@ const ServiceDetail: React.FC = () => {
   const shareService = () => {
     const serviceUrl = window.location.href;
     const shareText = service
-      ? `Check out ${service.name} on SellCard`
-      : "Check out this service on SellCard";
+      ? `Check out ${service.name} on ShopLink`
+      : "Check out this service on ShopLink";
 
     if (navigator.share) {
       navigator.share({

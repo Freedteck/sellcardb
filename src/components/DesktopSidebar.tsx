@@ -75,7 +75,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ isCollapsed, onToggleCo
               <Link to={user ? "/dashboard" : "/"} className="flex items-center space-x-3">
                 <Store className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                 <span className="text-xl font-bold text-gray-900 dark:text-white">
-                  SellCard
+                  ShopLink
                 </span>
               </Link>
             )}

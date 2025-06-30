@@ -94,7 +94,7 @@ const ShopDetail: React.FC = () => {
   const handleContactSeller = (method: "whatsapp" | "phone" | "email") => {
     if (!seller) return;
 
-    const message = `Hi! I found your shop on SellCard. I'm interested in your products/services.`;
+    const message = `Hi! I found your shop on ShopLink. I'm interested in your products/services.`;
 
     switch (method) {
       case "whatsapp":
@@ -127,8 +127,8 @@ const ShopDetail: React.FC = () => {
   const shareShop = () => {
     const shopUrl = window.location.href;
     const shareText = seller
-      ? `Check out ${seller.business_name} on SellCard`
-      : "Check out this shop on SellCard";
+      ? `Check out ${seller.business_name} on ShopLink`
+      : "Check out this shop on ShopLink";
 
     if (navigator.share) {
       navigator.share({

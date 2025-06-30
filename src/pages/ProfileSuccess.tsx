@@ -60,7 +60,7 @@ const ProfileSuccess: React.FC = () => {
     if (!profile) return;
     
     const profileUrl = `${window.location.origin}/profile/${profile.id}`;
-    const shareText = `Check out ${profile.business_name} on SellCard`;
+    const shareText = `Check out ${profile.business_name} on ShopLink`;
     
     if (navigator.share) {
       navigator.share({
@@ -124,7 +124,7 @@ const ProfileSuccess: React.FC = () => {
             Profile Created Successfully!
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Your professional SellCard is ready to share with the world
+            Your professional ShopLink is ready to share with the world
           </p>
         </motion.div>
 

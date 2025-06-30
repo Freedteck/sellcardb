@@ -351,7 +351,7 @@ END:VCARD`;
                     href={seller.website.startsWith('http') ? seller.website : `https://${seller.website}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-900/40 transition-colors touch-target"
+                    className="p-3 bg-indigo-100  dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-900/40 transition-colors touch-target"
                   >
                     <Globe size={20} />
                   </a>
@@ -390,14 +390,14 @@ END:VCARD`;
           </p>
         </div>
         
-        {/* Powered by SellCard */}
+        {/* Powered by ShopLink */}
         <div className="text-center mt-6">
           <Link
             to="/"
             className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
           >
             <Store className="h-4 w-4 mr-1" />
-            <span className="text-sm">Powered by SellCard</span>
+            <span className="text-sm">Powered by ShopLink</span>
           </Link>
         </div>
       </motion.div>

@@ -9,15 +9,15 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
             <Store className="h-8 w-8 text-blue-400" />
-            <span className="text-2xl font-bold">SellCard</span>
+            <span className="text-2xl font-bold">ShopLink</span>
           </div>
           <p className="text-gray-400 text-center md:text-right">
-            © 2025 SellCard. Built for small business owners.
+            © 2025 ShopLink. Built for small business owners.
           </p>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-800 text-center">
           <Link to="/create" className="text-blue-400 hover:text-blue-300 transition-colors">
-            Create your own SellCard
+            Create your own ShopLink
           </Link>
         </div>
       </div>

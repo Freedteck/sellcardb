@@ -57,7 +57,7 @@ const ContactMethods: React.FC<ContactMethodsProps> = ({ methods, businessName }
     
     switch (method.type) {
       case 'whatsapp':
-        const message = `Hi! I found your business profile on SellCard. I'm interested in your products/services.`;
+        const message = `Hi! I found your business profile on ShopLink. I'm interested in your products/services.`;
         url = `https://wa.me/${method.value.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
         break;
       case 'instagram':

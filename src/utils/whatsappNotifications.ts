@@ -36,7 +36,7 @@ ${customerEmail ? `📧 Email: ${customerEmail}` : ''}
 
 🔗 Respond here: ${responseLink}
 
-Powered by SellCard 🛍️`;
+Powered by ShopLink 🛍️`;
 
   const whatsappUrl = `https://wa.me/${sellerWhatsApp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(notificationMessage)}`;
   
@@ -58,5 +58,5 @@ ${responseMessage}
 Feel free to ask if you have any other questions!
 
 Best regards,
-Your SellCard Seller 🛍️`;
+Your ShopLink Seller 🛍️`;
 };

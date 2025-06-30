@@ -340,7 +340,7 @@ const BusinessCard: React.FC = () => {
                 <div className="mt-4 text-center">
                   <div className="text-xs text-gray-500 mb-1">Powered by</div>
                   <div className="text-sm font-bold" style={{ color: colors.primary }}>
-                    SellCard
+                    ShopLink
                   </div>
                 </div>
               </div>

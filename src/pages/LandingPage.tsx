@@ -26,7 +26,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen pb-20">
-      <MobileHeader title="SellCard" />
+      <MobileHeader title="ShopLink" />
       
       {/* Hero Section */}
       <motion.section
@@ -165,7 +165,7 @@ const LandingPage: React.FC = () => {
                   transition={{ duration: 0.5 }}
                   className={`${feature.iconColor} text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}
                 >
-                  <feature.icon size={24} />
+                  <feature.icon className="h-6 w-6" />
                 </motion.div>
                 <h3 className="text-lg lg:text-xl font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                   {feature.title}
@@ -315,7 +315,7 @@ const LandingPage: React.FC = () => {
             variants={itemVariants}
             className="text-lg lg:text-xl mb-8 text-blue-100"
           >
-            Join thousands of entrepreneurs who've built successful online businesses with SellCard
+            Join thousands of entrepreneurs who've built successful online businesses with ShopLink
           </motion.p>
           <motion.div
             variants={itemVariants}

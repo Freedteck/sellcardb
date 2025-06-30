@@ -169,8 +169,8 @@ const ProductDetail: React.FC = () => {
   const shareProduct = () => {
     const productUrl = window.location.href;
     const shareText = product
-      ? `Check out ${product.name} on SellCard`
-      : "Check out this product on SellCard";
+      ? `Check out ${product.name} on ShopLink`
+      : "Check out this product on ShopLink";
 
     if (navigator.share) {
       navigator.share({

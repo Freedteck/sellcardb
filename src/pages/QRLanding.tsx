@@ -140,14 +140,14 @@ const QRLanding: React.FC = () => {
           )}
         </div>
         
-        {/* Powered by SellCard */}
+        {/* Powered by ShopLink */}
         <div className="mt-6 text-center">
           <a
             href="/"
             className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
           >
             <Store className="h-4 w-4 mr-1" />
-            <span className="text-sm">Powered by SellCard</span>
+            <span className="text-sm">Powered by ShopLink</span>
           </a>
         </div>
       </motion.div>

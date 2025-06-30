@@ -53,14 +53,14 @@ const PublicProfile: React.FC = () => {
   const handleWhatsAppContact = () => {
     if (!profile) return;
     
-    const message = `Hi! I found your business profile on SellCard. I'm interested in your products/services.`;
+    const message = `Hi! I found your business profile on ShopLink. I'm interested in your products/services.`;
     const whatsappUrl = `https://wa.me/${profile.whatsapp_number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
   const shareProfile = () => {
     const profileUrl = window.location.href;
-    const shareText = profile ? `Check out ${profile.business_name} on SellCard` : 'Check out this business on SellCard';
+    const shareText = profile ? `Check out ${profile.business_name} on ShopLink` : 'Check out this business on ShopLink';
     
     if (navigator.share) {
       navigator.share({
@@ -161,7 +161,7 @@ const PublicProfile: React.FC = () => {
                 <Store className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </motion.div>
               <span className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                SellCard
+                ShopLink
               </span>
             </Link>
             <div className="flex items-center space-x-2">
@@ -369,7 +369,7 @@ const PublicProfile: React.FC = () => {
                 className="inline-flex items-center bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl"
               >
                 <Store size={20} className="mr-2" />
-                Create My SellCard
+                Create My ShopLink
               </Link>
             </motion.div>
           </div>

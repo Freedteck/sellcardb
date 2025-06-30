@@ -49,7 +49,7 @@ const Header: React.FC = () => {
               <Store className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 dark:text-blue-400" />
             </motion.div>
             <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              SellCard
+              ShopLink
             </span>
           </Link>
           
