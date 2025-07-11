@@ -167,7 +167,7 @@ const Dashboard: React.FC = () => {
       >
               {showGuide && <GuideModal seller={seller} onClose={() => setShowGuide(false)} />}
 
-      <div className="mobile-card p-4 mb-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 flex items-center justify-between">
+      <div className="mobile-card px-4 py-2 mb-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 flex items-center justify-between">
   <div className="flex items-center">
     <TrendingUp className="h-4 w-4 text-blue-600 mr-2" />
     <span className="text-sm text-blue-900 dark:text-blue-200 font-medium">
