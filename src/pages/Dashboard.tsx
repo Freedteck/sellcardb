@@ -159,7 +159,13 @@ const Dashboard: React.FC = () => {
       <MobileHeader 
         title="Dashboard"
       />
-      {showGuide && <GuideModal seller={seller} onClose={() => setShowGuide(false)} />}
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="px-4 py-6"
+      >
+              {showGuide && <GuideModal seller={seller} onClose={() => setShowGuide(false)} />}
 
       <div className="mobile-card p-4 mb-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 flex items-center justify-between">
   <div className="flex items-center">
@@ -175,12 +181,6 @@ const Dashboard: React.FC = () => {
     View Tips
   </button>
 </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="px-4 py-6"
-      >
         {/* Welcome Section */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
