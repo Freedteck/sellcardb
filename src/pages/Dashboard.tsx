@@ -161,9 +161,21 @@ const Dashboard: React.FC = () => {
       />
       {showGuide && <GuideModal seller={seller} onClose={() => setShowGuide(false)} />}
 
-<div className="bg-yellow-100 text-yellow-800 text-sm p-3 rounded-lg mb-4">
-  Want more customers? <button onClick={() => setShowGuide(true)} className="text-blue-600 underline">See tips</button>
+      <div className="mobile-card p-4 mb-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 flex items-center justify-between">
+  <div className="flex items-center">
+    <TrendingUp className="h-4 w-4 text-blue-600 mr-2" />
+    <span className="text-sm text-blue-900 dark:text-blue-200 font-medium">
+      Want more customers?
+    </span>
+  </div>
+  <button
+    onClick={() => setShowGuide(true)}
+    className="text-sm font-semibold text-blue-700 dark:text-blue-400 hover:underline"
+  >
+    View Tips
+  </button>
 </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
