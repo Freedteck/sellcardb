@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   CheckCircle,
@@ -81,7 +81,7 @@ const GuideModal: React.FC<GuideModalProps> = ({ seller, onClose }) => {
     }
   ];
 
-  const currentSteps = steps.slice(stepIndex, stepIndex + 2);
+  const currentStep = steps[stepIndex];
 
   const copyToClipboard = async (text: string, stepId: string) => {
     setCopying(stepId);
@@ -114,47 +114,41 @@ const GuideModal: React.FC<GuideModalProps> = ({ seller, onClose }) => {
           <TrendingUp className="h-5 w-5 mr-2" /> How to Get More Customers
         </h2>
 
-        {currentSteps.map((step) => {
-          const StepIcon = step.icon;
-          return (
-            <div key={step.id} className="mb-4 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-              <div className="flex items-center mb-2">
-                <StepIcon className="h-5 w-5 mr-2 text-blue-600" />
-                <h3 className="font-semibold text-sm text-gray-800 dark:text-white">{step.title}</h3>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{step.instruction}</p>
-              {step.content && (
-                <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded text-sm text-gray-800 dark:text-white mb-2">
-                  {step.content}
-                </div>
-              )}
-              {step.actionType === 'copy' && step.content && (
-                <button
-                  onClick={() => copyToClipboard(step.content!, step.id)}
-                  disabled={copying === step.id}
-                  className="flex items-center text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-                >
-                  <Copy className="h-4 w-4 mr-1" />
-                  {copying === step.id ? 'Copying...' : step.actionLabel}
-                </button>
-              )}
-              {step.actionType === 'download' && (
-                <button
-                  onClick={downloadQRCode}
-                  className="flex items-center text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded"
-                >
-                  <Download className="h-4 w-4 mr-1" />
-                  {step.actionLabel}
-                </button>
-              )}
+        <div className="mb-4 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+          <div className="flex items-center mb-2">
+            <currentStep.icon className="h-5 w-5 mr-2 text-blue-600" />
+            <h3 className="font-semibold text-sm text-gray-800 dark:text-white">{currentStep.title}</h3>
+          </div>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{currentStep.instruction}</p>
+          {currentStep.content && (
+            <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded text-sm text-gray-800 dark:text-white mb-2">
+              {currentStep.content}
             </div>
-          );
-        })}
+          )}
+          {currentStep.actionType === 'copy' && currentStep.content && (
+            <button
+              onClick={() => copyToClipboard(currentStep.content!, currentStep.id)}
+              disabled={copying === currentStep.id}
+              className="flex items-center text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+            >
+              <Copy className="h-4 w-4 mr-1" />
+              {copying === currentStep.id ? 'Copying...' : currentStep.actionLabel}
+            </button>
+          )}
+          {currentStep.actionType === 'download' && (
+            <button
+              onClick={downloadQRCode}
+              className="flex items-center text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded"
+            >
+              <Download className="h-4 w-4 mr-1" />
+              {currentStep.actionLabel}
+            </button>
+          )}
+        </div>
 
-        {/* Navigation */}
         <div className="flex justify-between items-center mt-4">
           <button
-            onClick={() => setStepIndex(Math.max(0, stepIndex - 2))}
+            onClick={() => setStepIndex(Math.max(0, stepIndex - 1))}
             disabled={stepIndex === 0}
             className="flex items-center text-sm text-gray-600 dark:text-gray-300 disabled:opacity-40"
           >
@@ -162,8 +156,8 @@ const GuideModal: React.FC<GuideModalProps> = ({ seller, onClose }) => {
           </button>
 
           <button
-            onClick={() => setStepIndex(Math.min(steps.length - 1, stepIndex + 2))}
-            disabled={stepIndex + 2 >= steps.length}
+            onClick={() => setStepIndex(Math.min(steps.length - 1, stepIndex + 1))}
+            disabled={stepIndex === steps.length - 1}
             className="flex items-center text-sm text-gray-600 dark:text-gray-300 disabled:opacity-40"
           >
             Next <ArrowRight className="h-4 w-4 ml-1" />
