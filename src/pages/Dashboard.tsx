@@ -7,8 +7,7 @@ import { supabase, Seller, Product, Service, Inquiry } from '../lib/supabase';
 import MobileHeader from '../components/MobileHeader';
 import FloatingActionButton from '../components/FloatingActionButton';
 import LoadingSpinner from '../components/LoadingSpinner';
-import BoostShopButton from '../components/BoostShopButton';
-import BoostShopModal from '../components/BoostShopModal';
+import CustomerAcquisitionGuide from '../components/CustomerAcquisitionGuide';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -24,7 +23,6 @@ const Dashboard: React.FC = () => {
   });
   const [recentInquiries, setRecentInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showBoostModal, setShowBoostModal] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -350,19 +348,18 @@ const Dashboard: React.FC = () => {
           )}
         </motion.div>
       </motion.div>
+        {/* Customer Acquisition Guide */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          <CustomerAcquisitionGuide seller={seller} />
+        </motion.div>
+
 
       {/* Floating Action Button */}
       <FloatingActionButton />
-      
-      {/* Boost Shop Button */}
-      <BoostShopButton onClick={() => setShowBoostModal(true)} />
-      
-      {/* Boost Shop Modal */}
-      <BoostShopModal 
-        isOpen={showBoostModal}
-        onClose={() => setShowBoostModal(false)}
-        seller={seller}
-      />
     </div>
   );
 };
