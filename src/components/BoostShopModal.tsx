@@ -47,9 +47,7 @@ const BoostShopModal: React.FC<BoostShopModalProps> = ({ isOpen, onClose, seller
               stiffness: 200,
               duration: 0.3
             }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-gray-900 z-50 overflow-hidden shadow-2xl
-                       sm:max-w-lg md:max-w-xl lg:max-w-2xl
-                       sm:right-4 sm:top-4 sm:bottom-4 sm:rounded-2xl"
+            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-gray-900 z-50 shadow-2xl sm:max-w-lg md:max-w-xl lg:max-w-2xl sm:right-4 sm:top-4 sm:bottom-4 sm:rounded-2xl flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 sticky top-0 z-10">
