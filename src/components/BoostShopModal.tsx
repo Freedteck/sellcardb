@@ -78,62 +78,6 @@ const BoostShopModal: React.FC<BoostShopModalProps> = ({ isOpen, onClose, seller
 </div>
 
           </motion.div>
-
-          {/* Mobile Bottom Sheet Alternative */}
-          <motion.div
-            initial={{ 
-              opacity: 0, 
-              y: '100%'
-            }}
-            animate={{ 
-              opacity: 1, 
-              y: 0
-            }}
-            exit={{ 
-              opacity: 0, 
-              y: '100%'
-            }}
-            transition={{ 
-              type: 'spring', 
-              damping: 25, 
-              stiffness: 200,
-              duration: 0.3
-            }}
-            className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 z-50 max-h-[90vh] overflow-hidden rounded-t-3xl shadow-2xl"
-          >
-            {/* Handle */}
-            <div className="flex justify-center pt-3 pb-2">
-              <div className="w-10 h-1 bg-gray-300 dark:bg-gray-600 rounded-full" />
-            </div>
-
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-3">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-lg">
-                  <TrendingUp className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                    Boost My Shop
-                  </h2>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Get more customers
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={onClose}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors touch-target"
-              >
-                <X size={20} className="text-gray-500 dark:text-gray-400" />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto p-4">
-              <CustomerAcquisitionGuide seller={seller} />
-            </div>
-          </motion.div>
         </>
       )}
     </AnimatePresence>
