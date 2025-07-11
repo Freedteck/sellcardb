@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  CheckCircle, 
-  Circle, 
-  Copy, 
-  Link, 
-  QrCode, 
-  MessageSquare, 
-  Gallery,
-  Download,
-  Users,
-  TrendingUp
-} from 'lucide-react';
+import { CheckCircle, Circle, Copy, Link, QrCode, MessageSquare, GalleryVertical as Gallery, Download, Users, TrendingUp } from 'lucide-react';
 import { Seller } from '../lib/supabase';
 import toast from 'react-hot-toast';
 
