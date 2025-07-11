@@ -77,6 +77,7 @@ const MobileBottomNav: React.FC = () => {
             {/* Expanded Add Options */}
             <AnimatePresence>
               {isAddExpanded && (
+          <>
                 {/* Tap-away backdrop */}
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -126,6 +127,7 @@ const MobileBottomNav: React.FC = () => {
                     </motion.div>
                   ))}
                 </motion.div>
+          </>
               )}
             </AnimatePresence>
 
