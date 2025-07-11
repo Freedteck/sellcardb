@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Search, Plus, MessageSquare, User, Package, Users } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const MobileBottomNav: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const { user } = useAuth();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -15,19 +14,28 @@ const MobileBottomNav: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
-      
       setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  useEffect(() => {
+    setIsAddExpanded(false);
+  }, [location.pathname]);
+
+  const isActive = (path: string) => {
+    if (path === '/' && location.pathname === '/') return true;
+    if (path === '/dashboard' && location.pathname === '/dashboard') return true;
+    if (path !== '/' && location.pathname.startsWith(path)) return true;
+    return false;
+  };
 
   const handleAddClick = () => {
     setIsAddExpanded(!isAddExpanded);
@@ -56,7 +64,7 @@ const MobileBottomNav: React.FC = () => {
       id: 'add',
       label: 'Add',
       icon: Plus,
-      path: user ? '/dashboard/products/new' : '/signup',
+      path: '',
       activeColor: 'text-purple-500',
       isSpecial: true
     },
@@ -76,13 +84,6 @@ const MobileBottomNav: React.FC = () => {
     }
   ];
 
-  const isActive = (path: string) => {
-    if (path === '/' && location.pathname === '/') return true;
-    if (path === '/dashboard' && location.pathname === '/dashboard') return true;
-    if (path !== '/' && location.pathname.startsWith(path)) return true;
-    return false;
-  };
-
   return (
     <AnimatePresence>
       {isVisible && (
@@ -92,16 +93,65 @@ const MobileBottomNav: React.FC = () => {
           exit={{ y: 100 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-t border-gray-200/50 dark:border-gray-800/50 safe-area-bottom"
-          style={{
-            background: 'var(--nav-bg)',
-            borderColor: 'var(--nav-border)',
-          }}
         >
           <div className="flex items-center justify-around px-2 py-2 max-w-md mx-auto">
             {tabs.map((tab) => {
               const active = isActive(tab.path);
               const Icon = tab.icon;
-              
+
+              if (tab.id === 'add') {
+                return (
+                  <div key="add" className="relative flex flex-col items-center justify-center min-w-0 flex-1">
+                    <button
+                      onClick={handleAddClick}
+                      className="relative flex flex-col items-center justify-center py-2 px-1 min-h-12 min-w-12"
+                    >
+                      <motion.div
+                        whileTap={{ scale: 0.9 }}
+                        className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full p-3 shadow-lg"
+                      >
+                        <motion.div
+                          animate={{ rotate: isAddExpanded ? 45 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <Plus size={24} />
+                        </motion.div>
+                      </motion.div>
+                      <span className="text-xs mt-1 font-medium text-gray-700 dark:text-gray-200">Add</span>
+                    </button>
+
+                    {/* Expanded Add Options */}
+                    <AnimatePresence>
+                      {isAddExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          className="absolute bottom-14 flex flex-col space-y-2 z-50"
+                        >
+                          <Link
+                            to={user ? '/dashboard/products/new' : '/signup'}
+                            onClick={handleAddOptionClick}
+                            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md rounded-lg px-3 py-2 text-sm flex items-center space-x-2"
+                          >
+                            <Package size={16} className="text-blue-600" />
+                            <span className="text-gray-800 dark:text-white">Add Product</span>
+                          </Link>
+                          <Link
+                            to={user ? '/dashboard/services/new' : '/signup'}
+                            onClick={handleAddOptionClick}
+                            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md rounded-lg px-3 py-2 text-sm flex items-center space-x-2"
+                          >
+                            <Users size={16} className="text-green-600" />
+                            <span className="text-gray-800 dark:text-white">Add Service</span>
+                          </Link>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
               return (
                 <div key={tab.id} className="relative flex flex-col items-center justify-center min-w-0 flex-1">
                   <Link
@@ -110,43 +160,29 @@ const MobileBottomNav: React.FC = () => {
                   >
                     <motion.div
                       whileTap={{ scale: 0.85 }}
-                      className={`relative flex flex-col items-center justify-center ${
-                        tab.isSpecial 
-                          ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full p-3 shadow-lg'
-                          : 'p-2'
-                      }`}
+                      className={`relative flex flex-col items-center justify-center p-2`}
                     >
-                      {/* Active indicator */}
-                      {active && !tab.isSpecial && (
+                      {active && (
                         <motion.div
                           layoutId="activeTab"
                           className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-current rounded-full"
                           style={{ color: tab.activeColor.replace('text-', '') }}
                         />
                       )}
-                      
-                      <Icon 
-                        size={tab.isSpecial ? 24 : 22} 
+
+                      <Icon
+                        size={22}
                         className={
-                          tab.isSpecial 
-                            ? 'text-white' 
-                            : active 
-                              ? tab.activeColor 
-                              : 'text-gray-500 dark:text-gray-400'
+                          active ? tab.activeColor : 'text-gray-500 dark:text-gray-400'
                         }
                       />
-                      
-                      {!tab.isSpecial && (
-                        <span 
-                          className={`text-xs mt-1 font-medium ${
-                            active 
-                              ? tab.activeColor 
-                              : 'text-gray-500 dark:text-gray-400'
-                          }`}
-                        >
-                          {tab.label}
-                        </span>
-                      )}
+                      <span
+                        className={`text-xs mt-1 font-medium ${
+                          active ? tab.activeColor : 'text-gray-500 dark:text-gray-400'
+                        }`}
+                      >
+                        {tab.label}
+                      </span>
                     </motion.div>
                   </Link>
                 </div>
