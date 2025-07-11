@@ -127,7 +127,7 @@ const MobileBottomNav: React.FC = () => {
                     </motion.div>
                   ))}
                 </motion.div>
-          </>
+          </> 
               )}
             </AnimatePresence>
 
