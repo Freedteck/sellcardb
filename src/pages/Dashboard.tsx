@@ -7,7 +7,7 @@ import { supabase, Seller, Product, Service, Inquiry } from '../lib/supabase';
 import MobileHeader from '../components/MobileHeader';
 import FloatingActionButton from '../components/FloatingActionButton';
 import LoadingSpinner from '../components/LoadingSpinner';
-import CustomerAcquisitionGuide from '../components/CustomerAcquisitionGuide';
+import GuideModal from '../components/GuideModal';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -29,6 +29,7 @@ const Dashboard: React.FC = () => {
       fetchSellerData();
     }
   }, [user]);
+  const [showGuide, setShowGuide] = useState(false);
 
   const fetchSellerData = async () => {
     try {
@@ -158,7 +159,11 @@ const Dashboard: React.FC = () => {
       <MobileHeader 
         title="Dashboard"
       />
-      
+      {showGuide && <GuideModal seller={seller} onClose={() => setShowGuide(false)} />}
+
+<div className="bg-yellow-100 text-yellow-800 text-sm p-3 rounded-lg mb-4">
+  Want more customers? <button onClick={() => setShowGuide(true)} className="text-blue-600 underline">See tips</button>
+</div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -348,15 +353,6 @@ const Dashboard: React.FC = () => {
           )}
         </motion.div>
       </motion.div>
-        {/* Customer Acquisition Guide */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6 }}
-        >
-          <CustomerAcquisitionGuide seller={seller} />
-        </motion.div>
-
 
       {/* Floating Action Button */}
       <FloatingActionButton />
