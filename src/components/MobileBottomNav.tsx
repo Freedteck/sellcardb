@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Search, Plus, MessageSquare, User } from 'lucide-react';
+import { Home, Search, Plus, MessageSquare, User, Package, Users } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const MobileBottomNav: React.FC = () => {
@@ -10,6 +10,7 @@ const MobileBottomNav: React.FC = () => {
   const { user } = useAuth();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isAddExpanded, setIsAddExpanded] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +28,14 @@ const MobileBottomNav: React.FC = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  const handleAddClick = () => {
+    setIsAddExpanded(!isAddExpanded);
+  };
+
+  const handleAddOptionClick = () => {
+    setIsAddExpanded(false);
+  };
 
   const tabs = [
     {
