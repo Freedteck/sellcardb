@@ -73,9 +73,10 @@ const BoostShopModal: React.FC<BoostShopModalProps> = ({ isOpen, onClose, seller
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-              <CustomerAcquisitionGuide seller={seller} />
-            </div>
+            <div className="h-full overflow-y-auto p-4 sm:p-6">
+  <CustomerAcquisitionGuide seller={seller} />
+</div>
+
           </motion.div>
 
           {/* Mobile Bottom Sheet Alternative */}
