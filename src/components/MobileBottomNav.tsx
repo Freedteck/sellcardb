@@ -64,72 +64,73 @@ const MobileBottomNav: React.FC = () => {
   ];
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          exit={{ y: 100 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-t border-gray-200/50 dark:border-gray-800/50 safe-area-bottom"
-        >
-          <div className="relative">
-            {/* Expanded Add Options */}
-            <AnimatePresence>
-              {isAddExpanded && (
-          <>
-                {/* Tap-away backdrop */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={() => setIsAddExpanded(false)}
-                  className="fixed inset-0 z-40"
-                />
-            
-                {/* Expanded Add Options */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                  className="absolute -top-28 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-end space-y-3"
-                >
-                  {fabOptions.map((option, index) => (
-                    <motion.div
-                      key={option.label}
-                      initial={{ opacity: 0, scale: 0, y: 20 }}
-                      animate={{
-                        opacity: 1,
-                        scale: 1,
-                        y: 0,
-                        transition: { delay: index * 0.05 }
-                      }}
-                      exit={{
-                        opacity: 0,
-                        scale: 0,
-                        y: 20,
-                        transition: { delay: (fabOptions.length - 1 - index) * 0.05 }
-                      }}
-                      className="flex items-center"
+<AnimatePresence>
+    {isVisible && (
+      <motion.div
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        exit={{ y: 100 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-t border-gray-200/50 dark:border-gray-800/50 safe-area-bottom"
+      >
+        <div className="relative">
+          {/* Tap-away backdrop */}
+          <AnimatePresence>
+            {isAddExpanded && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsAddExpanded(false)}
+                className="fixed inset-0 bg-transparent z-40"
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Expanded Add Options */}
+          <AnimatePresence>
+            {isAddExpanded && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                className="absolute -top-28 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-end space-y-3"
+              >
+                {fabOptions.map((option, index) => (
+                  <motion.div
+                    key={option.label}
+                    initial={{ opacity: 0, scale: 0, y: 20 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      y: 0,
+                      transition: { delay: index * 0.05 }
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0,
+                      y: 20,
+                      transition: { delay: (fabOptions.length - 1 - index) * 0.05 }
+                    }}
+                    className="flex items-center"
+                  >
+                    <div className="bg-white dark:bg-gray-800 px-3 py-2 rounded-lg shadow-lg mr-3 border border-gray-200 dark:border-gray-700">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        {option.label}
+                      </span>
+                    </div>
+                    <Link
+                      to={option.path}
+                      onClick={handleAddOptionClick}
+                      className={`flex items-center justify-center w-12 h-12 bg-gradient-to-r ${option.color} text-white rounded-full shadow-lg hover:shadow-xl transition-all touch-target`}
                     >
-                      <div className="bg-white dark:bg-gray-800 px-3 py-2 rounded-lg shadow-lg mr-3 border border-gray-200 dark:border-gray-700">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                          {option.label}
-                        </span>
-                      </div>
-                      <Link
-                        to={option.path}
-                        onClick={handleAddOptionClick}
-                        className={`flex items-center justify-center w-12 h-12 bg-gradient-to-r ${option.color} text-white rounded-full shadow-lg hover:shadow-xl transition-all touch-target`}
-                      >
-                        <option.icon size={20} />
-                      </Link>
-                    </motion.div>
-                  ))}
-                </motion.div>
-          </> 
-              )}
-            </AnimatePresence>
+                      <option.icon size={20} />
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
             {/* Bottom Nav */}
             <div className="flex items-center justify-around px-2 py-2 max-w-md mx-auto">
