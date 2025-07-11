@@ -1,12 +1,12 @@
+// components/CustomerAcquisitionModal.tsx
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, Circle, Copy, Link, QrCode, MessageSquare, GalleryVertical as Gallery, Download, Users, TrendingUp } from 'lucide-react';
-import { Seller } from '../lib/supabase';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  CheckCircle, Circle, Copy, QrCode, MessageSquare, Link as LinkIcon,
+  Users, GalleryVertical as Gallery, Download, X, ArrowLeft, ArrowRight
+} from 'lucide-react';
 import toast from 'react-hot-toast';
-
-interface CustomerAcquisitionGuideProps {
-  seller: Seller;
-}
+import { Seller } from '../lib/supabase';
 
 interface Step {
   id: string;
@@ -18,53 +18,19 @@ interface Step {
   actionLabel?: string;
 }
 
-const CustomerAcquisitionGuide: React.FC<CustomerAcquisitionGuideProps> = ({ seller }) => {
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  seller: Seller;
+}
+
+const CustomerAcquisitionModal: React.FC<ModalProps> = ({ isOpen, onClose, seller }) => {
+  const [currentPage, setCurrentPage] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<string>>(new Set());
   const [copying, setCopying] = useState<string | null>(null);
+  const stepsPerPage = 2;
 
   const shopUrl = `${window.location.origin}/shop/${seller.id}`;
-
-  // Load completed steps from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem(`completed-steps-${seller.id}`);
-    if (saved) {
-      setCompletedSteps(new Set(JSON.parse(saved)));
-    }
-  }, [seller.id]);
-
-  // Save completed steps to localStorage
-  const saveCompletedSteps = (steps: Set<string>) => {
-    localStorage.setItem(`completed-steps-${seller.id}`, JSON.stringify([...steps]));
-  };
-
-  const toggleStepCompletion = (stepId: string) => {
-    const newCompleted = new Set(completedSteps);
-    if (newCompleted.has(stepId)) {
-      newCompleted.delete(stepId);
-    } else {
-      newCompleted.add(stepId);
-    }
-    setCompletedSteps(newCompleted);
-    saveCompletedSteps(newCompleted);
-  };
-
-  const copyToClipboard = async (text: string, stepId: string) => {
-    setCopying(stepId);
-    try {
-      await navigator.clipboard.writeText(text);
-      toast.success('Copied to clipboard!');
-    } catch (error) {
-      toast.error('Failed to copy');
-    } finally {
-      setCopying(false);
-    }
-  };
-
-  const downloadQRCode = () => {
-    // This would trigger the QR code download functionality
-    // For now, we'll navigate to the QR codes page
-    window.open(`/dashboard/qr-codes`, '_blank');
-  };
 
   const steps: Step[] = [
     {
@@ -80,7 +46,7 @@ const CustomerAcquisitionGuide: React.FC<CustomerAcquisitionGuideProps> = ({ sel
       id: 'instagram-bio',
       title: 'Add your ShopLink to your Instagram Bio',
       instruction: 'Having your link in your bio helps customers trust you and order faster.',
-      icon: Link,
+      icon: LinkIcon,
       actionType: 'none'
     },
     {
@@ -109,149 +75,135 @@ const CustomerAcquisitionGuide: React.FC<CustomerAcquisitionGuideProps> = ({ sel
     }
   ];
 
-  const completionPercentage = Math.round((completedSteps.size / steps.length) * 100);
+  useEffect(() => {
+    const saved = localStorage.getItem(`completed-steps-${seller.id}`);
+    if (saved) {
+      setCompletedSteps(new Set(JSON.parse(saved)));
+    }
+  }, [seller.id]);
+
+  const saveCompletedSteps = (steps: Set<string>) => {
+    localStorage.setItem(`completed-steps-${seller.id}`, JSON.stringify([...steps]));
+  };
+
+  const toggleStepCompletion = (stepId: string) => {
+    const updated = new Set(completedSteps);
+    if (updated.has(stepId)) updated.delete(stepId);
+    else updated.add(stepId);
+    setCompletedSteps(updated);
+    saveCompletedSteps(updated);
+  };
+
+  const copyToClipboard = async (text: string, stepId: string) => {
+    setCopying(stepId);
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success('Copied to clipboard!');
+    } catch {
+      toast.error('Failed to copy');
+    } finally {
+      setCopying(null);
+    }
+  };
+
+  const downloadQRCode = () => {
+    window.open(`/dashboard/qr-codes`, '_blank');
+  };
+
+  const pageSteps = steps.slice(currentPage * stepsPerPage, (currentPage + 1) * stepsPerPage);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="mobile-card p-4 sm:p-6"
-    >
-      {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xl font-bold flex items-center" style={{ color: 'var(--text-primary)' }}>
-            <TrendingUp className="h-5 w-5 mr-2 text-blue-600" />
-            How to Get More Customers
-          </h2>
-          <div className="text-right">
-            <div className="text-2xl font-bold text-blue-600">{completionPercentage}%</div>
-            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>Complete</div>
-          </div>
-        </div>
-        
-        {/* Progress Bar */}
-        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
           <motion.div
-            className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all duration-500"
-            style={{ width: `${completionPercentage}%` }}
-            initial={{ width: 0 }}
-            animate={{ width: `${completionPercentage}%` }}
-          />
-        </div>
-        
-        <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>
-          Follow these steps to attract more customers to your shop
-        </p>
-      </div>
+            className="bg-white dark:bg-gray-900 w-full max-w-lg rounded-xl shadow-lg p-6 relative overflow-y-auto"
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0.95 }}
+          >
+            <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+              <X className="h-5 w-5" />
+            </button>
 
-      {/* Steps */}
-      <div className="space-y-4">
-        {steps.map((step, index) => {
-          const isCompleted = completedSteps.has(step.id);
-          const StepIcon = step.icon;
-          
-          return (
-            <motion.div
-              key={step.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={`border rounded-lg p-4 transition-all ${
-                isCompleted 
-                  ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20' 
-                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-              }`}
-            >
-              <div className="flex items-start space-x-3">
-                {/* Checkbox */}
-                <button
-                  onClick={() => toggleStepCompletion(step.id)}
-                  className="flex-shrink-0 mt-1 touch-target"
-                >
-                  {isCompleted ? (
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  ) : (
-                    <Circle className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
-                  )}
-                </button>
+            <h2 className="text-xl font-bold mb-4 flex items-center">
+              <TrendingUp className="h-5 w-5 mr-2 text-blue-600" />
+              How to Get More Customers
+            </h2>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className={`font-semibold text-sm sm:text-base flex items-center ${
-                      isCompleted ? 'text-green-800 dark:text-green-200' : ''
-                    }`} style={{ color: isCompleted ? undefined : 'var(--text-primary)' }}>
-                      <StepIcon className="h-4 w-4 mr-2 flex-shrink-0" />
-                      <span className="line-clamp-2">Step {index + 1}: {step.title}</span>
-                    </h3>
-                  </div>
+            {pageSteps.map((step, index) => {
+              const isCompleted = completedSteps.has(step.id);
+              const StepIcon = step.icon;
 
-                  <p className={`text-sm mb-3 leading-relaxed ${
-                    isCompleted ? 'text-green-700 dark:text-green-300' : ''
-                  }`} style={{ color: isCompleted ? undefined : 'var(--text-muted)' }}>
-                    {step.instruction}
-                  </p>
-
-                  {/* Content to copy */}
-                  {step.content && (
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 mb-3 border border-gray-200 dark:border-gray-700">
-                      <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                        {step.content}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Action Button */}
-                  {step.actionType !== 'none' && (
-                    <div className="flex justify-start">
+              return (
+                <div key={step.id} className="mb-6 border p-4 rounded-lg">
+                  <div className="flex items-start space-x-3">
+                    <button onClick={() => toggleStepCompletion(step.id)} className="mt-1">
+                      {isCompleted ? <CheckCircle className="text-green-600" /> : <Circle className="text-gray-400" />}
+                    </button>
+                    <div className="flex-1">
+                      <h3 className="font-semibold mb-1 flex items-center">
+                        <StepIcon className="h-4 w-4 mr-2" />
+                        Step {currentPage * stepsPerPage + index + 1}: {step.title}
+                      </h3>
+                      <p className="text-sm mb-2 text-gray-600 dark:text-gray-300">{step.instruction}</p>
+                      {step.content && (
+                        <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded mb-2 text-sm">
+                          {step.content}
+                        </div>
+                      )}
                       {step.actionType === 'copy' && step.content && (
                         <button
                           onClick={() => copyToClipboard(step.content!, step.id)}
                           disabled={copying === step.id}
-                          className="mobile-button flex items-center bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 disabled:bg-blue-400 transition-colors text-sm"
+                          className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-700"
                         >
-                          <Copy className="h-4 w-4 mr-2" />
+                          <Copy className="h-4 w-4 inline mr-1" />
                           {copying === step.id ? 'Copying...' : step.actionLabel}
                         </button>
                       )}
-                      
                       {step.actionType === 'download' && (
                         <button
                           onClick={downloadQRCode}
-                          className="mobile-button flex items-center bg-purple-600 text-white px-3 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm"
+                          className="bg-purple-600 text-white text-sm px-3 py-1 rounded hover:bg-purple-700"
                         >
-                          <Download className="h-4 w-4 mr-2" />
+                          <Download className="h-4 w-4 inline mr-1" />
                           {step.actionLabel}
                         </button>
                       )}
                     </div>
-                  )}
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
+              );
+            })}
 
-      {/* Completion Message */}
-      {completionPercentage === 100 && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="mt-6 p-4 bg-green-100 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-center"
-        >
-          <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
-          <h3 className="font-semibold text-green-800 dark:text-green-200 mb-1">
-            Congratulations! 🎉
-          </h3>
-          <p className="text-sm text-green-700 dark:text-green-300">
-            You've completed all steps to grow your customer base. Keep promoting your shop!
-          </p>
+            {/* Navigation Buttons */}
+            <div className="flex justify-between mt-4">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+                disabled={currentPage === 0}
+                className="text-sm px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50"
+              >
+                <ArrowLeft className="h-4 w-4 inline mr-1" /> Previous
+              </button>
+              <button
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(steps.length / stepsPerPage) - 1))}
+                disabled={(currentPage + 1) * stepsPerPage >= steps.length}
+                className="text-sm px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+              >
+                Next <ArrowRight className="h-4 w-4 inline ml-1" />
+              </button>
+            </div>
+          </motion.div>
         </motion.div>
       )}
-    </motion.div>
+    </AnimatePresence>
   );
 };
 
-export default CustomerAcquisitionGuide;
+export default CustomerAcquisitionModal;
