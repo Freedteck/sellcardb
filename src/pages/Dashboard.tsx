@@ -7,6 +7,7 @@ import { supabase, Seller, Product, Service, Inquiry } from '../lib/supabase';
 import MobileHeader from '../components/MobileHeader';
 import FloatingActionButton from '../components/FloatingActionButton';
 import LoadingSpinner from '../components/LoadingSpinner';
+import CustomerAcquisitionGuide from '../components/CustomerAcquisitionGuide';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -282,7 +283,7 @@ const Dashboard: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.7 }}
           className="mobile-card p-4"
         >
           <div className="flex items-center justify-between mb-4">
@@ -347,6 +348,15 @@ const Dashboard: React.FC = () => {
           )}
         </motion.div>
       </motion.div>
+        {/* Customer Acquisition Guide */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          <CustomerAcquisitionGuide seller={seller} />
+        </motion.div>
+
 
       {/* Floating Action Button */}
       <FloatingActionButton />
