@@ -133,7 +133,7 @@ const MobileBottomNav: React.FC = () => {
           </AnimatePresence>
 
             {/* Bottom Nav */}
-            <div className="flex items-center justify-around px-2 py-2 max-w-md mx-auto">
+          <div className="flex items-center justify-around px-2 py-2 max-w-md mx-auto">
               {[
                 {
                   id: 'home',
