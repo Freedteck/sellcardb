@@ -94,7 +94,7 @@ const MobileBottomNav: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                className="absolute -top-28 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-end space-y-3"
+                className="absolute -top-28 left-1/2 transform -translate-x-1/2 z-40 flex flex-col items-end space-y-3"
               >
                 {fabOptions.map((option, index) => (
                   <motion.div
