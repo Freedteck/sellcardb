@@ -151,7 +151,7 @@ const MobileBottomNav: React.FC = () => {
                 },
                 {
                   id: 'add',
-                  label: 'Add',
+                  label: '',
                   icon: Plus,
                   path: '',
                   isSpecial: true
