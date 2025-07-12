@@ -106,7 +106,7 @@ const GuideModal: React.FC<GuideModalProps> = ({ seller, onClose }) => {
         animate={{ scale: 1, opacity: 1 }}
         className="bg-white dark:bg-gray-900 rounded-xl w-full max-w-md p-6 relative overflow-hidden"
       >
-        <button onClick={onClose} className="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <button onClick={onClose} className="absolute top-3 right-0 text-gray-500 hover:text-gray-700">
           <X className="h-5 w-5" />
         </button>
 
