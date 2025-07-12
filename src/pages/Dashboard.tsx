@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { supabase, Seller, Product, Service, Inquiry } from '../lib/supabase';
 import MobileHeader from '../components/MobileHeader';
-import FloatingActionButton from '../components/FloatingActionButton';
+// import FloatingActionButton from '../components/FloatingActionButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 import GuideModal from '../components/GuideModal';
 import { Link } from 'react-router-dom';
@@ -367,7 +367,7 @@ const Dashboard: React.FC = () => {
       </motion.div>
 
       {/* Floating Action Button */}
-      <FloatingActionButton />
+      {/* <FloatingActionButton /> */}
     </div>
   );
 };
