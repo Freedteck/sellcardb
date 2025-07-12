@@ -165,22 +165,6 @@ const Dashboard: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         className="px-4 py-6"
       >
-              {showGuide && <GuideModal seller={seller} onClose={() => setShowGuide(false)} />}
-
-      <div className="mobile-card px-4 py-2 mb-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 flex items-center justify-between">
-  <div className="flex items-center">
-    <TrendingUp className="h-4 w-4 text-blue-600 mr-2" />
-    <span className="text-sm text-blue-900 dark:text-blue-200 font-medium">
-      Want more customers?
-    </span>
-  </div>
-  <button
-    onClick={() => setShowGuide(true)}
-    className="text-sm font-semibold text-blue-700 dark:text-blue-400 hover:underline"
-  >
-    View Tips
-  </button>
-</div>
         {/* Welcome Section */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
@@ -190,7 +174,22 @@ const Dashboard: React.FC = () => {
             Here's what's happening with your shop today.
           </p>
         </div>
-
+        {showGuide && <GuideModal seller={seller} onClose={() => setShowGuide(false)} />}
+        
+          <div className="mobile-card px-4 py-2 mb-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 flex items-center justify-between">
+            <div className="flex items-center">
+              <TrendingUp className="h-4 w-4 text-blue-600 mr-2" />
+              <span className="text-sm text-blue-900 dark:text-blue-200 font-medium">
+                Want more customers?
+              </span>
+            </div>
+            <button
+              onClick={() => setShowGuide(true)}
+              className="text-sm font-semibold text-blue-700 dark:text-blue-400 hover:underline"
+            >
+              View Tips
+            </button>
+        </div>
         {/* Stats Grid */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           {[
