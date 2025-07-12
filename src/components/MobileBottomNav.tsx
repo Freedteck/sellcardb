@@ -82,7 +82,7 @@ const MobileBottomNav: React.FC = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsAddExpanded(false)}
-                className="fixed inset-0 bg-transparent z-40"
+                className="fixed inset-0 bg-transparent z-30"
               />
             )}
           </AnimatePresence>
