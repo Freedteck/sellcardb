@@ -151,7 +151,7 @@ const MobileBottomNav: React.FC = () => {
                 },
                 {
                   id: 'add',
-                  label: '',
+                  label: 'Add',
                   icon: Plus,
                   path: '',
                   isSpecial: true
@@ -192,7 +192,7 @@ const MobileBottomNav: React.FC = () => {
                             <Plus size={24} />
                           </motion.div>
                         </motion.div>
-                        <span className="text-xs mt-1 font-medium text-gray-700 dark:text-gray-200">Add</span>
+                        {/* <span className="text-xs mt-1 font-medium text-gray-700 dark:text-gray-200">Add</span> */}
                       </button>
                     </div>
                   );
