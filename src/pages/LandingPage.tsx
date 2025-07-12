@@ -4,7 +4,7 @@ import { ArrowRight, Store, Share2, Smartphone, Zap, Search, QrCode, BarChart3, 
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import MobileHeader from '../components/MobileHeader';
-import FloatingActionButton from '../components/FloatingActionButton';
+// import FloatingActionButton from '../components/FloatingActionButton';
 
 const LandingPage: React.FC = () => {
   const { user } = useAuth();
@@ -348,7 +348,7 @@ const LandingPage: React.FC = () => {
       </motion.section>
 
       {/* Floating Action Button */}
-      <FloatingActionButton />
+      {/* <FloatingActionButton /> */}
     </div>
   );
 };
